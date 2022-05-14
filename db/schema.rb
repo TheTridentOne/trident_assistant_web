@@ -10,11 +10,53 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_14_071544) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_14_165505) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "attributes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "value"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name", "value"], name: "index_attributes_on_name_and_value", unique: true
+  end
+
+  create_table "collections", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "creator_id"
+    t.string "name"
+    t.string "external_url"
+    t.text "description"
+    t.float "split"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_collections_on_creator_id"
+  end
+
+  create_table "item_attributes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "item_id"
+    t.uuid "attribute_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id", "attribute_id"], name: "index_item_attributes_on_item_id_and_attribute_id", unique: true
+  end
+
+  create_table "items", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "collection_id"
+    t.string "identifier"
+    t.string "metahash"
+    t.string "name"
+    t.text "description"
+    t.float "royalty"
+    t.jsonb "metadata"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["collection_id"], name: "index_items_on_collection_id"
+    t.index ["identifier"], name: "index_items_on_identifier"
+    t.index ["metahash"], name: "index_items_on_metahash"
+  end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"

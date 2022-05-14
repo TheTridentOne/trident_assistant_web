@@ -4,11 +4,22 @@ class SessionsController < ApplicationController
   def create
     keystore = File.read(params[:keystore])
 
-    user = User.find_or_create_by keystore: keystore
+    json ||=
+      begin
+        JSON.parse keystore
+      rescue StandardError
+        {}
+      end
 
-    if user.present?
-      user_sign_in user
-      redirect_to root_path
-    end
+    user = User.create_with(
+      keystore: keystore
+    ).find_or_create_by(
+      id: json['client_id']
+    )
+    user.update(keystore: keystore) if user.present?
+
+    user_sign_in(user) if user.blank?
+
+    redirect_to root_path
   end
 end

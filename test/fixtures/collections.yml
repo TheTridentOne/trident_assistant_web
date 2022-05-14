@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: collections
+#
+#  id           :uuid             not null, primary key
+#  description  :text
+#  external_url :string
+#  name         :string
+#  split        :float
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  creator_id   :uuid
+#
+# Indexes
+#
+#  index_collections_on_creator_id  (creator_id)
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the "{}" from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value

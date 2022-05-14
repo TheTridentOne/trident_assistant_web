@@ -14,6 +14,7 @@
 #
 class User < ApplicationRecord
   encrypts :keystore
+
   store_accessor :raw, %i[avatar_url biography]
 
   before_validation :setup_attributes
@@ -22,6 +23,9 @@ class User < ApplicationRecord
   validates :mixin_id, presence: true
   validates :keystore, presence: true
   validates :raw, presence: true
+
+  has_many :collections, dependent: :restrict_with_exception
+  has_many :items, through: :collections, dependent: :restrict_with_exception
 
   def keystore_json
     @keystore_json ||=
