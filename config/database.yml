@@ -1,0 +1,29 @@
+production:
+  adapter:  postgresql
+  host:     <%= Settings.postgres&.host %>
+  encoding: unicode
+  database: <%= Settings.postgres&.database %>
+  pool:     16
+  username: <%= Settings.postgres&.username %>
+  password: <%= Settings.postgres&.password %>
+  template: template0
+
+development:
+  adapter:  postgresql
+  host:     <%= Settings.postgres&.host || 'localhost' %>
+  encoding: unicode
+  database: <%= Settings.postgres&.database || 'trident_lab_development' %>
+  pool:     10
+  username: <%= Settings.postgres&.username || 'postgres' %>
+  password: <%= Settings.postgres&.password || 'postgres' %>
+  template: template0
+
+test:
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  database: trident_lab_test
+  pool:     5
+  username: postgres
+  password: postgres
+  template: template0
