@@ -35,6 +35,9 @@ gem 'redis', '~> 4.0'
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 gem 'kredis'
 
+# This gem adds a Redis::Namespace class which can be used to namespace Redis keys. http://redis.io
+gem 'redis-namespace'
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
 
@@ -52,6 +55,18 @@ gem 'msgpack_rails'
 
 # Config helps you easily manage environment specific settings in an easy and usable manner.
 gem 'config'
+
+# Bundle and process CSS in Rails with Tailwind, PostCSS, and Sass via Node.js.
+gem 'cssbundling-rails'
+
+# Simple, efficient background processing for Ruby http://sidekiq.org
+gem 'sidekiq', '~> 6.0'
+
+# Scheduler / Cron for Sidekiq jobs
+gem 'sidekiq-cron'
+
+# Concurrency and threshold throttling for Sidekiq.
+gem 'sidekiq-throttled'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
