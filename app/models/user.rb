@@ -13,6 +13,8 @@
 #  mixin_id   :string
 #
 class User < ApplicationRecord
+  include Users::Authenticatable
+
   encrypts :keystore
 
   store_accessor :raw, %i[avatar_url biography]
@@ -24,8 +26,10 @@ class User < ApplicationRecord
   validates :keystore, presence: true
   validates :raw, presence: true
 
-  has_many :collections, dependent: :restrict_with_exception
-  has_many :items, through: :collections, dependent: :restrict_with_exception
+  has_many :collections, foreign_key: :creator_id, dependent: :restrict_with_exception
+  has_many :non_fungible_outputs, dependent: :restrict_with_exception
+  has_many :unspent_non_fungible_outputs, -> { where(state: :unspent) }, class_name: 'NonFungibleOutput', dependent: :restrict_with_exception
+  has_many :items, through: :unspent_non_fungible_outputs, dependent: :restrict_with_exception
 
   def keystore_json
     @keystore_json ||=
@@ -45,6 +49,79 @@ class User < ApplicationRecord
     )
   rescue StandardError
     nil
+  end
+
+  def trident_api
+    @trident_api ||= TridentAssistant::API.new keystore: keystore
+  end
+
+  def sync_collections_from_trident
+    loop do
+      page = 1
+      r = trident_api.collections(page: page)
+      r['collections'].each do |c|
+        collection =
+          collections.create_with(
+            raw: c
+          ).find_or_create_by(
+            id: c['id']
+          )
+      end
+
+      page = r['next_page']
+      break if page.blank?
+    end
+  end
+
+  def sync_collectibles!
+    offset = non_fungible_outputs.first&.raw_updated_at
+
+    loop do
+      logger.info "Syncing #{name}(#{id}) collectibles"
+      r = mixin_api.collectibles offset: offset
+
+      r['data'].each do |collectible|
+        logger.info "found collectible #{collectible}"
+        nfo = NonFungibleOutput.find_by id: collectible['output_id']
+        if nfo.present?
+          nfo.update! raw: collectible
+        else
+          non_fungible_outputs.create! raw: collectible
+          token = mixin_api.collectible collectible['token_id']
+          item = Item.find_by metahash: token.dig('meta', 'hash')
+          if item.blank?
+            res = trident_api.metadata token.dig('meta', 'hash')
+            Item.create!(
+              token_id: collectible['token_id'],
+              collection: Collection.find_or_create_by!(id: res.dig('collection', 'id')),
+              name: res.dig('token', 'name'),
+              description: res.dig('token', 'description'),
+              identifier: res.dig('token', 'id'),
+              metahash: token.dig('meta', 'hash'),
+              royalty: res.dig('creator', 'royalty'),
+              metadata: res
+            )
+          end
+        end
+      end
+
+      offset = r['data'].last['updated_at'] if r['data'].size.positive?
+      if r['data'].size < 500
+        logger.info "#{name}(#{id}) collectibles synced"
+        break
+      end
+    end
+    true
+  rescue MixinBot::Error, ActiveRecord::RecordNotUnique
+    false
+  end
+
+  def sync_collectibles_async
+    UserSyncCollectiblesJob.perform_async id
+  end
+
+  def admin?
+    raw.dig('app', 'creator_id').in? Rails.application.credentials[:admin] || []
   end
 
   private

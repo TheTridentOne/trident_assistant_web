@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TridentAssistantWeb</title> <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Trident Assistant</title> 
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= favicon_link_tag 'logo.png' %>
   </head>
 
   <body>
-    <%= yield %>
+    <% if current_user %>
+      <%= render 'shared/nav' %>
+      <div class="p-4 mx-auto w-full max-w-7xl">
+        <%= yield %>
+      </div>
+    <% else %>
+      <%= yield %>
+    <% end %>
+    <div class="absolute bottom-0" id="modal-slot"></div>
+    <div class="fixed bottom-24 h-0 w-full px-4 z-50 flex flex-col justify-end" id="flashes">
+      <% flash.each do |type, message| %>
+        <%= render "flashes/flash", type: type, message: message %>
+      <% end %>
+    </div>
+    <%= turbo_stream_from "user_#{current_user.id}" if current_user.present? %>
   </body>
 </html>

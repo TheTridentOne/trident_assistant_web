@@ -6,6 +6,8 @@ class CreateCollections < ActiveRecord::Migration[7.0]
       t.string :external_url
       t.text :description
       t.float :split
+      t.jsonb :raw
+      t.string :state
 
       t.timestamps
     end

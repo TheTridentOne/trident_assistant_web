@@ -6,7 +6,9 @@
 #  description  :text
 #  external_url :string
 #  name         :string
+#  raw          :jsonb
 #  split        :float
+#  state        :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  creator_id   :uuid

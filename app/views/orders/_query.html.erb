@@ -1,0 +1,25 @@
+<%= form_with url: collection_orders_path(@collection.id), method: :get, class: "flex items-center flex-wrap" do |form| %>
+  <%= form.select :type, 
+    [
+      ['Ask', 'ask'], 
+      ['Auction', 'auction'], 
+      ['Bid', 'bid'], 
+      ['All', 'all'], 
+    ], 
+    { selected: params[:type] }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.select :state, 
+    [
+      ['Open', 'open'], 
+      ['Completed', 'completed'], 
+    ], 
+    { selected: params[:state] }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.submit :Query, class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
+  <% if params[:metahash].present? %>
+    <div class="ml-4"
+      <%= form.label :metahash %>
+      <%= form.text_field :metahash, value: params[:metahash], class: "rounded-lg m-1 dark:bg-zinc-900" %>
+    </div>
+  <% end %>
+<% end %>

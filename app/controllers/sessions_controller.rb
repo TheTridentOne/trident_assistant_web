@@ -1,25 +1,19 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
+  skip_before_action :authenticate!
+
   def create
-    keystore = File.read(params[:keystore])
+    return if params[:keystore].blank?
 
-    json ||=
-      begin
-        JSON.parse keystore
-      rescue StandardError
-        {}
-      end
+    user = User.auth_from_keystore params[:keystore]
+    user_sign_in(user) if user.present?
 
-    user = User.create_with(
-      keystore: keystore
-    ).find_or_create_by(
-      id: json['client_id']
-    )
-    user.update(keystore: keystore) if user.present?
+    redirect_to root_path
+  end
 
-    user_sign_in(user) if user.blank?
-
+  def destroy
+    user_sign_out
     redirect_to root_path
   end
 end

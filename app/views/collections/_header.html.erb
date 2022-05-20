@@ -1,0 +1,12 @@
+<% tab ||= 'items' %>
+
+<div class="mb-4 flex items-center space-x-4">
+  <%= image_tag collection.icon_url, class: "block rounded w-12 h-12" %>
+  <div class="text-xl font-bold">
+    <%= collection.name %>
+  </div>
+</div>
+<div class="mb-4 flex items-center">
+  <%= link_to 'Items', collection_items_path(collection), class: "px-4 py-2 border-b-2 #{tab == 'items' ? 'text-bold text-primary border-primary' : 'hover:text-bold hover:text-primary border-slate-200'}" %>
+  <%= link_to 'Orders', collection_orders_path(collection), class: "px-4 py-2 border-b-2 #{tab == 'orders' ? 'text-bold text-primary border-primary' : 'hover:text-bold hover:text-primary border-slate-200'}" %>
+</div>

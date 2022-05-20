@@ -1,6 +1,24 @@
+GIT
+  remote: https://github.com/TheTridentOne/trident_assistant.git
+  revision: 5c2e0766fd1e4b0596ac3d1c9c21c99bfb580ce5
+  specs:
+    trident_assistant (0.1.4)
+      mixin_bot (~> 0.8)
+
+GIT
+  remote: https://github.com/activerecord-hackery/ransack.git
+  revision: 7ad95448dd518f5a96a0e18c25623f3f90d612b5
+  specs:
+    ransack (2.6.0)
+      activerecord (>= 6.0.4)
+      activesupport (>= 6.0.4)
+      i18n
+
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (5.2.0)
+      concurrent-ruby (~> 1.0)
     actioncable (7.0.3)
       actionpack (= 7.0.3)
       activesupport (= 7.0.3)
@@ -73,7 +91,7 @@ GEM
       rake (>= 10.4, < 14.0)
     ast (2.4.2)
     awesome_print (1.9.2)
-    bcrypt (3.1.17)
+    bcrypt (3.1.18)
     bindex (0.8.1)
     bootsnap (1.11.1)
       msgpack (~> 1.2)
@@ -223,6 +241,8 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.13.6-x86_64-linux)
       racc (~> 1.4)
+    pagy (5.10.1)
+      activesupport
     parallel (1.22.1)
     parser (3.1.2.0)
       ast (~> 2.4.1)
@@ -318,8 +338,6 @@ GEM
     strscan (3.0.3)
     thor (1.2.1)
     timeout (0.2.0)
-    trident_assistant (0.1.4)
-      mixin_bot (~> 0.8)
     turbo-rails (1.0.1)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
@@ -349,6 +367,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  aasm
   annotate
   bootsnap
   capybara
@@ -359,9 +378,11 @@ DEPENDENCIES
   jbuilder
   kredis
   msgpack_rails
+  pagy
   pg
   puma (~> 5.0)
   rails (~> 7.0.3)
+  ransack!
   redis (~> 4.0)
   redis-namespace
   rubocop
@@ -372,7 +393,7 @@ DEPENDENCIES
   sidekiq-throttled
   sprockets-rails
   stimulus-rails
-  trident_assistant
+  trident_assistant!
   turbo-rails
   tzinfo-data
   web-console

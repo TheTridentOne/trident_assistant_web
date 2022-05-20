@@ -1,0 +1,11 @@
+<div class="h-screen flex items-center justify-center">
+  <div class="">
+    <div class="mb-4 font-bold">
+      Upload <code>keystore.json</code> file to login
+    </div>
+    <%= form_with url: login_path, method: :post do |form| %>
+      <%= form.file_field :keystore, required: true, class: 'block mb-4' %>
+      <%= form.submit :submit, class: 'block py-2 px-4 bg-blue-500 rounded text-center text-white cursor-pointer hover:bg-blue-600 block mx-auto' %>
+    <% end %>
+  </div>
+</div>

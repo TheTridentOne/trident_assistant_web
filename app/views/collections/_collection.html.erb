@@ -1,0 +1,8 @@
+<%= link_to collection_items_path(collection.id), class: "block shadow hover:scale-105 rounded" do %>
+  <div class="aspect-w-1 aspect-h-1">
+    <%= image_tag collection.icon_url, class: "block rounded-t w-full h-full object-cover", lazy: true %>
+  </div>
+  <div class="p-4 text-lg">
+    <%= collection.name %>
+  </div>
+<% end %>

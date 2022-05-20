@@ -1,0 +1,63 @@
+<% order = OpenStruct.new(order) if order.is_a?(Hash) %>
+<tr>
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= link_to collection_orders_path(@collection.id, metahash: order.item['metahash'], type: params[:type], state: params[:state], ), class: "flex items-center space-x-2" do %>
+      <%= image_tag order.item['icon_url'], class: "w-12 h-12 block" %>
+      <div>
+        <div class="">
+          <%= order.item['name'] %>
+        </div>
+        <div class="">
+          #<%= order.item['identifier'] %>
+        </div>
+      </div>
+    <% end %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= order.type %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= order.state %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= order.price %>
+    <%= order.currency['symbol'] %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= link_to order.maker['name'], "https://thetrident.one/users/#{order.maker['id']}", target: "_blank" %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <% if order.taker.present? %>
+      <%= link_to order.taker['name'], "https://thetrident.one/users/#{order.maker['id']}", target: "_blank" %>
+    <% else %>
+      -
+    <% end %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= order.opened_at %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= order.state == 'completed' ? order.completed_at : order.expired_at %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <div class="flex items-center justify-center space-x-2">
+      <%= link_to 'Detail', "https://thetrident.one/collectibles/#{order.item['metahash']}", target: "_blank" %>
+      <%= button_to 'Cancel', 
+        collection_order_path(@collection.id, order.id), 
+        method: :delete,
+        form: {
+          data: {
+            turbo_confirm: 'Are you sure to cancel this order?'
+          }
+        } if order.state == 'open' %>
+    </div>
+  </td>
+</tr>

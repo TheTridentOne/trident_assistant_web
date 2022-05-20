@@ -1,0 +1,52 @@
+<%= render "collections/header", collection: @collection, tab: 'orders' %>
+
+<div class="mb-4">
+  <%= render "orders/query" %>
+</div>
+
+<div class="">
+  <% if @orders.blank? %>
+    <div class="p-4 text-center opacity-70">- No records -</div>
+  <% else %>
+    <table class="mb-4 border-collapse w-full border border-slate-400 dark:border-slate-500 bg-white dark:bg-slate-800 text-sm shadow-sm">
+      <thead class="bg-slate-50 dark:bg-slate-700">
+        <tr>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Item
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Type
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            State
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Price
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Maker
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Taker
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Opened At
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Completed/Expire At
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: "orders/order", collection: @orders %>
+      </tbody>
+    </table>
+    <div class="flex items-center justify-center">
+      <%= link_to '<- Prev', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @previous_page) if @previous_page.present? %>
+      <%= link_to 'Next ->', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @next_page) if @next_page.present? %>
+    </div>
+  <% end %>
+</div>

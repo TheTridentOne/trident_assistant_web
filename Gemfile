@@ -48,7 +48,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'bootsnap', require: false
 
 # A simple API wrapper for Mixin Network in Ruby
-gem 'trident_assistant'
+gem 'trident_assistant', git: 'https://github.com/TheTridentOne/trident_assistant.git'
 
 # The Rails way to serialize/deserialize objects with Message Pack.
 gem 'msgpack_rails'
@@ -67,6 +67,15 @@ gem 'sidekiq-cron'
 
 # Concurrency and threshold throttling for Sidekiq.
 gem 'sidekiq-throttled'
+
+# AASM - State machines for Ruby classes (plain Ruby, ActiveRecord, Mongoid)
+gem 'aasm'
+
+# The Best Pagination Ruby Gem
+gem 'pagy'
+
+# Object-based searching.
+gem 'ransack', github: 'activerecord-hackery/ransack'
 
 # Use Sass to process CSS
 # gem "sassc-rails"
