@@ -4,6 +4,11 @@ class ApplicationController < ActionController::Base
   include Pagy::Backend
   include RenderingHelper
 
+  rescue_from StandardError do |ex|
+    Rails.logger.error ex.inspect
+    render_flash :danger, ex.message if Rails.env.production?
+  end
+
   before_action :authenticate!
   helper_method :current_user
 

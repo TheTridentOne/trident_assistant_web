@@ -21,7 +21,7 @@ class NonFungibleOutput < ApplicationRecord
   store_accessor :raw, %i[updated_at], prefix: true
 
   belongs_to :user
-  belongs_to :item, primary_key: :token_id, foreign_key: :token_id
+  belongs_to :item, primary_key: :token_id, foreign_key: :token_id, inverse_of: :non_fungible_outputs
 
   before_validation :setup_attributes
 
@@ -31,8 +31,10 @@ class NonFungibleOutput < ApplicationRecord
 
   def setup_attributes
     assign_attributes(
+      id: raw['output_id'],
       token_id: raw['token_id'],
-      state: raw['state']
+      state: raw['state'],
+      user_id: raw['user_id']
     )
   end
 end

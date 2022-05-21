@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   get :logout, to: 'sessions#destroy'
 
   resources :collections do
-    resources :items, only: %i[index]
+    resources :items, only: %i[index] do
+      post :withdraw
+    end
     resources :orders, only: %i[index new create destroy]
   end
   post :sync_collections, to: 'collections#sync'

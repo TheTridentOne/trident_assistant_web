@@ -44,9 +44,17 @@ class ItemsController < ApplicationController
     end
   end
 
-  def sync
-    current_user.sync_collectibles_async
-    redirect_to items_path
+  def withdraw
+    item = Item.find params[:item_id]
+    r = current_user.trident_api.withdraw @collection.id, item.identifier
+
+    if r['data'].present?
+      render_flash :success, 'Successfully to invoke withdraw! Refresh page later'
+    else
+      render_flash :error, r['errors']
+    end
+  rescue MixinBot::Error, TridentAssistant::Error => e
+    render_flash :error, e.inspect
   end
 
   private

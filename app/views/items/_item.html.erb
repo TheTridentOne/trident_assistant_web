@@ -16,8 +16,19 @@
   </td>
 
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
-    <div class="flex items-center justify-center space-x-2">
+    <div class="flex items-center space-x-2">
       <%= link_to 'Detail', "https://thetrident.one/collectibles/#{item.metahash}", target: "_blank" %>
+      <% case params[:type] %>
+      <% when 'listed' %>
+        <%= button_to 'Withdraw', 
+          collection_item_withdraw_path(item.collection_id, item.id), 
+          form: {
+            data: {
+              turbo_confirm: 'Are you sure to withdraw NFT?'
+            }
+          },
+          class: "" %>
+      <% end %>
     </div>
   </td>
 </tr>

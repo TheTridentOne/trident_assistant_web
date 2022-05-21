@@ -34,11 +34,12 @@ class Item < ApplicationRecord
 
   has_many :item_attributes, dependent: :restrict_with_exception
   has_many :propoties, through: :item_attributes, dependent: :restrict_with_exception
+  has_many :non_fungible_outputs, primary_key: :token_id, foreign_key: :token_id, dependent: :restrict_with_exception, inverse_of: :item
 
   validates :name, presence: true
   validates :description, presence: true
   validates :metadata, presence: true
-  validates :metahash, presence: true
+  validates :metahash, presence: true, uniqueness: true
   validates :identifier, presence: true, format: { with: /\A(?!0)\d+\z/ }, uniqueness: { scope: :collection_id }
 
   aasm column: :state do

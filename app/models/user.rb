@@ -26,9 +26,9 @@ class User < ApplicationRecord
   validates :keystore, presence: true
   validates :raw, presence: true
 
-  has_many :collections, foreign_key: :creator_id, dependent: :restrict_with_exception
+  has_many :collections, foreign_key: :creator_id, dependent: :restrict_with_exception, inverse_of: :creator
   has_many :non_fungible_outputs, dependent: :restrict_with_exception
-  has_many :unspent_non_fungible_outputs, -> { where(state: :unspent) }, class_name: 'NonFungibleOutput', dependent: :restrict_with_exception
+  has_many :unspent_non_fungible_outputs, -> { where(state: :unspent) }, class_name: 'NonFungibleOutput', dependent: :restrict_with_exception, inverse_of: :user
   has_many :items, through: :unspent_non_fungible_outputs, dependent: :restrict_with_exception
 
   def keystore_json
@@ -60,12 +60,11 @@ class User < ApplicationRecord
       page = 1
       r = trident_api.collections(page: page)
       r['collections'].each do |c|
-        collection =
-          collections.create_with(
-            raw: c
-          ).find_or_create_by(
-            id: c['id']
-          )
+        collections.create_with(
+          raw: c
+        ).find_or_create_by(
+          id: c['id']
+        )
       end
 
       page = r['next_page']
@@ -86,7 +85,6 @@ class User < ApplicationRecord
         if nfo.present?
           nfo.update! raw: collectible
         else
-          non_fungible_outputs.create! raw: collectible
           token = mixin_api.collectible collectible['token_id']
           item = Item.find_by metahash: token.dig('meta', 'hash')
           if item.blank?
@@ -99,9 +97,11 @@ class User < ApplicationRecord
               identifier: res.dig('token', 'id'),
               metahash: token.dig('meta', 'hash'),
               royalty: res.dig('creator', 'royalty'),
+              state: :minted,
               metadata: res
             )
           end
+          non_fungible_outputs.create! raw: collectible
         end
       end
 
@@ -112,7 +112,9 @@ class User < ApplicationRecord
       end
     end
     true
-  rescue MixinBot::Error, ActiveRecord::RecordNotUnique
+  rescue MixinBot::HttpError
+    retry
+  rescue ActiveRecord::RecordNotUnique
     false
   end
 
@@ -121,7 +123,7 @@ class User < ApplicationRecord
   end
 
   def admin?
-    raw.dig('app', 'creator_id').in? Rails.application.credentials[:admin] || []
+    raw.dig('app', 'creator_id').in?(Rails.application.credentials[:admin] || [])
   end
 
   private

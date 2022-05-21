@@ -9,6 +9,9 @@ class SessionsController < ApplicationController
     user = User.auth_from_keystore params[:keystore]
     user_sign_in(user) if user.present?
 
+    user&.sync_collections_from_trident
+    user&.sync_collectibles_async
+
     redirect_to root_path
   end
 
