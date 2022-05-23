@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get :login, to: 'sessions#new'
   get :logout, to: 'sessions#destroy'
 
+  resources :view_modals, only: :create
   resources :collections do
     resources :items, only: %i[index] do
       post :withdraw

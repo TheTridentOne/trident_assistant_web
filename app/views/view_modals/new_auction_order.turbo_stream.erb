@@ -1,0 +1,11 @@
+<% content_for :modal_title do %>
+  <%= t('new_auction_order') %>
+<% end %>
+
+<% content_for :modal_content do %>
+  <%= render 'orders/form', item: @item, type: 'auction_order' %>
+<% end %>
+
+<%= turbo_stream.update "modal-slot" do %>
+  <%= render "view_modals/modal" %>
+<% end %>

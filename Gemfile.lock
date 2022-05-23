@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/TheTridentOne/trident_assistant.git
-  revision: 5c2e0766fd1e4b0596ac3d1c9c21c99bfb580ce5
+  revision: fecb28ba0669a8bf47fb01b7168c076107ad6e88
   specs:
     trident_assistant (0.1.4)
       mixin_bot (~> 0.8)
@@ -184,7 +184,7 @@ GEM
       ffi-compiler (>= 1.0, < 2.0)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
-    importmap-rails (1.0.3)
+    importmap-rails (1.1.0)
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.5.11)
@@ -338,8 +338,9 @@ GEM
     strscan (3.0.3)
     thor (1.2.1)
     timeout (0.2.0)
-    turbo-rails (1.0.1)
+    turbo-rails (1.1.0)
       actionpack (>= 6.0.0)
+      activejob (>= 6.0.0)
       railties (>= 6.0.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)

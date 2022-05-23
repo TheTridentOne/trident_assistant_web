@@ -19,7 +19,13 @@
     <div class="flex items-center space-x-2">
       <%= link_to 'Detail', "https://thetrident.one/collectibles/#{item.metahash}", target: "_blank" %>
       <% case @type %>
-      <% when 'listed', 'airdrop' %>
+      <% when 'listed' %>
+        <%= button_to 'Sell',
+          view_modals_path(type: :new_ask_order, metahash: item.metahash)
+        %>
+        <%= button_to 'Auction',
+          view_modals_path(type: :new_auction_order, metahash: item.metahash)
+        %>
         <%= button_to 'Withdraw', 
           collection_item_withdraw_path(item.collection_id, item.id), 
           form: {
@@ -28,6 +34,7 @@
             }
           },
           class: "" %>
+      <% when 'airdrop' %>
       <% when 'wallet' %>
         <%= button_to 'Deposit', 
           collection_item_deposit_path(item.collection_id, item.id), 
