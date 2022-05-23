@@ -33,11 +33,12 @@ class AuctionOrderTask < Task
 
   def process!
     r =
-      user.trident_api.ask_order(
+      user.trident_api.auction_order(
         collection_id,
         identifier,
         asset_id: asset_id,
         price: price,
+        reserve_price: reserve_price,
         expire_at: expire_at
       )
 
@@ -58,7 +59,7 @@ class AuctionOrderTask < Task
       if expire_at.blank?
         7.days.from_now.utc.rfc3339
       else
-        ActiveSupport::TimeZone[params[:time_zone] || 'UTC'].parse(params[:expire_at])&.iso8601
+        ActiveSupport::TimeZone[time_zone || 'UTC'].parse(expire_at)&.iso8601
       end
   end
 end
