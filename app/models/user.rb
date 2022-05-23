@@ -30,6 +30,7 @@ class User < ApplicationRecord
   has_many :non_fungible_outputs, dependent: :restrict_with_exception
   has_many :unspent_non_fungible_outputs, -> { where(state: :unspent) }, class_name: 'NonFungibleOutput', dependent: :restrict_with_exception, inverse_of: :user
   has_many :items, through: :unspent_non_fungible_outputs, dependent: :restrict_with_exception
+  has_many :tasks, dependent: :restrict_with_exception
 
   def keystore_json
     @keystore_json ||=

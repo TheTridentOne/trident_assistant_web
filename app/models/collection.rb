@@ -27,6 +27,7 @@ class Collection < ApplicationRecord
   belongs_to :creator, class_name: 'User'
 
   has_many :items, dependent: :restrict_with_exception
+  has_many :tasks, dependent: :restrict_with_exception
 
   before_validation :setup_attributes
 

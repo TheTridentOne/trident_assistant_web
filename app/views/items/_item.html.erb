@@ -21,28 +21,21 @@
       <% case @type %>
       <% when 'listed' %>
         <%= button_to 'Sell',
-          view_modals_path(type: :new_ask_order, metahash: item.metahash)
-        %>
+          view_modals_path(type: :new_ask_order_task, metahash: item.metahash),
+          class: "" %>
         <%= button_to 'Auction',
-          view_modals_path(type: :new_auction_order, metahash: item.metahash)
-        %>
+          view_modals_path(type: :new_auction_order_task, metahash: item.metahash),
+          class: "" %>
         <%= button_to 'Withdraw', 
-          collection_item_withdraw_path(item.collection_id, item.id), 
-          form: {
-            data: {
-              turbo_confirm: 'Are you sure to withdraw NFT?'
-            }
-          },
+          view_modals_path(type: :new_withdraw_task, metahash: item.metahash),
           class: "" %>
       <% when 'airdrop' %>
+        <%= button_to 'Withdraw', 
+          view_modals_path(type: :new_withdraw_task, metahash: item.metahash),
+          class: "" %>
       <% when 'wallet' %>
         <%= button_to 'Deposit', 
-          collection_item_deposit_path(item.collection_id, item.id), 
-          form: {
-            data: {
-              turbo_confirm: 'Are you sure to deposit NFT?'
-            }
-          },
+          view_modals_path(type: :new_deposit_task, metahash: item.metahash),
           class: "" %>
       <% when 'on_sale' %>
         <%= link_to 'Orders',

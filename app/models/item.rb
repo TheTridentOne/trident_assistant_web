@@ -35,6 +35,7 @@ class Item < ApplicationRecord
   has_many :item_attributes, dependent: :restrict_with_exception
   has_many :propoties, through: :item_attributes, dependent: :restrict_with_exception
   has_many :non_fungible_outputs, primary_key: :token_id, foreign_key: :token_id, dependent: :restrict_with_exception, inverse_of: :item
+  has_many :tasks, primary_key: :token_id, foreign_key: :token_id, dependent: :restrict_with_exception, inverse_of: :item
 
   validates :name, presence: true
   validates :description, presence: true

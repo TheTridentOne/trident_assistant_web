@@ -1,0 +1,36 @@
+<tr>
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <% if task.item.present? %>
+      <%= link_to collection_tasks_path(@collection.id, metahash: task.item.metahash, type: params[:type], state: params[:state], ), class: "flex items-center space-x-2" do %>
+        <%= image_tag task.item.icon_url, class: "w-12 h-12 block" %>
+        <div>
+          <div class="">
+            #<%= task.item.identifier %>
+          </div>
+          <div class="text-sm opacity-70">
+            <%= task.item.name %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      -
+    <% end %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= task.type %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= task.state %>
+ 
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= task.processed_at || '-' %>
+  </t </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <div class="flex items-center justify-center space-x-2">
+      <%= link_to 'Detail', "https://thetrident.one/collectibles/#{task.item.metahash}", target: "_blank" %>
+    </div>
+  </td>
+</tr>

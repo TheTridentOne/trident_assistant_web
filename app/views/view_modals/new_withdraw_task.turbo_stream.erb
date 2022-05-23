@@ -1,0 +1,14 @@
+<% content_for :modal_title do %>
+  <%= t('withdraw_nft') %>
+<% end %>
+
+<% content_for :modal_content do %>
+  <div class="">
+    <%= t('are_you_sure_to_withdraw_this_nft') %>
+  </div>
+  <%= render 'tasks/form', type: 'WithdrawTask', collection_id: @item.collection_id, identifier: @item.identifier %>
+<% end %>
+
+<%= turbo_stream.update "modal-slot" do %>
+  <%= render "view_modals/modal" %>
+<% end %>

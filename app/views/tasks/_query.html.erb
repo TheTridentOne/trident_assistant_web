@@ -1,0 +1,29 @@
+<%= form_with url: collection_tasks_path(@collection.id), method: :get, class: "flex items-center flex-wrap" do |form| %>
+  <%= form.select :type, 
+    [
+      ['Ask Order', 'AskOrderTask'], 
+      ['Auction Order', 'AuctionOrderTask'], 
+      ['Cancel Order', 'CancelOrderTask'], 
+      ['Withdraw', 'WithdrawTask'], 
+      ['Deposit', 'DepositTask'], 
+      ['All Types', 'all'], 
+    ], 
+    { selected: params[:type] || @type }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.select :state, 
+    [
+      ['Pending', 'pending'], 
+      ['Finished', 'finished'], 
+      ['Failed', 'failed'], 
+      ['All States', 'all'], 
+    ], 
+    { selected: params[:state] || @state }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.submit :Query, class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
+  <% if params[:metahash].present? %>
+    <div class="ml-4"
+      <%= form.label :metahash %>
+      <%= form.text_field :metahash, value: params[:metahash], class: "rounded-lg m-1 dark:bg-zinc-900" %>
+    </div>
+  <% end %>
+<% end %>

@@ -16,9 +16,6 @@ class OrdersController < ApplicationController
     @prev_page = r['previous_page']
   end
 
-  def new
-  end
-
   def create
     expire_at = ActiveSupport::TimeZone[params[:time_zone] || 'UTC'].parse(params[:expire_at])&.iso8601
 

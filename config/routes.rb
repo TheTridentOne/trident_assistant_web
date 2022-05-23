@@ -11,12 +11,15 @@ Rails.application.routes.draw do
 
   resources :view_modals, only: :create
   resources :collections do
+    resources :tasks
+
     resources :items, only: %i[index] do
       post :withdraw
       post :deposit
     end
-    resources :orders, only: %i[index new create destroy]
+    resources :orders, only: %i[index]
   end
+
   post :sync_collections, to: 'collections#sync'
 
   post :sync_items, to: 'items#sync'

@@ -1,9 +1,9 @@
 <% content_for :modal_title do %>
-  <%= t('new_ask_order') %>
+  <%= t('new_auction_order') %>
 <% end %>
 
 <% content_for :modal_content do %>
-  <%= render 'orders/form', item: @item %>
+  <%= render 'tasks/form', type: 'AuctionOrderTask', collection_id: @item.collection_id, identifier: @item.identifier %>
 <% end %>
 
 <%= turbo_stream.update "modal-slot" do %>

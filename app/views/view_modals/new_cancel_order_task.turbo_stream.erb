@@ -1,0 +1,14 @@
+<% content_for :modal_title do %>
+  <%= t('cancel_order') %>
+<% end %>
+
+<% content_for :modal_content do %>
+  <div class="">
+    <%= t('are_you_sure_to_cancel_order') %>
+  </div>
+  <%= render 'tasks/form', type: 'CancelOrderTask', collection_id: @item.collection_id, identifier: @item.identifier, order_id: params[:order_id] %>
+<% end %>
+
+<%= turbo_stream.update "modal-slot" do %>
+  <%= render "view_modals/modal" %>
+<% end %>

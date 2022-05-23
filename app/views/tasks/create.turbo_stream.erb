@@ -1,0 +1,8 @@
+<%= turbo_stream.replace "modal-slot" do %>
+<% end %>
+
+<% @task.errors.full_messages.each do |message| %>
+  <%= turbo_stream.append "flashes" do %>
+    <%= render "flashes/flash", type: :danger, message: message %>
+  <% end %>
+<% end %>
