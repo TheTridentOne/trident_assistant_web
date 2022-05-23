@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :collections do
     resources :items, only: %i[index] do
       post :withdraw
+      post :deposit
     end
     resources :orders, only: %i[index new create destroy]
   end

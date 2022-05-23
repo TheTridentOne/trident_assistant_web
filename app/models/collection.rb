@@ -28,7 +28,7 @@ class Collection < ApplicationRecord
 
   has_many :items, dependent: :restrict_with_exception
 
-  before_validation :setup_attributes, on: :create
+  before_validation :setup_attributes
 
   aasm column: :state do
     state :drafted, initialize: true
@@ -48,10 +48,14 @@ class Collection < ApplicationRecord
       end
   end
 
+  def trident_url
+    "https://thetrident.one/collections/#{id}"
+  end
+
   private
 
   def setup_attributes
-    self.raw ||= TridentAssistant::API.new.collection(id) if id.present? && raw.blank?
+    self.raw ||= TridentAssistant::API.new.collection(id) if new_record? && id.present? && raw.blank?
     return if raw.blank?
 
     assign_attributes(

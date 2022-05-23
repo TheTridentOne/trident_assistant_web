@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
       )
 
       @next_page = @pagy.next
-      @previous_pagev_page = @pagy.prev
+      @prev_page = @pagy.prev
     when 'airdrop', 'deposited', 'on_sale', 'on_auction', 'listed'
       r = current_user.trident_api.collectibles(
         collection_id: @collection&.id,
@@ -34,13 +34,13 @@ class ItemsController < ApplicationController
       )
       @items = Item.where(metahash: r['collectibles'].map(&->(item) { item['metahash'] }))
       @next_page = r['next_page']
-      @previous_page = r['previous_page']
+      @prev_page = r['previous_page']
     when 'wallet'
       current_user.sync_collectibles_async
       @pagy, @items = pagy current_user.items
 
       @next_page = @pagy.next
-      @previous_pagev_page = @pagy.prev
+      @prev_page = @pagy.prev
     end
   end
 
@@ -50,6 +50,19 @@ class ItemsController < ApplicationController
 
     if r['data'].present?
       render_flash :success, 'Successfully to invoke withdraw! Refresh page later'
+    else
+      render_flash :error, r['errors']
+    end
+  rescue MixinBot::Error, TridentAssistant::Error => e
+    render_flash :error, e.inspect
+  end
+
+  def deposit
+    item = Item.find params[:item_id]
+    r = current_user.trident_api.deposit @collection.id, item.identifier
+
+    if r['data'].present?
+      render_flash :success, 'Successfully to invoke deposit! Refresh page later'
     else
       render_flash :error, r['errors']
     end

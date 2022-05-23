@@ -1,4 +1,5 @@
-<%= render "collections/header", collection: @collection, tab: 'orders' %>
+<%= render "collections/header", collection: @collection %>
+<%= render "collections/tabbar", collection: @collection, tab: 'orders' %>
 
 <div class="mb-4">
   <%= render "orders/query" %>
@@ -45,7 +46,7 @@
       </tbody>
     </table>
     <div class="flex items-center justify-center">
-      <%= link_to '<- Prev', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @previous_page) if @previous_page.present? %>
+      <%= link_to '<- Prev', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @prev_page) if @prev_page.present? %>
       <%= link_to 'Next ->', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @next_page) if @next_page.present? %>
     </div>
   <% end %>

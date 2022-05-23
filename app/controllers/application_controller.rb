@@ -6,7 +6,9 @@ class ApplicationController < ActionController::Base
 
   rescue_from StandardError do |ex|
     Rails.logger.error ex.inspect
-    render_flash :danger, ex.message if Rails.env.production?
+    raise ex unless Rails.env.production?
+
+    render_flash :danger, ex.message
   end
 
   before_action :authenticate!

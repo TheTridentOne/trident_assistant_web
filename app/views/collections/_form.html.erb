@@ -1,0 +1,22 @@
+<%= form_for collection do |form| %>
+  <div class="mb-4">
+    <%= form.label :name, class: "block mb-2" %>
+    <%= form.text_field :name, disabled: collection.listed?, class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
+  </div>
+  <div class="mb-4">
+    <%= form.label :split, class: "block mb-2" %>
+    <%= form.number_field :split, disabled: collection.listed?, class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
+  </div>
+  <div class="mb-4">
+    <%= form.label :external_url, class: "block mb-2" %>
+    <%= form.text_field :external_url, class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
+  </div>
+  <div class="mb-4">
+    <%= form.label :description, class: "block mb-2" %>
+    <%= form.text_area :description, class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
+  </div>
+  <div class="mt-8 flex justify-center items-center space-x-4">
+    <%= link_to 'Back', collections_path, class: "border border-primary px-6 py-2 rounded text-primary cursor-pointer opacity-90 hover:opacity-100" %>
+    <%= form.submit 'Save', class: "bg-primary px-6 py-2 rounded text-white cursor-pointer opacity-90 hover:opacity-100" %>
+  </div>
+<% end %>

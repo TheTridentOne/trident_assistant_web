@@ -1,8 +1,22 @@
-<%= link_to collection_items_path(collection.id), class: "block shadow hover:scale-105 rounded" do %>
-  <div class="aspect-w-1 aspect-h-1">
-    <%= image_tag collection.icon_url, class: "block rounded-t w-full h-full object-cover", lazy: true %>
-  </div>
-  <div class="p-4 text-lg">
+<tr>
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= image_tag collection.icon_url, class: "w-12 h-12 block mx-auto" %>
+  </td>
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <%= collection.name %>
-  </div>
-<% end %>
+  </td>
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= collection.state %>
+  </td>
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= collection.items.count %>
+  </td>
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <div class="flex items-center space-x-2">
+      <%= link_to 'Detail', collection.trident_url, class: "", target: "_blank" if collection.listed? %>
+      <%= link_to 'Edit', edit_collection_path(collection.id), class: "" %>
+      <%= link_to 'Items', collection_items_path(collection.id), class: "" %>
+      <%= link_to 'Orders', collection_orders_path(collection.id), class: "" %>
+    </div>
+  </td>
+</tr>

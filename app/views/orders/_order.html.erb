@@ -5,10 +5,10 @@
       <%= image_tag order.item['icon_url'], class: "w-12 h-12 block" %>
       <div>
         <div class="">
-          <%= order.item['name'] %>
-        </div>
-        <div class="">
           #<%= order.item['identifier'] %>
+        </div>
+        <div class="text-sm opacity-70">
+          <%= order.item['name'] %>
         </div>
       </div>
     <% end %>

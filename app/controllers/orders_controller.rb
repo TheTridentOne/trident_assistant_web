@@ -13,7 +13,7 @@ class OrdersController < ApplicationController
     )
     @orders = r['orders']
     @next_page = r['next_page']
-    @previous_page = r['previous_page']
+    @prev_page = r['previous_page']
   end
 
   def new

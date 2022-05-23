@@ -1,6 +1,39 @@
-<div class="flex justify-end">
+<div class="flex items-center space-x-4 mb-8">
+  <%= link_to 'New', new_collection_path, class: "py-2 px-4 bg-primary text-white rounded" %>
   <%= button_to 'Sync From Trident', sync_collections_path, class: "py-2 px-4 bg-primary text-white rounded" %>
 </div>
-<div class="grid grid-cols-4 gap-4">
-  <%= render partial: "collections/collection", collection: @collections %>
+
+<div class="">
+  <% if @collections.blank? %>
+    <div class="p-4 text-center opacity-70">- No records -</div>
+  <% else %>
+    <table class="mb-4 border-collapse w-full border border-slate-400 dark:border-slate-500 bg-white dark:bg-slate-800 text-sm shadow-sm">
+      <thead class="bg-slate-50 dark:bg-slate-700">
+        <tr>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Icon
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Name
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            State
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Items
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: "collections/collection", collection: @collections %>
+      </tbody>
+    </table>
+    <div class="flex items-center justify-center">
+      <%= link_to 'Prev Page', collections_path(page: @pagy.prev) if @pagy.prev.present? %>
+      <%= link_to 'Next Page', collections_path(page: @pagy.next) if @pagy.next.present? %>
+    </div>
+  <% end %>
 </div>
