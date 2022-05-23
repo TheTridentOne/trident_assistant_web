@@ -20,9 +20,9 @@ class OrdersController < ApplicationController
   end
 
   def create
-    expire_at = ActiveSupport::TimeZone[params[:time_zone] || 'UTC'].parse(params[:expire_at])&.iso8601 
+    expire_at = ActiveSupport::TimeZone[params[:time_zone] || 'UTC'].parse(params[:expire_at])&.iso8601
 
-    r = 
+    r =
       case params[:type]
       when 'ask_order'
         current_user.trident_api.ask_order(
