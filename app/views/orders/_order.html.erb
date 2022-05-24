@@ -52,7 +52,10 @@
       <%= link_to 'Detail', "https://thetrident.one/collectibles/#{order.item['metahash']}", target: "_blank" %>
       <%= button_to 'Cancel', 
         view_modals_path(type: :new_cancel_order_task, metahash: order.item['metahash'], order_id: order.id), 
-        class: '' if order.state == 'open' %>
+        class: '' if order.state == 'open' && order.maker['id'] == current_user.id %>
+      <%= button_to 'Fill', 
+        view_modals_path(type: :new_fill_order_task, metahash: order.item['metahash'], order_id: order.id), 
+        class: '' if order.state == 'open' && order.maker['id'] != current_user.id && order.owner&.[]('id') == current_user.id %>
     </div>
   </td>
 </tr>

@@ -9,4 +9,6 @@
   <%= render 'tasks/deposit_task_form', collection_id: collection_id, identifier: identifier %>
 <% when 'CancelOrderTask' %>
   <%= render 'tasks/cancel_order_task_form', collection_id: collection_id, identifier: identifier, order_id: order_id %>
+<% when 'FillOrderTask' %>
+  <%= render 'tasks/fill_order_task_form', collection_id: collection_id, identifier: identifier, order_id: order_id %>
 <% end %>

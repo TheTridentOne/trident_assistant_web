@@ -6,14 +6,14 @@
       ['Bid', 'bid'], 
       ['All', 'all'], 
     ], 
-    { selected: params[:type] || @type }, 
+    { selected: @type }, 
     class: "rounded-lg m-1 dark:bg-zinc-900" %>
   <%= form.select :state, 
     [
       ['Open', 'open'], 
       ['Completed', 'completed'], 
     ], 
-    { selected: params[:state] || @state }, 
+    { selected:  @state }, 
     class: "rounded-lg m-1 dark:bg-zinc-900" %>
   <%= form.submit :Query, class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
   <% if params[:metahash].present? %>

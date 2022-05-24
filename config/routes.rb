@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :view_modals, only: :create
   resources :collections do
-    resources :tasks
+    resources :tasks, only: %i[index create show]
 
     resources :items, only: %i[index] do
       post :withdraw

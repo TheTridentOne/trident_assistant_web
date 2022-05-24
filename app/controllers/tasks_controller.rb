@@ -31,10 +31,10 @@ class TasksController < ApplicationController
         tasks.order(created_at: :desc)
       when 'created_at_asc'
         tasks.order(created_at: :asc)
-      when 'finished_at_desc'
-        tasks.order(finished_at: :desc)
-      when 'finished_at_asc'
-        tasks.order(finished_at: :asc)
+      when 'processed_at_desc'
+        tasks.order(processed_at: :desc)
+      when 'processed_at_asc'
+        tasks.order(processed_at: :asc)
       end
 
     @pagy, @tasks = pagy tasks
@@ -57,6 +57,10 @@ class TasksController < ApplicationController
     @task = current_user.tasks.new task_params.merge(collection_id: @collection.id)
 
     redirect_to collection_tasks_path(@collection.id), success: 'Task created' if @task.save
+  end
+
+  def show
+    @task = @collection.tasks.find params[:id]
   end
 
   private

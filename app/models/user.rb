@@ -127,6 +127,10 @@ class User < ApplicationRecord
     raw.dig('app', 'creator_id').in?(Rails.application.credentials[:admin] || [])
   end
 
+  def own?(token_id)
+    unspent_non_fungible_outputs.find_by(token_id: token_id).present?
+  end
+
   private
 
   def setup_attributes

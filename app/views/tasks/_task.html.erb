@@ -22,15 +22,25 @@
   </td>
 
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
-    <%= task.state %>
+    <div class="flex items-center space-x-2">
+      <div class="w-2 h-2 rounded-full
+        <%= {
+          pending: 'bg-blue-500',
+          failed: 'bg-red-500',
+          expired: 'bg-gray-500',
+          finished: 'bg-green-500'
+        }[task.state.to_sym] %>"></div>
+      <div><%= task.state %></div>
+    </div>
+  </td>
  
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <%= task.processed_at || '-' %>
-  </t </td>
+  </td>
 
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <div class="flex items-center justify-center space-x-2">
-      <%= link_to 'Detail', "https://thetrident.one/collectibles/#{task.item.metahash}", target: "_blank" %>
+      <%= link_to 'Detail', collection_task_path(task.collection, task) %>
     </div>
   </td>
 </tr>
