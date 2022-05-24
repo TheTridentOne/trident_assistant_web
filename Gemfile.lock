@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/TheTridentOne/trident_assistant.git
-  revision: fecb28ba0669a8bf47fb01b7168c076107ad6e88
+  revision: 5341c3d5ab4c5a4fef984c94eb84c457b78fdd75
   specs:
     trident_assistant (0.1.4)
       mixin_bot (~> 0.8)
@@ -338,7 +338,7 @@ GEM
     strscan (3.0.3)
     thor (1.2.1)
     timeout (0.2.0)
-    turbo-rails (1.1.0)
+    turbo-rails (1.1.1)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
