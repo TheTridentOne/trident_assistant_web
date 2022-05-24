@@ -1,6 +1,5 @@
-<%= form_for current_user.tasks.new(type: 'AskOrderTask'), url: collection_tasks_path(collection_id) do |form| %>
+<%= form_for current_user.tasks.new(type: 'AskOrderTask'), url: collection_tasks_path(collection_id, identifiers: identifiers) do |form| %>
   <%= form.hidden_field :type %>
-  <%= form.hidden_field :identifier, value: identifier %>
   <%= form.text_field :time_zone, value: "UTC", class: 'hidden', data: { controller: "time-zone" } %>
 
   <div class="mb-4">

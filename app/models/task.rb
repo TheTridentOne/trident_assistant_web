@@ -34,6 +34,7 @@ class Task < ApplicationRecord
   before_validation :setup_token_id, on: :create
 
   validates :type, presence: true
+  validate :ensure_not_create_duplicated_task
 
   after_commit :process_async, on: :create
 
@@ -43,12 +44,12 @@ class Task < ApplicationRecord
     state :finished
     state :expired
 
-    event :finish, guards: :result_present?, after: :touch_processed_at do
+    event :finish, guards: :result_present?, after: %i[touch_processed_at notify] do
       transitions from: :pending, to: :finished
     end
 
-    event :fail, guards: :result_present?, after: :touch_processed_at do
-      transitions from: :pending, to: :fail
+    event :fail, guards: :result_present?, after: %i[touch_processed_at notify] do
+      transitions from: :pending, to: :failed
     end
 
     event :expire, after: :touch_processed_at do
@@ -70,7 +71,17 @@ class Task < ApplicationRecord
 
   delegate :present?, to: :result, prefix: true
 
+  def notify
+    broadcast_append_later_to "user_#{user_id}", target: 'flashes', partial: 'flashes/flash', locals: { message: "#{type} for #{collection.name}(##{identifier}) #{state}", type: 'notice' }
+  end
+
   private
+
+  def ensure_not_create_duplicated_task
+    return unless new_record?
+
+    errors.add(:type, "There is a #{type} task in pending") if user.tasks.pending.order(created_at: :desc).find_by(type: type, token_id: token_id).present?
+  end
 
   def setup_token_id
     self.token_id = MixinBot::Utils::Nfo.new(collection: collection_id, token: identifier).unique_token_id if identifier.present?

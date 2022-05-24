@@ -2,8 +2,9 @@
 
 class ViewModalsController < ApplicationController
   def create
-    @item = Item.find_by(metahash: params[:metahash]) if params[:metahash].present?
-
+    Rails.logger.info '+' * 80
+    Rails.logger.info params
+    Rails.logger.info '+' * 80
     case params[:type]
     when 'new_ask_order_task'
       render :new_ask_order_task

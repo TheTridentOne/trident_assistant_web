@@ -1,9 +1,12 @@
 <% content_for :modal_title do %>
-  <%= t('new_ask_order') %>
+  New Fixed Price Order
 <% end %>
 
 <% content_for :modal_content do %>
-  <%= render 'tasks/form', type: 'AskOrderTask', collection_id: @item.collection_id, identifier: @item.identifier %>
+  <div class="mb-4 font-bold">
+    You are selling <%= params[:identifiers].size %> NFTs
+  </div>
+  <%= render 'tasks/form', type: 'AskOrderTask', collection_id: params[:collection_id], identifiers: params[:identifiers] %>
 <% end %>
 
 <%= turbo_stream.update "modal-slot" do %>

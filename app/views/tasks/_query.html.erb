@@ -28,7 +28,7 @@
     ], 
     { selected: params[:order_by] || @order_by }, 
     class: "rounded-lg m-1 dark:bg-zinc-900" %>
-  <%= form.submit :Query, class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
+  <%= form.submit :Refresh, class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
   <% if params[:metahash].present? %>
     <div class="ml-4"
       <%= form.label :metahash %>

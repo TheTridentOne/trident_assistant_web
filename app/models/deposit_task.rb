@@ -26,14 +26,18 @@ class DepositTask < Task
   validates :identifier, presence: true
 
   def process!
+    return unless pending?
+
     r = user.trident_api.deposit collection_id, identifier
 
-    if r['data'].present?
-      update result: r['data']
-      finish!
-    else
-      update result: r
-      fail!
-    end
+    update result: r['data']
+    finish!
+  rescue TridentAssistant::API::ForbiddenError,
+         TridentAssistant::API::ArgumentError,
+         TridentAssistant::API::UnauthorizedError,
+         MixinBot::ForbiddenError,
+         MixinBot::InsufficientBalanceError => e
+    update! result: { errors: e.inspect }
+    fail!
   end
 end

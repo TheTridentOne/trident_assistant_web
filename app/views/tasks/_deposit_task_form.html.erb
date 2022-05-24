@@ -1,6 +1,5 @@
-<%= form_for current_user.tasks.new(type: 'DepositTask'), url: collection_tasks_path(collection_id) do |form| %>
+<%= form_for current_user.tasks.new(type: 'DepositTask'), url: collection_tasks_path(collection_id, identifiers: identifiers) do |form| %>
   <%= form.hidden_field :type %>
-  <%= form.hidden_field :identifier, value: identifier %>
 
   <div class="mt-8 flex justify-center items-center space-x-4">
     <%= form.submit 'Confirm', class: "bg-primary px-6 py-2 rounded text-white cursor-pointer opacity-90 hover:opacity-100" %>

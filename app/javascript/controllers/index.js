@@ -4,14 +4,14 @@
 
 import { application } from "./application"
 
+import CheckboxSelectAllController from "./checkbox_select_all_controller.js"
+application.register("checkbox-select-all", CheckboxSelectAllController)
+
 import FlashController from "./flash_controller.js"
 application.register("flash", FlashController)
 
 import FlatpickrController from "./flatpickr_controller.js"
 application.register("flatpickr", FlatpickrController)
-
-import HelloController from "./hello_controller.js"
-application.register("hello", HelloController)
 
 import ModalController from "./modal_controller.js"
 application.register("modal", ModalController)

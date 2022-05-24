@@ -23,18 +23,32 @@
 class CancelOrderTask < Task
   store_accessor :params, %i[identifier order_id]
 
+  before_validation :setup_identifier, on: :create
+
   validates :identifier, presence: true
   validates :order_id, presence: true
 
   def process!
+    return unless pending?
+
     r = user.trident_api.cancel_order order_id
 
-    if r['data'].present?
-      update result: r['data']
-      finish!
-    else
-      update result: r
-      fail!
-    end
+    update result: r['data']
+    finish!
+  rescue TridentAssistant::API::ForbiddenError,
+         TridentAssistant::API::ArgumentError,
+         TridentAssistant::API::UnauthorizedError,
+         MixinBot::ForbiddenError,
+         MixinBot::InsufficientBalanceError => e
+    update result: { errors: e.inspect }
+    fail!
+  end
+
+  private
+
+  def setup_identifier
+    r = user.trident_api.order order_id
+    self.identifier = r['item']['identifier']
+    self.token_id = MixinBot::Utils::Nfo.new(collection: collection_id, token: identifier).unique_token_id if identifier.present?
   end
 end

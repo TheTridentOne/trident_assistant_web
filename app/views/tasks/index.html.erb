@@ -34,8 +34,8 @@
       </tbody>
     </table>
     <div class="flex items-center justify-center">
-      <%= link_to '<- Prev', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @pagy.prev) if @pagy.prev.present? %>
-      <%= link_to 'Next ->', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @pagy.next) if @pagy.next.present? %>
+      <%= link_to '<- Prev', collection_tasks_path(@collection&.id, type: params[:type], state: params[:state], page: @pagy.prev) if @pagy.prev.present? %>
+      <%= link_to 'Next ->', collection_tasks_path(@collection&.id, type: params[:type], state: params[:state], page: @pagy.next) if @pagy.next.present? %>
     </div>
   <% end %>
 </div>

@@ -1,0 +1,12 @@
+<div class="mb-4 flex items-center space-x-4">
+  <% case @type %>
+  <% when 'listed' %>
+    <%= render 'items/bulk_task_form', type: :new_ask_order_task, collection_id: @collection.id, action: 'Sell All' %>
+    <%= render 'items/bulk_task_form', type: :new_auction_order_task, collection_id: @collection.id, action: 'Auction All' %>
+    <%= render 'items/bulk_task_form', type: :new_withdraw_task, collection_id: @collection.id, action: 'Withdraw All' %>
+  <% when 'airdrop' %>
+    <%= render 'items/bulk_task_form', type: :new_withdraw_task, collection_id: @collection.id, action: 'Withdraw All' %>
+  <% when 'wallet' %>
+    <%= render 'items/bulk_task_form', type: :new_deposit_task, collection_id: @collection.id, action: 'Deposit All' %>
+  <% end %>
+</div>

@@ -1,6 +1,5 @@
-<%= form_for current_user.tasks.new(type: 'FillOrderTask'), url: collection_tasks_path(collection_id) do |form| %>
+<%= form_for current_user.tasks.new(type: 'FillOrderTask'), url: collection_tasks_path(collection_id, identifiers: identifiers) do |form| %>
   <%= form.hidden_field :type %>
-  <%= form.hidden_field :identifier, value: identifier %>
   <%= form.hidden_field :order_id, value: order_id %>
 
   <div class="mt-8 flex justify-center items-center space-x-4">

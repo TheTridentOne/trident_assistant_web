@@ -1,5 +1,12 @@
 <tr>
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <div class="flex justify-center">
+      <label class="cursor-pointer">
+        <input type="checkbox" data-checkbox-select-all-target="checkbox" value="<%= item.identifier %>" />
+      </label>
+    </div>
+  </td>
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <%= image_tag item.icon_url, class: "w-12 h-12 block mx-auto" %>
   </td>
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
@@ -21,21 +28,21 @@
       <% case @type %>
       <% when 'listed' %>
         <%= button_to 'Sell',
-          view_modals_path(type: :new_ask_order_task, metahash: item.metahash),
+          view_modals_path(type: :new_ask_order_task, collection_id: item.collection_id, identifiers: [item.identifier]),
           class: "" %>
         <%= button_to 'Auction',
-          view_modals_path(type: :new_auction_order_task, metahash: item.metahash),
+          view_modals_path(type: :new_auction_order_task, collection_id: item.collection_id, identifiers: [item.identifier]),
           class: "" %>
         <%= button_to 'Withdraw', 
-          view_modals_path(type: :new_withdraw_task, metahash: item.metahash),
+          view_modals_path(type: :new_withdraw_task, collection_id: item.collection_id, identifiers: [item.identifier]),
           class: "" %>
       <% when 'airdrop' %>
         <%= button_to 'Withdraw', 
-          view_modals_path(type: :new_withdraw_task, metahash: item.metahash),
+          view_modals_path(type: :new_withdraw_task, collection_id: item.collection_id, identifiers: [item.identifier]),
           class: "" %>
       <% when 'wallet' %>
         <%= button_to 'Deposit', 
-          view_modals_path(type: :new_deposit_task, metahash: item.metahash),
+          view_modals_path(type: :new_deposit_task, collection_id: item.collection_id, identifiers: [item.identifier]),
           class: "" %>
       <% when 'on_sale' %>
         <%= link_to 'Orders',

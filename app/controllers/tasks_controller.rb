@@ -54,9 +54,28 @@ class TasksController < ApplicationController
         params.require(:cancel_order_task).permit(:identifier, :order_id).merge(type: 'CancelOrderTask')
       end
 
-    @task = current_user.tasks.new task_params.merge(collection_id: @collection.id)
+    successes = []
+    @errors = []
 
-    redirect_to collection_tasks_path(@collection.id), success: 'Task created' if @task.save
+    params[:identifiers]&.each do |identifier|
+      task = current_user.tasks.create task_params.merge(collection_id: @collection.id, identifier: identifier)
+      if task.save
+        successes.push task.id
+      else
+        @errors.push task.errors.full_messages.join(';')
+      end
+    end
+
+    params[:order_ids]&.each do |order_id|
+      task = current_user.tasks.create task_params.merge(collection_id: @collection.id, order_id: order_id)
+      if task.save
+        successes.push task.id
+      else
+        @errors.push task.errors.full_messages.join(';')
+      end
+    end
+
+    redirect_to collection_tasks_path(@collection.id), success: "#{successes.count} task created" if successes.present?
   end
 
   def show
