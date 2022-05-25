@@ -10,13 +10,10 @@ Rails.application.routes.draw do
   get :logout, to: 'sessions#destroy'
 
   resources :view_modals, only: :create
-  resources :collections do
+  resources :collections
+  resources :collections, module: :collections do
     resources :tasks, only: %i[index create show]
-
-    resources :items, only: %i[index] do
-      post :withdraw
-      post :deposit
-    end
+    resources :items, only: %i[index]
     resources :orders, only: %i[index]
   end
 

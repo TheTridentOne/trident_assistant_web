@@ -1,17 +1,18 @@
 <%= render "collections/header", collection: @collection %>
-<%= render "collections/tabbar", collection: @collection, tab: 'orders' %>
+<%= render "collections/tabbar", collection: @collection, tab: 'items' %>
 
 <div class="mb-4">
-  <%= render "orders/query" %>
+  <%= render "collections/items/query" %>
 </div>
 
 <div data-controller="checkbox-select-all">
-  <%= render "orders/bulk_actions_bar" %>
-  <% if @orders.blank? %>
+  <%= render "collections/items/bulk_actions_bar" %>
+  <% if @items.blank? %>
     <div class="p-4 text-center opacity-70">- No records -</div>
   <% else %>
     <table class="mb-4 border-collapse w-full border border-slate-400 dark:border-slate-500 bg-white dark:bg-slate-800 text-sm shadow-sm">
       <thead class="bg-slate-50 dark:bg-slate-700">
+        <tr>
           <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
             <div class="flex justify-center">
               <label class="cursor-pointer">
@@ -21,41 +22,26 @@
               </div>
           </th>
           <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-            Item
+            Icon
           </th>
           <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-            Type
+            Name
           </th>
           <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-            State
+            Collection
           </th>
           <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-            Price
-          </th>
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-            Maker
-          </th>
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-            Taker
-          </th>
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-            Opened At
-          </th>
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-            Completed/Expire At
-          </th>
-          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-            Action
+            Actions
           </th>
         </tr>
       </thead>
       <tbody>
-        <%= render partial: "orders/order", collection: @orders %>
+        <%= render partial: "collections/items/item", collection: @items %>
       </tbody>
     </table>
     <div class="flex items-center justify-center">
-      <%= link_to '<- Prev', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @prev_page) if @prev_page.present? %>
-      <%= link_to 'Next ->', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @next_page) if @next_page.present? %>
+      <%= link_to 'Prev Page', collection_items_path(@collection.id, type: @type, page: @prev_page) if @prev_page.present? %>
+      <%= link_to 'Next Page', collection_items_path(@collection.id, type: @type, page: @next_page) if @next_page.present? %>
     </div>
   <% end %>
 </div>

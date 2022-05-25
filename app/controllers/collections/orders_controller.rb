@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class OrdersController < ApplicationController
-  before_action :load_collection
-
+class Collections::OrdersController < Collections::BaseController
   def index
     @type = params[:type] || 'all'
     @state = params[:state] || 'open'
@@ -19,12 +17,5 @@ class OrdersController < ApplicationController
     @orders = r['orders']
     @next_page = r['next_page']
     @prev_page = r['previous_page']
-  end
-
-  private
-
-  def load_collection
-    @collection = current_user.collections.find_by id: params[:collection_id]
-    redirect_back fallback_location: root_path if @collection.blank?
   end
 end

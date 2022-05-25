@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class TasksController < ApplicationController
-  before_action :load_collection
-
+class Collections::TasksController < Collections::BaseController
   def index
     tasks = @collection.tasks
 
@@ -82,12 +80,5 @@ class TasksController < ApplicationController
 
   def show
     @task = @collection.tasks.find params[:id]
-  end
-
-  private
-
-  def load_collection
-    @collection = current_user.collections.find_by id: params[:collection_id]
-    redirect_back fallback_location: root_path if @collection.blank?
   end
 end

@@ -5,6 +5,7 @@ class CollectionsController < ApplicationController
 
   def index
     @pagy, @collections = pagy current_user.collections.order(created_at: :desc)
+    @nav_tab = 'collections'
   end
 
   def new
@@ -49,5 +50,6 @@ class CollectionsController < ApplicationController
 
   def load_collection
     @collection = current_user.collections.find params[:id]
+    @nav_tab = 'collections'
   end
 end

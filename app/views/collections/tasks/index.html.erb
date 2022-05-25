@@ -2,7 +2,7 @@
 <%= render "collections/tabbar", collection: @collection, tab: 'tasks' %>
 
 <div class="mb-4">
-  <%= render "tasks/query" %>
+  <%= render "collections/tasks/query" %>
 </div>
 
 <div class="">
@@ -30,7 +30,7 @@
         </tr>
       </thead>
       <tbody>
-        <%= render partial: "tasks/task", collection: @tasks %>
+        <%= render partial: "collections/tasks/task", collection: @tasks %>
       </tbody>
     </table>
     <div class="flex items-center justify-center">

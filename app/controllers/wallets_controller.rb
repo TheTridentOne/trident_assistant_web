@@ -3,6 +3,7 @@
 class WalletsController < ApplicationController
   def show
     @tab = params[:tab] || 'assets'
+    @nav_tab = 'wallet'
   end
 
   def assets
@@ -18,8 +19,5 @@ class WalletsController < ApplicationController
     limit = 25
     @snapshots = current_user.mixin_api.snapshots(limit: limit, offset: params[:offset])['data']
     @has_next = @snapshots.size >= limit
-  end
-
-  def transfer
   end
 end

@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-class ItemsController < ApplicationController
-  before_action :load_collection
-
+class Collections::ItemsController < Collections::BaseController
   def index
     @query = params[:query].to_s.strip
     @type = params[:type] || 'wallet'
@@ -68,12 +66,5 @@ class ItemsController < ApplicationController
     end
   rescue MixinBot::Error, TridentAssistant::Error => e
     render_flash :error, e.inspect
-  end
-
-  private
-
-  def load_collection
-    @collection = current_user.collections.find_by id: params[:collection_id]
-    redirect_back fallback_location: root_path if @collection.blank?
   end
 end
