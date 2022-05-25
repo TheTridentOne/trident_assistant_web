@@ -24,6 +24,7 @@ class OrdersController < ApplicationController
   private
 
   def load_collection
-    @collection = Collection.find_by id: params[:collection_id]
+    @collection = current_user.collections.find_by id: params[:collection_id]
+    redirect_back fallback_location: root_path if @collection.blank?
   end
 end

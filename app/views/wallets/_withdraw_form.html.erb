@@ -1,0 +1,21 @@
+<%= form_with url: withdraw_circle_app_admin_wallet_path do |form| %>
+  <div class="flex items-center space-x-2 justify-center py-2">
+    <%= image_tag current_circle.owner.avatar, class: "w-8 h-8 rounded-full" %>
+    <div class="text-xs">
+      <div class="font-bold"><%= current_circle.owner.name %></div>
+      <div>@<%= current_circle.owner.mixin_id %></div>
+    </div>
+  </div>
+  <div class="flex items-center space-x-2 justify-center py-2">
+    <%= image_tag currency.icon_url, class: "w-8 h-8 rounded-full" %>
+    <%= form.number_field :amount, value: params[:amount], min: '0', step: '0.00000001', class: "rounded dark:border-zinc-800 dark:bg-zinc-900" %>
+  </div>
+  <div class="flex items-center justify-center space-x-2 py-2">
+    <%= form.label :pin, 'PIN', class: "w-8" %>
+    <%= form.text_field :pin, type: :password, required: true, placeholder: 'pin', class: "rounded dark:border-zinc-800 dark:bg-zinc-900" %>
+    <%= form.hidden_field :asset_id, value: params[:asset_id] %>
+  </div>
+  <div class="flex justify-center py-2">
+    <%= form.submit t('withdraw'), class: "bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded cursor-pointer" %>
+  </div>
+<% end %>

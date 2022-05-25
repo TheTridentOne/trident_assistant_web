@@ -6,6 +6,7 @@
       </label>
     </div>
   </td>
+
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <%= image_tag item.icon_url, class: "w-12 h-12 block mx-auto" %>
   </td>
@@ -43,6 +44,9 @@
       <% when 'wallet' %>
         <%= button_to 'Deposit', 
           view_modals_path(type: :new_deposit_task, collection_id: item.collection_id, identifiers: [item.identifier]),
+          class: "" %>
+        <%= button_to 'Transfer', 
+          view_modals_path(type: :new_transfer_task, collection_id: item.collection_id, identifiers: [item.identifier]),
           class: "" %>
       <% when 'on_sale' %>
         <%= link_to 'Orders',

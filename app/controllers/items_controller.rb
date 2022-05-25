@@ -37,7 +37,7 @@ class ItemsController < ApplicationController
       @prev_page = r['previous_page']
     when 'wallet'
       current_user.sync_collectibles_async
-      @pagy, @items = pagy current_user.items
+      @pagy, @items = pagy current_user.items.where(collection_id: params[:collection_id])
 
       @next_page = @pagy.next
       @prev_page = @pagy.prev
@@ -73,6 +73,7 @@ class ItemsController < ApplicationController
   private
 
   def load_collection
-    @collection = Collection.find_by id: params[:collection_id]
+    @collection = current_user.collections.find_by id: params[:collection_id]
+    redirect_back fallback_location: root_path if @collection.blank?
   end
 end

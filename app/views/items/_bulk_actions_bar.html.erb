@@ -8,5 +8,6 @@
     <%= render 'items/bulk_task_form', type: :new_withdraw_task, collection_id: @collection.id, action: 'Withdraw All' %>
   <% when 'wallet' %>
     <%= render 'items/bulk_task_form', type: :new_deposit_task, collection_id: @collection.id, action: 'Deposit All' %>
+    <%= render 'items/bulk_task_form', type: :new_transfer_task, collection_id: @collection.id, action: 'Transfer All' %>
   <% end %>
 </div>

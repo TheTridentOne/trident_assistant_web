@@ -1,0 +1,54 @@
+<div class="p-4">
+  <div class=""
+    data-controller="tabs"
+    data-tabs-active-tab-value="<%= @tab %>"
+    data-tabs-active-class-value="border-b-2">
+    <div class="w-full flex overflow-auto flex-nowrap scrollbar-hide items-center flex dark:border-zinc-800 px-4 mb-4">
+      <%= link_to t('assets'),
+        wallet_path(tab: :assets),
+        class: "cursor-pointer py-1 px-4 border-blue-500 opacity-75",
+        data: {
+          tabs_target: "tab",
+          tabs_tabname_param: "assets"
+        } %>
+      <%= link_to 'NFTs',
+        wallet_path(tab: :items),
+        class: "cursor-pointer py-1 px-4 border-blue-500 opacity-75",
+        data: {
+          tabs_target: "tab",
+          tabs_tabname_param: "items"
+        } %>
+      <%= link_to t('snapshots'),
+        wallet_path(tab: :snapshots),
+        class: "cursor-pointer py-1 px-4 border-blue-500 opacity-75",
+        data: {
+          tabs_target: "tab",
+          tabs_tabname_param: "snapshots"
+        } %>
+    </div>
+
+    <div class="hidden pb-4"
+      data-tabs-content-param="assets"
+      data-tabs-target="content">
+      <%= turbo_frame_tag "wallet_assets", src: assets_wallet_path, loading: :lazy do %>
+        <%= render "shared/loading" %>
+      <% end %>
+    </div>
+
+    <div class="hidden pb-4"
+      data-tabs-content-param="items"
+      data-tabs-target="content">
+      <%= turbo_frame_tag "wallet_collectibles", src: items_wallet_path, loading: :lazy do %>
+        <%= render "shared/loading" %>
+      <% end %>
+    </div>
+
+    <div class="hidden pb-4"
+      data-tabs-content-param="snapshots"
+      data-tabs-target="content">
+      <%= turbo_frame_tag "wallet_snapshots", src: snapshots_wallet_path, loading: :lazy do %>
+        <%= render "shared/loading" %>
+      <% end %>
+    </div>
+  </div>
+</div>

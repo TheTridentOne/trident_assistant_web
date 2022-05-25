@@ -1,0 +1,5 @@
+<% if @error.present? %>
+  <%= turbo_stream.update "notifications" do %>
+    <%= render "notifications/notification", type: :danger, message: @error %>
+  <% end %>
+<% end %>

@@ -1,0 +1,21 @@
+<%= turbo_frame_tag 'wallet_assets' do %>
+  <div class="mb-4">
+    $<%= @assets.map(&->(asset){asset['balance'].to_f * asset['price_usd'].to_f}).sum.round(4) %>
+  </div>
+  <div data-controller="infinite-scroll" class="w-full overflow-x-scroll scrollbar-hide">
+    <table class='w-full table-auto min-w-max'>
+      <thead>
+        <tr class="bg-zinc-100 dark:bg-zinc-900">
+          <th class="p-2"><%= t('name') %></th>
+          <th class="p-2"><%= t('balance') %></th>
+          <th class="p-2 hidden sm:block"><%= t('value') %></th>
+        </tr>
+      </thead>
+      <tbody id="circle_app_wallet_assets_list">
+        <%= render partial: 'wallets/asset', collection: @assets, as: :asset %>
+      </tbody>
+    </table>
+    <div data-infinite-scroll-target='scrollArea'></div>
+    <%= render partial: "shared/pagination", locals: { pagy: @pagy } %>
+  </div>
+<% end %>

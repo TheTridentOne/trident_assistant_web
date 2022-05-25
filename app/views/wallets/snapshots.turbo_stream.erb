@@ -1,0 +1,7 @@
+<%= turbo_stream.append 'wallet_snapshots_list' do %>
+  <%= render partial: 'wallets/snapshot', collection: @snapshots, as: :snapshot %>
+<% end %>
+
+<%= turbo_stream.update 'pagination' do %>
+  <%= render "wallets/pagination", has_next: @has_next, next_url: snapshots_wallet_path(offset: @snapshots.last['created_at']) %>
+<% end %>

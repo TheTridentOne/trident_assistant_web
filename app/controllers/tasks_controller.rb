@@ -48,6 +48,8 @@ class TasksController < ApplicationController
         params.require(:auction_order_task).permit(:identifier, :asset_id, :price, :reserve_price, :expire_at, :time_zone).merge(type: 'AuctionOrderTask')
       elsif params[:withdraw_task].present?
         params.require(:withdraw_task).permit(:identifier).merge(type: 'WithdrawTask')
+      elsif params[:transfer_task].present?
+        params.require(:transfer_task).permit(:recipient_id).merge(type: 'TransferTask')
       elsif params[:deposit_task].present?
         params.require(:deposit_task).permit(:identifier).merge(type: 'DepositTask')
       elsif params[:cancel_order_task].present?
@@ -86,5 +88,6 @@ class TasksController < ApplicationController
 
   def load_collection
     @collection = current_user.collections.find_by id: params[:collection_id]
+    redirect_back fallback_location: root_path if @collection.blank?
   end
 end

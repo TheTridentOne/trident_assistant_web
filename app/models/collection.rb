@@ -24,7 +24,7 @@ class Collection < ApplicationRecord
 
   has_one_attached :icon
 
-  belongs_to :creator, class_name: 'User'
+  belongs_to :creator, class_name: 'User', optional: true
 
   has_many :items, dependent: :restrict_with_exception
   has_many :tasks, dependent: :restrict_with_exception

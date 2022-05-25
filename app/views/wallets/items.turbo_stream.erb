@@ -1,0 +1,7 @@
+<%= turbo_stream.append 'wallet_collcetibles_list' do %>
+  <%= render partial: 'wallets/collectible', collection: @items, as: :item %>
+<% end %>
+
+<%= turbo_stream.update 'pagination' do %>
+  <%= render partial: "shared/pagination", locals: { pagy: @pagy } %>
+<% end %>

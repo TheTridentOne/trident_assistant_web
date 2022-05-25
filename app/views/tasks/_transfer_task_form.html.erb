@@ -1,0 +1,12 @@
+<%= form_for current_user.tasks.new(type: 'TransferTask'), url: collection_tasks_path(collection_id, identifiers: identifiers) do |form| %>
+  <%= form.hidden_field :type %>
+
+  <div class="mb-4">
+    <%= form.label :recipient_id, class: "block mb-2" %>
+    <%= form.text_field :recipient_id, required: true, placeholder: 'Mixin ID / UUID', class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
+  </div>
+
+  <div class="mt-8 flex justify-center items-center space-x-4">
+    <%= form.submit 'Confirm', class: "bg-primary px-6 py-2 rounded text-white cursor-pointer opacity-90 hover:opacity-100" %>
+  </div>
+<% end %>

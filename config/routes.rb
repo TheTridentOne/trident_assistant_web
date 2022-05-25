@@ -20,6 +20,13 @@ Rails.application.routes.draw do
     resources :orders, only: %i[index]
   end
 
+  resource :wallet, only: %i[show] do
+    get :items
+    get :assets
+    get :snapshots
+    post :transfer
+  end
+
   post :sync_collections, to: 'collections#sync'
 
   post :sync_items, to: 'items#sync'

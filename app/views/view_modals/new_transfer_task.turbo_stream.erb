@@ -1,0 +1,14 @@
+<% content_for :modal_title do %>
+  Transfer NFT
+<% end %>
+
+<% content_for :modal_content do %>
+  <div class="font-bold mb-4">
+    You are transfering <%= params[:identifiers].size %> NFTs
+  </div>
+  <%= render 'tasks/form', type: 'TransferTask', collection_id: params[:collection_id], identifiers: params[:identifiers] %>
+<% end %>
+
+<%= turbo_stream.update "modal-slot" do %>
+  <%= render "view_modals/modal" %>
+<% end %>

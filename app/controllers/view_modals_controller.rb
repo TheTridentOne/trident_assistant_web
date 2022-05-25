@@ -2,9 +2,6 @@
 
 class ViewModalsController < ApplicationController
   def create
-    Rails.logger.info '+' * 80
-    Rails.logger.info params
-    Rails.logger.info '+' * 80
     case params[:type]
     when 'new_ask_order_task'
       render :new_ask_order_task
@@ -16,6 +13,8 @@ class ViewModalsController < ApplicationController
       render :new_deposit_task
     when 'new_cancel_order_task'
       render :new_cancel_order_task
+    when 'new_transfer_task'
+      render :new_transfer_task
     else
       render params[:type]
     end

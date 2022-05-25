@@ -5,6 +5,8 @@
   <%= render 'tasks/auction_order_task_form', collection_id: collection_id, identifiers: identifiers %>
 <% when 'WithdrawTask' %>
   <%= render 'tasks/withdraw_task_form', collection_id: collection_id, identifiers: identifiers %>
+<% when 'TransferTask' %>
+  <%= render 'tasks/transfer_task_form', collection_id: collection_id, identifiers: identifiers %>
 <% when 'DepositTask' %>
   <%= render 'tasks/deposit_task_form', collection_id: collection_id, identifiers: identifiers %>
 <% when 'CancelOrderTask' %>

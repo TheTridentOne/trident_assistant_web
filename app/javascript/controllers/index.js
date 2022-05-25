@@ -13,11 +13,17 @@ application.register("flash", FlashController)
 import FlatpickrController from "./flatpickr_controller.js"
 application.register("flatpickr", FlatpickrController)
 
+import InfiniteScrollController from "./infinite_scroll_controller.js"
+application.register("infinite-scroll", InfiniteScrollController)
+
 import ModalController from "./modal_controller.js"
 application.register("modal", ModalController)
 
 import NotificationController from "./notification_controller.js"
 application.register("notification", NotificationController)
+
+import TabsController from "./tabs_controller.js"
+application.register("tabs", TabsController)
 
 import TimeZoneController from "./time_zone_controller.js"
 application.register("time-zone", TimeZoneController)
