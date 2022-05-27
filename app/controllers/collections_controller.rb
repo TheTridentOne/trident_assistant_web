@@ -12,19 +12,29 @@ class CollectionsController < ApplicationController
   end
 
   def create
+    @collection = current_user.collections.new collection_params
+
+    redirect_to collections_path, success: 'Created' if @collection.save
   end
 
   def edit
   end
 
   def update
+    if collection_params[:icon].present?
+      @collection.assign_attributes(
+        icon: collection_params[:icon]
+      )
+    end
+
     r =
       current_user
       .trident_api
       .update_collection(
         @collection.id,
         description: collection_params[:description],
-        external_url: collection_params[:external_url]
+        external_url: collection_params[:external_url],
+        icon_url: @collection.icon.changed? ? @collection.icon.url : ''
       )
 
     if @collection.update raw: r
@@ -42,10 +52,13 @@ class CollectionsController < ApplicationController
     render_flash :success, 'Syncing from Trident, please refresh page later'
   end
 
+  def destroy
+  end
+
   private
 
   def collection_params
-    params.require(:collection).permit(:name, :description, :split, :external_url)
+    params.require(:collection).permit(:name, :description, :split, :external_url, :icon)
   end
 
   def load_collection

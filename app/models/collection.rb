@@ -26,10 +26,12 @@ class Collection < ApplicationRecord
 
   belongs_to :creator, class_name: 'User', optional: true
 
-  has_many :items, dependent: :restrict_with_exception
-  has_many :tasks, dependent: :restrict_with_exception
+  has_many :items, dependent: :destroy
+  has_many :tasks, dependent: :destroy
 
   before_validation :setup_attributes
+
+  validates :name, presence: true
 
   aasm column: :state do
     state :drafted, initialize: true

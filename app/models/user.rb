@@ -61,11 +61,14 @@ class User < ApplicationRecord
       page = 1
       r = trident_api.collections(page: page)
       r['collections'].each do |c|
-        collections.create_with(
-          raw: c
-        ).find_or_create_by(
-          id: c['id']
-        )
+        collection =
+          collections.create_with(
+            raw: c
+          ).find_or_create_by(
+            id: c['id']
+          )
+
+        collection.update raw: c
       end
 
       page = r['next_page']

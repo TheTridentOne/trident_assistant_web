@@ -1,0 +1,9 @@
+<%= turbo_stream.replace "new_collection" do %>
+  <%= render "collections/form", collection: @collection %>
+<% end %>
+
+<% @collection.errors.full_messages.each do |message| %>
+  <%= turbo_stream.append "flashes" do %>
+    <%= render "flashes/flash", type: :danger, message: message %>
+  <% end %>
+<% end %>
