@@ -3,14 +3,20 @@
 class Collections::ItemsController < Collections::BaseController
   def index
     @query = params[:query].to_s.strip
-    @type = params[:type] || 'wallet'
+    @type = params[:type] || 'all'
 
     case @type
-    when 'drafted'
+    when 'drafted', 'all'
+      items =
+        if @type == 'drafted'
+          Item.drafted
+        else
+          Item.all
+        end
+
       @pagy, @items = pagy(
-        Item
-        .drafted
-        .where(collection_id: @collection&.id)
+        items
+        .where(collection_id: @collection.id)
         .ransack(
           {
             name_i_cont_any: @query,
@@ -34,7 +40,6 @@ class Collections::ItemsController < Collections::BaseController
       @next_page = r['next_page']
       @prev_page = r['previous_page']
     when 'wallet'
-      current_user.sync_collectibles_async
       @pagy, @items = pagy current_user.items.where(collection_id: params[:collection_id])
 
       @next_page = @pagy.next

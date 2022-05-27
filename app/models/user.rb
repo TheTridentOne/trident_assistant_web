@@ -62,13 +62,14 @@ class User < ApplicationRecord
       r = trident_api.collections(page: page)
       r['collections'].each do |c|
         collection =
-          collections.create_with(
-            raw: c
+          Collection.create_with(
+            raw: c,
+            creator_id: id
           ).find_or_create_by(
             id: c['id']
           )
 
-        collection.update raw: c
+        collection.update raw: c, creator_id: id
       end
 
       page = r['next_page']
@@ -95,7 +96,7 @@ class User < ApplicationRecord
             res = trident_api.metadata token.dig('meta', 'hash')
             Item.create!(
               token_id: collectible['token_id'],
-              collection: Collection.find_or_create_by!(id: res.dig('collection', 'id')),
+              collection: Collection.find_or_create_by(id: res.dig('collection', 'id')),
               name: res.dig('token', 'name'),
               description: res.dig('token', 'description'),
               identifier: res.dig('token', 'id'),

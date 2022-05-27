@@ -2,7 +2,8 @@
 
 class WalletsController < ApplicationController
   def show
-    @tab = params[:tab] || 'assets'
+    current_user.sync_collectibles_async
+    @tab = params[:tab] || 'items'
     @nav_tab = 'wallet'
   end
 

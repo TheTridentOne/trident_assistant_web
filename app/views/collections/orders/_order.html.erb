@@ -57,7 +57,7 @@
 
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <div class="flex items-center justify-center space-x-2">
-      <%= link_to 'Detail', "https://thetrident.one/collectibles/#{order.item['metahash']}", target: "_blank" %>
+      <%= link_to 'Trident', "https://thetrident.one/collectibles/#{order.item['metahash']}", target: "_blank" %>
       <%= button_to 'Cancel', 
         view_modals_path(type: :new_cancel_order_task, collection_id: order.item['collection_id'], order_ids: [order.id]), 
         class: '' if order.state == 'open' && order.maker['id'] == current_user.id %>

@@ -69,5 +69,7 @@ class Collection < ApplicationRecord
       external_url: raw['external_url'],
       state: :listed
     )
+  rescue TridentAssistant::Client::RequestError
+    nil
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CollectionsController < ApplicationController
-  before_action :load_collection, only: %i[edit update show]
+  before_action :load_collection, only: %i[edit update show destroy]
 
   def index
     @pagy, @collections = pagy current_user.collections.order(created_at: :desc)
@@ -49,6 +49,7 @@ class CollectionsController < ApplicationController
 
   def sync
     current_user.sync_collections_from_trident
+    current_user.sync_collectibles_async
     render_flash :success, 'Syncing from Trident, please refresh page later'
   end
 
