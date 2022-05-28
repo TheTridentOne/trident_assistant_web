@@ -11,11 +11,14 @@
     <%= render 'collections/items/bulk_task_form', type: :new_transfer_task, collection_id: @collection.id, action: 'Transfer All' %>
   <% when 'drafted' %>
     <%= button_to collection_bulk_destroy_items_path(@collection),
+      form: {
+        turbo_confirm: 'Are you sure to delete the selected NFTs?'
+      },
       data: {
         checkbox_select_all_target: 'submitButton' 
       } do %>
       <div data-checkbox-select-all-target="valueInput" data-name="identifiers[]" class="hidden"></div>
-      <div class="cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1">Destroy All</div>
+      <div class="cursor-pointer rounded bg-red-500 hover:bg-red-600 text-white px-4 py-2 m-1">Delete All</div>
     <% end %>
   <% end %>
 </div>

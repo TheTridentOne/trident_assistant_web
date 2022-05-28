@@ -4,3 +4,10 @@ import "controllers";
 
 import * as ActiveStorage from "@rails/activestorage";
 ActiveStorage.start();
+
+
+addEventListener('turbo:submit-start', ({ target }) => {
+  for (const field of target.elements) {
+    field.disabled = true;
+  }
+});
