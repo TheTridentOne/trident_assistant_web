@@ -13,7 +13,12 @@ Rails.application.routes.draw do
   resources :collections
   resources :collections, module: :collections do
     resources :tasks, only: %i[index create show]
-    resources :items, only: %i[index]
+
+    resources :generate_nft_tasks, only: %i[create]
+
+    resources :items
+    post :bulk_destroy_items, to: 'items#bulk_destroy'
+
     resources :orders, only: %i[index]
   end
 

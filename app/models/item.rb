@@ -32,10 +32,10 @@ class Item < ApplicationRecord
 
   belongs_to :collection, optional: true
 
-  has_many :item_attributes, dependent: :restrict_with_exception
-  has_many :propoties, through: :item_attributes, dependent: :restrict_with_exception
   has_many :non_fungible_outputs, primary_key: :token_id, foreign_key: :token_id, dependent: :restrict_with_exception, inverse_of: :item
-  has_many :tasks, primary_key: :token_id, foreign_key: :token_id, dependent: :restrict_with_exception, inverse_of: :item
+  has_many :tasks, primary_key: :token_id, foreign_key: :token_id, dependent: :nullify, inverse_of: :item
+
+  before_validation :setup_meta
 
   validates :name, presence: true
   validates :metadata, presence: true
@@ -58,5 +58,11 @@ class Item < ApplicationRecord
       else
         metadata.dig('token', 'icon', 'url')
       end
+  end
+
+  private
+
+  def setup_meta
+    return unless drafted?
   end
 end

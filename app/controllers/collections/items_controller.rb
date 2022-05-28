@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Collections::ItemsController < Collections::BaseController
+  before_action :load_item, only: %i[show edit update destroy]
+
   def index
     @query = params[:query].to_s.strip
     @type = params[:type] || 'all'
@@ -47,29 +49,36 @@ class Collections::ItemsController < Collections::BaseController
     end
   end
 
-  def withdraw
-    item = Item.find params[:item_id]
-    r = current_user.trident_api.withdraw @collection.id, item.identifier
-
-    if r['data'].present?
-      render_flash :success, 'Successfully to invoke withdraw! Refresh page later'
-    else
-      render_flash :error, r['errors']
-    end
-  rescue MixinBot::Error, TridentAssistant::Error => e
-    render_flash :error, e.inspect
+  def new
   end
 
-  def deposit
-    item = Item.find params[:item_id]
-    r = current_user.trident_api.deposit @collection.id, item.identifier
+  def show
+  end
 
-    if r['data'].present?
-      render_flash :success, 'Successfully to invoke deposit! Refresh page later'
-    else
-      render_flash :error, r['errors']
+  def edit
+  end
+
+  def update
+  end
+
+  def destroy
+    @item.destroy! if @item.drafted?
+
+    redirect_to collection_items_path(@collection)
+  end
+
+  def bulk_destroy
+    (params[:identifiers] || []).each do |identifier|
+      item = @collection.items.find_by identifier: identifier
+      item.destroy! if item.drafted?
     end
-  rescue MixinBot::Error, TridentAssistant::Error => e
-    render_flash :error, e.inspect
+
+    redirect_to collection_items_path(@collection, tab: 'drafted')
+  end
+
+  private
+
+  def load_item
+    @item = @collection.items.find params[:id]
   end
 end

@@ -1,8 +1,9 @@
 <%= render "collections/header", collection: @collection %>
 <%= render "collections/tabbar", collection: @collection, tab: 'items' %>
 
-<div class="mb-4">
+<div class="mb-4 flex items-center space-x-4">
   <%= render "collections/items/query" %>
+  <%= link_to 'Generate NFT', new_collection_item_path(@collection), class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
 </div>
 
 <div data-controller="checkbox-select-all">
@@ -28,10 +29,10 @@
             Name
           </th>
           <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-            State
+            Collection
           </th>
           <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
-            Collection
+            State
           </th>
           <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
             Actions

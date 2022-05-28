@@ -52,6 +52,8 @@ class Collections::TasksController < Collections::BaseController
         params.require(:deposit_task).permit(:identifier).merge(type: 'DepositTask')
       elsif params[:cancel_order_task].present?
         params.require(:cancel_order_task).permit(:identifier, :order_id).merge(type: 'CancelOrderTask')
+      elsif params[:generate_nft_task].present?
+        params.require(:generate_nft_task).permit(:royalty, :raw).merge(type: 'GenerateNftTask')
       end
 
     successes = []

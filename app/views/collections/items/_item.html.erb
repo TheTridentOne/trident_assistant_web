@@ -16,6 +16,15 @@
   </td>
 
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <div class="">
+      <%= item.collection.name %>
+    </div>
+    <div class="font-bold">
+      #<%= item.identifier %>
+    </div>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <div class="flex items-center space-x-2">
       <div class="w-2 h-2 rounded-full
         <%= {
@@ -27,17 +36,16 @@
   </td>
 
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
-    <div class="">
-      <%= item.collection.name %>
-    </div>
-    <div class="">
-      #<%= item.identifier %>
-    </div>
-  </td>
-
-  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <div class="flex items-center space-x-2">
-      <%= link_to 'Trident', "https://thetrident.one/collectibles/#{item.metahash}", target: "_blank" %>
+      <%= link_to 'Trident', "https://thetrident.one/collectibles/#{item.metahash}", target: "_blank" if item.minted? %>
+      <%= link_to 'Detail', collection_item_path(item.collection, item) %>
+      <%= button_to 'Destroy', collection_item_path(item.collection, item), 
+        method: :delete, 
+        form: { 
+          data: { 
+            turbo_confirm: 'Are you sure to destroy this NFT?' 
+          } 
+        } if item.drafted? %>
       <% case @type %>
       <% when 'listed' %>
         <%= button_to 'Sell',

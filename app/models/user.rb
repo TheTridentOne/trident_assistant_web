@@ -105,6 +105,9 @@ class User < ApplicationRecord
               state: :minted,
               metadata: res
             )
+          else
+            item.update token_id: collectible['token_id']
+            item.mint! if item.drafted?
           end
           non_fungible_outputs.create! raw: collectible
         end

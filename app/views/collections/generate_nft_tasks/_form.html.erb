@@ -1,0 +1,68 @@
+<%= form_for [task.collection, task] do |form| %>
+  <div class="p-4 rounded bg-blue-100 text-blue-700 mb-6">
+    <div class="font-bold mb-4">
+      Notice
+    </div>
+    <div class="mb-2">
+      Upload a <code>zipped</code> file containing two folders: <b>assets</b> and <b>metadata</b>.
+    </div>
+    <p>Here is an example for unzip files.</p>
+    <pre>
+      <code class="hljs">
+.
+  ├── assets
+  │   ├── 001.png
+  │   ├── 002.png
+  │   └── 003.png
+  └── metadata
+      ├── 001.json
+      ├── 002.json
+      └── 003.json
+      </code>
+    </pre>
+    <p>Here is an metadata(the json file) example.</p>
+    <pre>
+      <code class="hljs">
+{
+  "name": "#001",
+  "description": "Example metadata",
+  "external_url": "https://thetrident.one",
+  "image": "001.png",
+  "attributes": [
+    {
+      "trait_type": "Hair",
+      "value": "Black"
+    },
+    {
+      "trait_type": "Eye",
+      "value": "Blue"
+    },
+  ]
+}
+      </code>
+    </pre>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :royalty, class: "block mb-2" %>
+    <%= form.number_field :royalty, required: true, step: '0.01', min: '0', max: '0.1', class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :raw, class: "block mb-2" %>
+    <%= form.file_field :raw, class: "block w-full text-sm text-slate-500
+      file:mr-4 file:py-2 file:px-4
+      file:rounded-full file:border-0
+      file:text-sm file:font-semibold
+      file:bg-blue-50 file:text-blue-700
+      hover:file:bg-violet-100", 
+      accept: ".zip",
+      required: true,
+      direct_upload: true %>
+  </div>
+
+  <div class="mt-8 flex justify-center items-center space-x-4">
+    <%= link_to 'Back', collection_items_path, class: "border border-primary px-6 py-2 rounded text-primary cursor-pointer opacity-90 hover:opacity-100" %>
+    <%= form.submit 'Save', class: "bg-primary px-6 py-2 rounded text-white cursor-pointer opacity-90 hover:opacity-100" %>
+  </div>
+<% end %>

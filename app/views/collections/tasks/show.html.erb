@@ -65,12 +65,35 @@
     </div>
   </div>
 
-  <div class="flex space-x-2">
+  <div class="flex items-start space-x-2 col-span-2">
+    <div class="font-bold">
+      Params:
+    </div>
+    <div class="w-full">
+      <pre>
+        <code data-controller="pretty-json" 
+              data-pretty-json-json-value="<%= @task.params.to_json %>"
+              data-pretty-json-target="content"
+              class="hljs language-json">
+      <%= @task.params || '-' %>
+        </code>
+      </pre>
+    </div>
+  </div>
+
+  <div class="flex items-start space-x-2 col-span-2">
     <div class="font-bold">
       Result:
     </div>
-    <div class="">
+    <div class="w-full">
+      <pre>
+        <code data-controller="pretty-json" 
+              data-pretty-json-json-value="<%= @task.result.to_json %>"
+              data-pretty-json-target="content"
+              class="hljs language-json">
       <%= @task.result || '-' %>
+        </code>
+      </pre>
     </div>
   </div>
 </div>

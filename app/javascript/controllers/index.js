@@ -22,6 +22,9 @@ application.register("modal", ModalController)
 import NotificationController from "./notification_controller.js"
 application.register("notification", NotificationController)
 
+import PrettyJsonController from "./pretty_json_controller.js"
+application.register("pretty-json", PrettyJsonController)
+
 import TabsController from "./tabs_controller.js"
 application.register("tabs", TabsController)
 

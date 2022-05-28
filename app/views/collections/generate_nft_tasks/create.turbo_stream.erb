@@ -1,0 +1,9 @@
+<%= turbo_stream.replace "new_generate_nft_task" do %>
+  <%= render "collections/generate_nft_tasks/form", task: @task %>
+<% end %>
+
+<% @task.errors.each do |message| %>
+  <%= turbo_stream.append "flashes" do %>
+    <%= render "flashes/flash", type: :danger, message: message %>
+  <% end %>
+<% end %>
