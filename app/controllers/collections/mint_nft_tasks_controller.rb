@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Collections::WithdrawNftTasksController < Collections::BaseController
+class Collections::MintNftTasksController < Collections::BaseController
   def create
     successes = []
     @errors = []
@@ -21,7 +21,7 @@ class Collections::WithdrawNftTasksController < Collections::BaseController
 
   def task_params
     params
-      .require(:withdraw_nft_task)
+      .require(:mint_nft_task)
       .permit(:type, :collection_id, :identifiers)
   end
 end

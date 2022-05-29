@@ -58,6 +58,7 @@ class GenerateNftTask < Task
       next if item.present?
 
       item = collection.items.new identifier: basename.to_i.to_s
+
       item.icon.attach io: File.open(image), filename: basename
       item.media.attach io: File.open(image), filename: basename
 

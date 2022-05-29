@@ -1,5 +1,6 @@
 <%= form_for [task.collection, task] do |form| %>
   <%= form.hidden_field :type, value: 'FillOrderTask' %>
+  <%= form.hidden_field :collection_id %>
   <%= (order_ids || []).each do |order_id| %>
     <%= form.hidden_field 'order_ids[]', value: order_id %>
   <% end %>

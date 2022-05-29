@@ -1,13 +1,13 @@
 <% content_for :modal_title do %>
-  Withdraw NFT
+  Mint NFT
 <% end %>
 
 <% content_for :modal_content do %>
   <div class="">
-    You are withdrawin <%= params[:identifiers].size %> NFTs
+    You are minting <%= params[:identifiers].size %> NFTs
   </div>
-  <%= render 'collections/withdraw_nft_tasks/form', 
-    task: WithdrawNftTask.new(collection_id: params[:collection_id]), 
+  <%= render 'collections/mint_nft_tasks/form', 
+    task: MintNftTask.new(collection_id: params[:collection_id]), 
     identifiers: params[:identifiers] %>
 <% end %>
 

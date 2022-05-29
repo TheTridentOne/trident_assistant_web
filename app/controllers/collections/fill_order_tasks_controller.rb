@@ -22,9 +22,6 @@ class Collections::FillOrderTasksController < Collections::BaseController
   def task_params
     params
       .require(:fill_order_task)
-      .permit(:type, :order_ids)
-      .merge(
-        collection_id: @collection.id
-      )
+      .permit(:type, :collection_id, :order_ids)
   end
 end

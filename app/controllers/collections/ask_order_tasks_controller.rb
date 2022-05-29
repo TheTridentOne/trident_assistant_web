@@ -22,9 +22,6 @@ class Collections::AskOrderTasksController < Collections::BaseController
   def task_params
     params
       .require(:ask_order_task)
-      .permit(:type, :identifiers, :asset_id, :price, :expire_at, :time_zone)
-      .merge(
-        collection_id: @collection.id
-      )
+      .permit(:type, :collection_id, :identifiers, :asset_id, :price, :expire_at, :time_zone)
   end
 end

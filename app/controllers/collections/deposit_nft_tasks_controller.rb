@@ -22,9 +22,6 @@ class Collections::DepositNftTasksController < Collections::BaseController
   def task_params
     params
       .require(:deposit_nft_task)
-      .permit(:type, :identifiers)
-      .merge(
-        collection_id: @collection.id
-      )
+      .permit(:type, :collection_id, :identifiers)
   end
 end

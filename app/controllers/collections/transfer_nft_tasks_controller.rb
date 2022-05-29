@@ -22,9 +22,6 @@ class Collections::TransferNftTasksController < Collections::BaseController
   def task_params
     params
       .require(:transfer_nft_task)
-      .permit(:type, :identifiers, :recipient_id)
-      .merge(
-        collection_id: @collection.id
-      )
+      .permit(:type, :collection_id, :identifiers, :recipient_id)
   end
 end

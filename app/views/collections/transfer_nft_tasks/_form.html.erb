@@ -1,5 +1,6 @@
 <%= form_for [task.collection, task] do |form| %>
   <%= form.hidden_field :type, value: 'TransferNftTask' %>
+  <%= form.hidden_field :collection_id %>
   <%= (identifiers || []).each do |identifier| %>
     <%= form.hidden_field 'identifiers[]', value: identifier %>
   <% end %>
