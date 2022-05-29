@@ -1,5 +1,8 @@
-<%= form_for current_user.tasks.new(type: 'TransferTask'), url: collection_tasks_path(collection_id, identifiers: identifiers) do |form| %>
+<%= form_for [@collection, current_user.tasks.new(type: 'TransferTask')] do |form| %>
   <%= form.hidden_field :type %>
+  <%= (identifiers || []).each do |identifier| %>
+    <%= form.hidden_field 'identifiers[]', value: identifier %>
+  <% end %>
 
   <div class="mb-4">
     <%= form.label :recipient_id, class: "block mb-2" %>

@@ -1,16 +1,16 @@
 <% case type %>
 <% when 'AskOrderTask' %>
-  <%= render 'tasks/ask_order_task_form', collection_id: collection_id, identifiers: identifiers %>
+  <%= render 'collections/ask_order_tasks/form', identifiers: identifiers %>
 <% when 'AuctionOrderTask' %>
-  <%= render 'tasks/auction_order_task_form', collection_id: collection_id, identifiers: identifiers %>
+  <%= render 'collections/auction_order_tasks/form', identifiers: identifiers %>
 <% when 'WithdrawTask' %>
-  <%= render 'tasks/withdraw_task_form', collection_id: collection_id, identifiers: identifiers %>
+  <%= render 'collections/withdraw_tasks/form', identifiers: identifiers %>
 <% when 'TransferTask' %>
-  <%= render 'tasks/transfer_task_form', collection_id: collection_id, identifiers: identifiers %>
+  <%= render 'collections/transfer_tasks/form', identifiers: identifiers %>
 <% when 'DepositTask' %>
-  <%= render 'tasks/deposit_task_form', collection_id: collection_id, identifiers: identifiers %>
+  <%= render 'collections/deposit_tasks/form', identifiers: identifiers %>
 <% when 'CancelOrderTask' %>
-  <%= render 'tasks/cancel_order_task_form', collection_id: collection_id, order_ids: order_ids %>
+  <%= render 'collections/cancel_order_tasks/form', order_ids: order_ids %>
 <% when 'FillOrderTask' %>
-  <%= render 'tasks/fill_order_task_form', collection_id: collection_id, order_ids: order_ids %>
+  <%= render 'collections/fill_order_tasks/form', order_ids: order_ids %>
 <% end %>

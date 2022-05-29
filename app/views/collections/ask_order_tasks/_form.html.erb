@@ -1,6 +1,9 @@
-<%= form_for current_user.tasks.new(type: 'AuctionOrderTask'), url: collection_tasks_path(collection_id, identifiers: identifiers) do |form| %>
+<%= form_for [@ollection, current_user.tasks.new(type: 'AskOrderTask')] do |form| %>
   <%= form.hidden_field :type %>
   <%= form.text_field :time_zone, value: "UTC", class: 'hidden', data: { controller: "time-zone" } %>
+  <%= (identifiers || []).each do |identifier| %>
+    <%= form.hidden_field 'identifiers[]', value: identifier %>
+  <% end %>
 
   <div class="mb-4">
     <%= form.label :asset_id, class: "block mb-2" %>
@@ -10,11 +13,6 @@
   <div class="mb-4">
     <%= form.label :price, class: "block mb-2" %>
     <%= form.number_field :price, required: true, min: '0.0001', step: '0.0001', class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
-  </div>
-
-  <div class="mb-4">
-    <%= form.label :reserve_price, class: "block mb-2" %>
-    <%= form.number_field :reserve_price, required: true, min: '0.0001', step: '0.0001', class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
   </div>
 
   <div class="mb-4">

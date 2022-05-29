@@ -21,6 +21,8 @@
 #  index_tasks_on_user_id  (user_id)
 #
 class AskOrderTask < Task
+  attr_accessor :identifiers
+
   store_accessor :params, %i[identifier asset_id price expire_at time_zone]
 
   before_validation :setup_attributes, on: :create

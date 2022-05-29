@@ -7,13 +7,14 @@ class Collections::GenerateNftTasksController < Collections::BaseController
     redirect_to collection_tasks_path(@collection.id) if @task.save
   end
 
+  private
+
   def task_params
     params
       .require(:generate_nft_task)
-      .permit(:royalty, :raw)
+      .permit(:type, :royalty, :raw)
       .merge(
-        collection_id: @collection.id,
-        type: 'GenerateNftTask'
+        collection_id: @collection.id
       )
   end
 end
