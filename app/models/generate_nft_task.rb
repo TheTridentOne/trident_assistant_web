@@ -40,12 +40,7 @@ class GenerateNftTask < Task
     succeeded = []
     failed = []
 
-    Dir.glob('./assets/*.png').each do |image|
-      basename = File.basename image, '.png'
-      meta = File.join '.', 'metadata', "#{basename}.json"
-      pp meta
-      next unless File.exist? meta
-
+    Dir.glob('./metadata/*.json').each do |meta|
       meta =
         begin
           JSON.parse File.read(meta)
@@ -53,6 +48,10 @@ class GenerateNftTask < Task
           {}
         end
       next if meta.blank?
+
+      basename = File.basename meta, '.json'
+      image = File.join '.', 'assets', meta['image']
+      next unless File.exist? image
 
       item = collection.items.find_by identifier: basename.to_i.to_s
       next if item.present?

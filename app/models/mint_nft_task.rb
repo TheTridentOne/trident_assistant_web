@@ -31,18 +31,29 @@ class MintNftTask < Task
   def process!
     return unless pending?
 
-    metadata.validate!
-
-    if metadata.metahash == item.metahash
-      uploaded = upload_metadata
-      payment = mint!
-
-      update result: { upload: uploaded, payment: payment }
+    collectible =
+      begin
+        user.trident_api.mixin_bot.collectible token_id
+      rescue MixinBot::NotFoundError
+        nil
+      end
+    if collectible.present?
+      update result: collectible
       finish!
-    else
+      return
+    end
+
+    if metadata.metahash != item.metahash
       update result: { errors: 'Invalid Metahash' }
       fail!
+      return
     end
+
+    uploaded = upload_metadata
+    payment = mint!
+
+    update result: { upload: uploaded, payment: payment }
+    finish!
   rescue TridentAssistant::API::ForbiddenError,
          TridentAssistant::API::ArgumentError,
          TridentAssistant::API::UnauthorizedError,
@@ -58,7 +69,8 @@ class MintNftTask < Task
   end
 
   def mint_memo
-    @mint_memo ||= user.trident_api.mixin_bot.nft_memo metadata.collection[:id], metadata.token[:id].to_i, metadata.metahash
+    @mint_memo ||=
+      user.trident_api.mixin_bot.nft_memo metadata.collection[:id], metadata.token[:id].to_i, metadata.metahash
   end
 
   def upload_metadata
