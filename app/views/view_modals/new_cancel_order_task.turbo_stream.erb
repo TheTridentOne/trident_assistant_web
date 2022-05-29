@@ -6,7 +6,9 @@
   <div class="">
     You are cancelling <%= params[:order_ids].size %> orders
   </div>
-  <%= render 'tasks/form', type: 'CancelOrderTask', collection_id: params[:collection_id], identifiers: [], order_ids: params[:order_ids] %>
+  <%= render 'collections/cancel_order_tasks/form', 
+    task: CancelOrderTask.new(collection_id: params[:collection_id]), 
+    order_ids: params[:order_ids] %>
 <% end %>
 
 <%= turbo_stream.update "modal-slot" do %>

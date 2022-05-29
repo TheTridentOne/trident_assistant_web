@@ -6,7 +6,9 @@
   <div class="">
     <%= t('are_you_sure_to_fill_order') %>
   </div>
-  <%= render 'tasks/form', type: 'FillOrderTask', collection_id: params[:collection_id], identifiers: params[:identifiers], order_id: params[:order_id] %>
+  <%= render 'collections/fill_order_tasks/form', 
+    task: FillOrderTask.new(collection_id: params[:collection_id]), 
+    order_id: params[:order_id] %>
 <% end %>
 
 <%=s turbo_stream.update "modal-slot" do %>

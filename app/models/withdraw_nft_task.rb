@@ -20,18 +20,15 @@
 #
 #  index_tasks_on_user_id  (user_id)
 #
-class TransferTask < Task
-  store_accessor :params, %i[identifier recipient_id]
-
-  before_validation :setup_recipient_id
+class WithdrawNftTask < Task
+  store_accessor :params, %i[identifier]
 
   validates :identifier, presence: true
-  validates :recipient_id, presence: true
 
   def process!
     return unless pending?
 
-    r = user.trident_api.transfer collection_id, identifier, recipient_id
+    r = user.trident_api.withdraw collection_id, identifier
 
     update result: r['data']
     finish!
@@ -40,15 +37,7 @@ class TransferTask < Task
          TridentAssistant::API::UnauthorizedError,
          MixinBot::ForbiddenError,
          MixinBot::InsufficientBalanceError => e
-    update! result: { errors: e.inspect }
+    update result: { errors: e.inspect }
     fail!
-  end
-
-  private
-
-  def setup_recipient_id
-    r = user.mixin_api.read_user recipient_id
-
-    self.recipient_id = r['user_id']
   end
 end

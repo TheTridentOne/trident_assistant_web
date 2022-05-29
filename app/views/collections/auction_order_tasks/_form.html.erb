@@ -1,5 +1,5 @@
-<%= form_for [@collection, current_user.tasks.new(type: 'AuctionOrderTask')] do |form| %>
-  <%= form.hidden_field :type %>
+<%= form_for [task.collection, task] do |form| %>
+  <%= form.hidden_field :type, value: 'AuctionOrderTask' %>
   <%= form.text_field :time_zone, value: "UTC", class: 'hidden', data: { controller: "time-zone" } %>
   <%= (identifiers || []).each do |identifier| %>
     <%= form.hidden_field 'identifiers[]', value: identifier %>

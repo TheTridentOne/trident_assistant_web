@@ -1,6 +1,6 @@
 <%= form_for [task.collection, task] do |form| %>
   <div class="mb-4">
-    <%= form.hidden_field :type %>
+    <%= form.hidden_field :type, value: 'GenerateNftTask' %>
     <%= form.label :royalty, class: "block mb-2" %>
     <%= form.number_field :royalty, required: true, step: '0.01', min: '0', max: '0.1', class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
   </div>

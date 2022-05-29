@@ -18,9 +18,9 @@ Rails.application.routes.draw do
     resources :cancel_order_tasks, only: :create
     resources :fill_order_tasks, only: :create
 
-    resources :deposit_tasks, only: :create
-    resources :transfer_tasks, only: :create
-    resources :withdraw_tasks, only: :create
+    resources :deposit_nft_tasks, only: :create
+    resources :transfer_nft_tasks, only: :create
+    resources :withdraw_nft_tasks, only: :create
 
     resources :generate_nft_tasks, only: :create
 

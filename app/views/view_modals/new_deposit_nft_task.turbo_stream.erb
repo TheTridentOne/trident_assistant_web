@@ -6,7 +6,9 @@
   <div class="">
     You are depositing <%= params[:identifiers].size %> NFTs
   </div>
-  <%= render 'tasks/form', type: 'DepositTask', collection_id: params[:collection_id], identifiers: params[:identifiers] %>
+  <%= render 'collections/deposit_nft_tasks/form', 
+    task: DepositNftTask.new(collection_id: params[:collection_id]), 
+    identifiers: params[:identifiers] %>
 <% end %>
 
 <%= turbo_stream.update "modal-slot" do %>

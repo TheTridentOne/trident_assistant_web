@@ -1,5 +1,5 @@
-<%= form_for [@collection, current_user.tasks.new(type: 'TransferTask')] do |form| %>
-  <%= form.hidden_field :type %>
+<%= form_for [task.collection, task] do |form| %>
+  <%= form.hidden_field :type, value: 'TransferNftTask' %>
   <%= (identifiers || []).each do |identifier| %>
     <%= form.hidden_field 'identifiers[]', value: identifier %>
   <% end %>

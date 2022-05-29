@@ -20,7 +20,7 @@
 #
 #  index_tasks_on_user_id  (user_id)
 #
-class WithdrawTask < Task
+class DepositNftTask < Task
   store_accessor :params, %i[identifier]
 
   validates :identifier, presence: true
@@ -28,7 +28,7 @@ class WithdrawTask < Task
   def process!
     return unless pending?
 
-    r = user.trident_api.withdraw collection_id, identifier
+    r = user.trident_api.deposit collection_id, identifier
 
     update result: r['data']
     finish!
@@ -37,7 +37,7 @@ class WithdrawTask < Task
          TridentAssistant::API::UnauthorizedError,
          MixinBot::ForbiddenError,
          MixinBot::InsufficientBalanceError => e
-    update result: { errors: e.inspect }
+    update! result: { errors: e.inspect }
     fail!
   end
 end

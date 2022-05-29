@@ -6,7 +6,9 @@
   <div class="mb-4 font-bold">
     You are selling <%= params[:identifiers].size %> NFTs
   </div>
-  <%= render 'tasks/form', type: 'AskOrderTask', collection_id: params[:collection_id], identifiers: params[:identifiers] %>
+  <%= render 'collections/ask_order_tasks/form', 
+    task: AskOrderTask.new(collection_id: params[:collection_id]), 
+    identifiers: params[:identifiers] %>
 <% end %>
 
 <%= turbo_stream.update "modal-slot" do %>

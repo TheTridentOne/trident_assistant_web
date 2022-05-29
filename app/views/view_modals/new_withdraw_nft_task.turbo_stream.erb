@@ -6,7 +6,9 @@
   <div class="">
     You are witthdrawing <%= params[:identifiers].size %> NFTs
   </div>
-  <%= render 'tasks/form', type: 'WithdrawTask', collection_id: params[:collection_id], identifiers: params[:identifiers] %>
+  <%= render 'collections/withdraw_nft_tasks/form', 
+    task: WithdrawNftTask.new(collection_id: params[:collection_id]), 
+    identifiers: params[:identifiers] %>
 <% end %>
 
 <%= turbo_stream.update "modal-slot" do %>
