@@ -86,6 +86,9 @@ gem 'noticed'
 # Use ActiveRecord transactional callbacks outside of models, literally everywhere in your application.
 gem 'after_commit_everywhere'
 
+# Rubyzip is a ruby library for reading and writing zip files.
+gem 'rubyzip'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

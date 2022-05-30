@@ -416,6 +416,7 @@ DEPENDENCIES
   redis-namespace
   rubocop
   rubocop-rails
+  rubyzip
   selenium-webdriver
   sidekiq (~> 6.0)
   sidekiq-cron
