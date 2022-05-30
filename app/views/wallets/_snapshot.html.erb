@@ -22,7 +22,7 @@
     <%= snapshot['created_at'] || '-' %>
   </td>
   <td class="p-4">
-    <%= snapshot['snapshot_id'] %>
+    <%= link_to snapshot['snapshot_id'], "https://mixin.one/snapshots/#{snapshot['snapshot_id']}", target: "_blank" %>
   </td>
   <td class="p-4">
     <%= snapshot['trace_id'] || '-' %>

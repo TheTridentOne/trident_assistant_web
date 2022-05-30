@@ -1,17 +1,21 @@
 <%= turbo_frame_tag 'wallet_collectibles' do %>
-  <div data-controller="infinite-scroll" class="w-full overflow-x-scroll scrollbar-hide">
-    <table class='w-full table-auto min-w-max'>
-      <thead>
-        <tr class="bg-zinc-100 dark:bg-zinc-900">
-          <th class="p-2"><%= t('name') %></th>
-          <th class="p-2"><%= t('collection') %></th>
-        </tr>
-      </thead>
-      <tbody id="circle_app_wallet_collectibles_list">
-        <%= render partial: 'wallets/item', collection: @items, as: :item %>
-      </tbody>
-    </table>
-    <div data-infinite-scroll-target='scrollArea'></div>
-    <%= render partial: "shared/pagination", locals: { pagy: @pagy } %>
-  </div>
+  <% if @items.blank? %>
+    <div class="text-center p-4">No records</div>
+  <% else %>
+    <div data-controller="infinite-scroll" class="w-full overflow-x-scroll scrollbar-hide">
+      <table class='w-full table-auto min-w-max'>
+        <thead>
+          <tr class="bg-zinc-100 dark:bg-zinc-900">
+            <th class="p-2"><%= t('name') %></th>
+            <th class="p-2"><%= t('collection') %></th>
+          </tr>
+        </thead>
+          <tbody id="circle_app_wallet_collectibles_list">
+            <%= render partial: 'wallets/item', collection: @items, as: :item %>
+          </tbody>
+      </table>
+      <div data-infinite-scroll-target='scrollArea'></div>
+      <%= render partial: "shared/pagination", locals: { pagy: @pagy } %>
+    </div>
+  <% end %>
 <% end %>

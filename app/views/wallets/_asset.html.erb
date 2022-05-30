@@ -1,14 +1,14 @@
 <tr class="hover:bg-zinc-50 border-zinc-100 dark:hover:bg-zinc-800 border-b dark:border-zinc-800">
   <td class="p-2">
-    <div class="flex items-center justify-center space-x-2">
+    <div class="flex items-center space-x-2">
       <%= image_tag asset['icon_url'], class: "w-10 w-10 rounded-full" %>
       <span><%= asset['symbol'] %></span>
     </div>
   </td>
-  <td class="p-2 text-center">
+  <td class="p-2">
     <%= asset['balance'] %>
   </td>
-  <td class="p-2 hidden sm:block text-center">
+  <td class="p-2 hidden sm:block">
     $<%= (asset['balance'].to_d * asset['price_usd'].to_d).round(4) %>
   </td>
 </tr>
