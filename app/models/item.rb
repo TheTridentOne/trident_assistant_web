@@ -35,18 +35,20 @@ class Item < ApplicationRecord
   has_many :non_fungible_outputs, primary_key: :token_id, foreign_key: :token_id, dependent: :restrict_with_exception, inverse_of: :item
   has_many :tasks, primary_key: :token_id, foreign_key: :token_id, dependent: :nullify, inverse_of: :item
 
-  before_validation :setup_meta
+  before_validation :setup_token_id
 
   validates :name, presence: true
   validates :metadata, presence: true
   validates :metahash, presence: true, uniqueness: true
   validates :identifier, presence: true, format: { with: /\A(?!0)\d+\z/ }, uniqueness: { scope: :collection_id }
 
+  default_scope -> { order('identifier::integer ASC') }
+
   aasm column: :state do
     state :drafted, initialize: true
     state :minted
 
-    event :mint do
+    event :mint, after: :sync_creator_collectibles do
       transitions from: :drafted, to: :minted
     end
   end
@@ -60,9 +62,15 @@ class Item < ApplicationRecord
       end
   end
 
+  def sync_creator_collectibles
+    UserSyncCollectiblesJob.perform_in 30.seconds, collection&.creator_id
+  end
+
   private
 
-  def setup_meta
+  def setup_token_id
     return unless drafted?
+
+    self.token_id = MixinBot::Utils::Nfo.new(collection: collection_id, token: identifier).unique_token_id
   end
 end

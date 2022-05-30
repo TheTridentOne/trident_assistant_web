@@ -42,18 +42,18 @@ class Task < ApplicationRecord
     state :pending, initialize: true
     state :failed
     state :finished
-    state :expired
+    state :cancelled
 
-    event :finish, guards: :result_present?, after: %i[touch_processed_at notify] do
+    event :finish, guards: :result_present?, after_commit: %i[touch_processed_at notify] do
       transitions from: :pending, to: :finished
     end
 
-    event :fail, guards: :result_present?, after: %i[touch_processed_at notify] do
+    event :fail, guards: :result_present?, after_commit: %i[touch_processed_at notify] do
       transitions from: :pending, to: :failed
     end
 
-    event :expire, after: :touch_processed_at do
-      transitions from: :pending, to: :expired
+    event :cancel, after: :touch_processed_at, after_commit: :notify do
+      transitions from: :pending, to: :cancelled
     end
   end
 
@@ -78,6 +78,8 @@ class Task < ApplicationRecord
 
   def broadcast_to_user
     broadcast_append_later_to "user_#{user_id}", target: 'flashes', partial: 'flashes/flash', locals: { message: "#{type} for #{collection.name}(##{identifier}) #{state}", type: 'notice' }
+
+    broadcast_replace_later_to "user_#{user_id}", target: "#{type.underscore}_#{id}", partial: 'collections/tasks/task', locals: { task: self }
   end
 
   private

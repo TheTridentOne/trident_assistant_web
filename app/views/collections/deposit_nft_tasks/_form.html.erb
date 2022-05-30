@@ -1,8 +1,8 @@
 <%= form_for [task.collection, task] do |form| %>
   <%= form.hidden_field :type, value: 'DepositNftTask' %>
   <%= form.hidden_field :collection_id %>
-  <%= (identifiers || []).each do |identifier| %>
-    <%= form.hidden_field 'identifiers[]', value: identifier %>
+  <% (identifiers || []).each do |identifier| %>
+    <%= form.hidden_field :identifiers, multiple: true, value: identifier %>
   <% end %>
 
   <div class="mt-8 flex justify-center items-center space-x-4">

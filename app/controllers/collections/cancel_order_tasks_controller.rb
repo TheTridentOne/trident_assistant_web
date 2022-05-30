@@ -5,7 +5,9 @@ class Collections::CancelOrderTasksController < Collections::BaseController
     successes = []
     @errors = []
 
-    (task_params.delete(:order_ids) || [])&.each do |order_id|
+    order_ids = params.dig(:cancel_order_task, :order_ids) || []
+
+    order_ids.each do |order_id|
       task = current_user.tasks.create task_params.merge(order_id: order_id)
       if task.save
         successes.push task.id
@@ -22,6 +24,6 @@ class Collections::CancelOrderTasksController < Collections::BaseController
   def task_params
     params
       .require(:cancel_order_task)
-      .permit(:type, :collection_id, :order_ids)
+      .permit(:type, :collection_id)
   end
 end

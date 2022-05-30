@@ -83,6 +83,9 @@ gem 'aws-sdk-s3', require: false
 # Notifications for Ruby on Rails applications
 gem 'noticed'
 
+# Use ActiveRecord transactional callbacks outside of models, literally everywhere in your application.
+gem 'after_commit_everywhere'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

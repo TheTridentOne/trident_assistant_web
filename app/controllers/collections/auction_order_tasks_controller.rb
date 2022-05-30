@@ -5,7 +5,9 @@ class Collections::AuctionOrderTasksController < Collections::BaseController
     successes = []
     @errors = []
 
-    (task_params.delete(:identifiers) || [])&.each do |identifier|
+    identifiers = params.dig(:auction_order_task, :identifiers) || []
+
+    identifiers.each do |identifier|
       task = current_user.tasks.create task_params.merge(identifier: identifier)
       if task.save
         successes.push task.id
@@ -22,6 +24,6 @@ class Collections::AuctionOrderTasksController < Collections::BaseController
   def task_params
     params
       .require(:auction_order_task)
-      .permit(:type, :collection_id, :identifiers, :asset_id, :price, :reserve_price, :expire_at, :time_zone)
+      .permit(:type, :collection_id, :asset_id, :price, :reserve_price, :expire_at, :time_zone)
   end
 end

@@ -1,8 +1,12 @@
 # frozen_string_literal: true
 
 class Collections::TasksController < Collections::BaseController
+  before_action :load_task, only: %i[show cancel]
+
   def index
     tasks = @collection.tasks
+
+    tasks = tasks.where("params->>'identifier' = ?", params[:identifier].to_s) if params[:identifier].present?
 
     @state = params[:state] || 'all'
     tasks =
@@ -39,6 +43,15 @@ class Collections::TasksController < Collections::BaseController
   end
 
   def show
-    @task = @collection.tasks.find params[:id]
+  end
+
+  def cancel
+    @task.cancel! if @task.may_cancel?
+  end
+
+  private
+
+  def load_task
+    @task = @collection.tasks.find(params[:id] || params[:task_id])
   end
 end

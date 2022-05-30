@@ -10,7 +10,7 @@
       ['Generate', 'GenerateNftTask'], 
       ['All Types', 'all'], 
     ], 
-    { selected: params[:type] || @type }, 
+    { selected: @type }, 
     class: "rounded-lg m-1 dark:bg-zinc-900" %>
   <%= form.select :state, 
     [
@@ -19,7 +19,7 @@
       ['Failed', 'failed'], 
       ['All States', 'all'], 
     ], 
-    { selected: params[:state] || @state }, 
+    { selected: @state }, 
     class: "rounded-lg m-1 dark:bg-zinc-900" %>
   <%= form.select :order_by, 
     [
@@ -28,13 +28,13 @@
       ['Processed At DESC', 'processed_at_desc'], 
       ['Processed At ASC', 'processed_at_asc'], 
     ], 
-    { selected: params[:order_by] || @order_by }, 
+    { selected: @order_by }, 
     class: "rounded-lg m-1 dark:bg-zinc-900" %>
   <%= form.submit :Refresh, class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
-  <% if params[:metahash].present? %>
+  <% if params[:identifier].present? %>
     <div class="ml-4"
-      <%= form.label :metahash %>
-      <%= form.text_field :metahash, value: params[:metahash], class: "rounded-lg m-1 dark:bg-zinc-900" %>
+      <%= form.label :identifier %>
+      <%= form.text_field :identifier, value: params[:identifier], class: "rounded-lg m-1 dark:bg-zinc-900" %>
     </div>
   <% end %>
 <% end %>

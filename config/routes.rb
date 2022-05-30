@@ -12,7 +12,10 @@ Rails.application.routes.draw do
   resources :view_modals, only: :create
   resources :collections
   resources :collections, module: :collections do
-    resources :tasks, only: %i[index show]
+    resources :tasks, only: %i[index show] do
+      post :cancel
+    end
+
     resources :ask_order_tasks, only: :create
     resources :auction_order_tasks, only: :create
     resources :cancel_order_tasks, only: :create
@@ -21,6 +24,7 @@ Rails.application.routes.draw do
     resources :deposit_nft_tasks, only: :create
     resources :transfer_nft_tasks, only: :create
     resources :withdraw_nft_tasks, only: :create
+    resources :mint_nft_tasks, only: :create
 
     resources :generate_nft_tasks, only: :create
 

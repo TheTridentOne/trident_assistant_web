@@ -10,6 +10,7 @@
     <%= render 'collections/items/bulk_task_form', type: :new_deposit_nft_task, collection_id: @collection.id, action: 'Deposit All' %>
     <%= render 'collections/items/bulk_task_form', type: :new_transfer_nft_task, collection_id: @collection.id, action: 'Transfer All' %>
   <% when 'drafted' %>
+    <%= render 'collections/items/bulk_task_form', type: :new_mint_nft_task, collection_id: @collection.id, action: 'Mint All' %>
     <%= button_to collection_bulk_destroy_items_path(@collection),
       form: {
         turbo_confirm: 'Are you sure to delete the selected NFTs?'

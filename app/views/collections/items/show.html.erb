@@ -7,7 +7,13 @@
 </div>
 
 <div class="flex items-center mb-4">
-  <%= link_to 'Trident', "https://thetrident.one/collectibles/#{@item.metahash}", target: "_blank", class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" if @item.minted? %>
+  <%= link_to 'Trident', 
+    "https://thetrident.one/collectibles/#{@item.metahash}", 
+    target: "_blank", 
+    class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" if @item.minted? %>
+  <%= button_to 'Mint',
+    view_modals_path(type: :new_mint_nft_task, collection_id: @item.collection_id, identifiers: [@item.identifier]),
+    class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" if @item.drafted? %>
 </div>
 
 <div class="grid grid-cols-2 gap-6">

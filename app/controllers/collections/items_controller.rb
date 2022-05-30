@@ -4,6 +4,7 @@ class Collections::ItemsController < Collections::BaseController
   before_action :load_item, only: %i[show edit update destroy]
 
   def index
+    current_user.sync_collectibles_async
     @query = params[:query].to_s.strip
     @type = params[:type] || 'all'
 

@@ -53,9 +53,9 @@
         <%= render partial: "collections/orders/order", collection: @orders %>
       </tbody>
     </table>
-    <div class="flex items-center justify-center">
-      <%= link_to '<- Prev', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @prev_page) if @prev_page.present? %>
-      <%= link_to 'Next ->', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @next_page) if @next_page.present? %>
+    <div class="flex items-center justify-center space-x-6">
+      <%= link_to '< Prev', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @prev_page) if @prev_page.present? %>
+      <%= link_to 'Next >', collection_orders_path(@collection&.id, type: params[:type], state: params[:state], page: @next_page) if @next_page.present? %>
     </div>
   <% end %>
 </div>

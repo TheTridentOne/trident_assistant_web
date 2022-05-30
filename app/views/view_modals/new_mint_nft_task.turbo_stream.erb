@@ -4,7 +4,10 @@
 
 <% content_for :modal_content do %>
   <div class="">
-    You are minting <%= params[:identifiers].size %> NFTs
+    You are minting <%= params[:identifiers].size %> NFTs. 
+  </div>
+  <div class="">
+    Make sure you have at least <%= params[:identifiers].size * 0.001 %> XIN in the wallet.
   </div>
   <%= render 'collections/mint_nft_tasks/form', 
     task: MintNftTask.new(collection_id: params[:collection_id]), 

@@ -5,7 +5,9 @@ class Collections::TransferNftTasksController < Collections::BaseController
     successes = []
     @errors = []
 
-    (task_params.delete(:identifiers) || [])&.each do |identifier|
+    identifiers = params.dig(:transfer_nft_task, :identifiers) || []
+
+    identifiers.each do |identifier|
       task = current_user.tasks.create task_params.merge(identifier: identifier)
       if task.save
         successes.push task.id
@@ -22,6 +24,6 @@ class Collections::TransferNftTasksController < Collections::BaseController
   def task_params
     params
       .require(:transfer_nft_task)
-      .permit(:type, :collection_id, :identifiers, :recipient_id)
+      .permit(:type, :collection_id, :recipient_id)
   end
 end
