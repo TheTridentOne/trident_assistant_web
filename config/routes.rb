@@ -3,6 +3,9 @@
 Rails.application.routes.draw do
   draw :admin
 
+  # health check for render.com
+  get 'healthz', to: 'healthz#index', as: :healthz
+
   root 'home#index'
 
   post :login, to: 'sessions#create'
