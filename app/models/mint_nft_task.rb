@@ -38,8 +38,12 @@ class MintNftTask < Task
         nil
       end
     if collectible.present?
-      update result: collectible
-      finish!
+      ActiveRecord::Base.transaction do
+        update result: collectible
+        finish!
+        item.mint! if item.drafted?
+      end
+
       return
     end
 
@@ -52,8 +56,11 @@ class MintNftTask < Task
     uploaded = upload_metadata
     payment = mint!
 
-    update result: { upload: uploaded, payment: payment }
-    finish!
+    ActiveRecord::Base.transaction do
+      update result: { upload: uploaded, payment: payment }
+      finish!
+      item.mint! if item.drafted?
+    end
   rescue TridentAssistant::API::ForbiddenError,
          TridentAssistant::API::ArgumentError,
          TridentAssistant::API::UnauthorizedError,

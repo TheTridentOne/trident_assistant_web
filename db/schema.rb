@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_25_004647) do
+ActiveRecord::Schema[7.0].define(version: 2022_05_30_005259) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -98,6 +98,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_004647) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "mixin_messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "sender_id"
+    t.uuid "recipient_id"
+    t.jsonb "raw", default: {}
+    t.datetime "processed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipient_id"], name: "index_mixin_messages_on_recipient_id"
+    t.index ["sender_id"], name: "index_mixin_messages_on_sender_id"
+  end
+
   create_table "non_fungible_outputs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "token_id"
@@ -107,6 +118,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_25_004647) do
     t.datetime "updated_at", null: false
     t.index ["token_id"], name: "index_non_fungible_outputs_on_token_id"
     t.index ["user_id"], name: "index_non_fungible_outputs_on_user_id"
+  end
+
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "recipient_type", null: false
+    t.uuid "recipient_id", null: false
+    t.string "type", null: false
+    t.jsonb "params"
+    t.datetime "read_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["read_at"], name: "index_notifications_on_read_at"
+    t.index ["recipient_type", "recipient_id"], name: "index_notifications_on_recipient"
   end
 
   create_table "tasks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -258,6 +258,9 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.13.6-x86_64-linux)
       racc (~> 1.4)
+    noticed (1.5.9)
+      http (>= 4.0.0)
+      rails (>= 5.2.0)
     pagy (5.10.1)
       activesupport
     parallel (1.22.1)
@@ -397,6 +400,7 @@ DEPENDENCIES
   jbuilder
   kredis
   msgpack_rails
+  noticed
   pagy
   pg
   puma (~> 5.0)

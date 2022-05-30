@@ -80,6 +80,9 @@ gem 'ransack', github: 'activerecord-hackery/ransack'
 # S3 active storage service
 gem 'aws-sdk-s3', require: false
 
+# Notifications for Ruby on Rails applications
+gem 'noticed'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

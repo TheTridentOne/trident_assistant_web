@@ -131,11 +131,15 @@ class User < ApplicationRecord
   end
 
   def admin?
-    raw.dig('app', 'creator_id').in?(Rails.application.credentials[:admin] || [])
+    creator_id.in?(Rails.application.credentials[:admin] || [])
   end
 
   def own?(token_id)
     unspent_non_fungible_outputs.find_by(token_id: token_id).present?
+  end
+
+  def creator_id
+    @creator_id ||= raw.dig('app', 'creator_id')
   end
 
   private

@@ -36,7 +36,7 @@ class Task < ApplicationRecord
   validates :type, presence: true
   validate :ensure_not_create_duplicated_task
 
-  after_commit :process_async, on: :create
+  after_commit :process_async, :notify, on: :create
 
   aasm column: :state do
     state :pending, initialize: true
@@ -72,6 +72,11 @@ class Task < ApplicationRecord
   delegate :present?, to: :result, prefix: true
 
   def notify
+    broadcast_to_user
+    TaskNotification.with(task: self).deliver_later(user)
+  end
+
+  def broadcast_to_user
     broadcast_append_later_to "user_#{user_id}", target: 'flashes', partial: 'flashes/flash', locals: { message: "#{type} for #{collection.name}(##{identifier}) #{state}", type: 'notice' }
   end
 

@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
 
   def user_sign_in(user)
     session[:current_user_id] = user.id
+    LoginNotification.with({}).deliver_later(user)
   end
 
   def user_sign_out
