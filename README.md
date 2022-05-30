@@ -1,3 +1,5 @@
 # Trident Assistant Web
 
-Exploring interesting things based on [Trident](https://thetrident.one).
+https://assistant.thetrident.one
+
+An assistant tool to generate/mint/sell NFTs on [Trident](https://thetrident.one).
