@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Collections::MintNftTasksController < Collections::BaseController
+  before_action :ensure_collection_listed
+
   def create
     successes = []
     @errors = []
@@ -25,5 +27,9 @@ class Collections::MintNftTasksController < Collections::BaseController
     params
       .require(:mint_nft_task)
       .permit(:type, :collection_id)
+  end
+
+  def ensure_collection_listed
+    redirect_to collection_items_path(@collection.id), danger: 'List collection first' if @collection.drafted?
   end
 end
