@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Collections::TasksController < Collections::BaseController
-  before_action :load_task, only: %i[show cancel]
+  before_action :load_task, only: %i[show cancel start_process]
 
   def index
     tasks = @collection.tasks
@@ -47,6 +47,12 @@ class Collections::TasksController < Collections::BaseController
 
   def cancel
     @task.cancel! if @task.may_cancel?
+    redirect_to collection_tasks_path(@collection)
+  end
+
+  def start_process
+    @task.process_async if @task.pending?
+    redirect_to collection_tasks_path(@collection)
   end
 
   private

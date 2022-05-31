@@ -52,7 +52,7 @@ class GenerateNftTask < Task
         begin
           JSON.parse File.read(json)
         rescue StandardError => e
-          failed.push({ identifier: basename.to_i.to_s, errors: e.inspect })
+          failed.push({ basename.to_i.to_s => e.inspect })
           {}
         end
       next if json.blank?
@@ -68,7 +68,7 @@ class GenerateNftTask < Task
           png_files_manifest[json['image']].presence && File.open(png_files_manifest[json['image']])
         end
       if image.nil?
-        failed.push({ identifier: basename.to_i.to_s, errors: "Cannot find image: #{json['image']}" })
+        failed.push({ basename.to_i.to_s => "Cannot find image: #{json['image']}" })
         next
       end
 

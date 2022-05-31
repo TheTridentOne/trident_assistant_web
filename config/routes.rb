@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :collections, module: :collections do
     resources :tasks, only: %i[index show] do
       post :cancel
+      post :start_process
     end
 
     resources :ask_order_tasks, only: :create

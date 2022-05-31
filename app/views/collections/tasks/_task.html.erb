@@ -1,5 +1,9 @@
 <tr id="<%= dom_id task %>">
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= task.id %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <% if task.item.present? %>
       <%= link_to collection_tasks_path(task.collection, identifier: task.item.identifier, type: params[:type], state: params[:state], ), class: "flex items-center space-x-2" do %>
         <%= image_tag task.item.icon_url, class: "w-12 h-12 block" %>
@@ -42,7 +46,8 @@
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <div class="flex items-center justify-center space-x-2">
       <%= link_to 'Detail', collection_task_path(task.collection, task) %>
-      <%= button_to 'Cancel', collection_task_cancel_path(task.collection, task), class: "", data: { turbo_confirm: "Are you sure to cancel this task?" } if task.pending? %>
+      <%= button_to 'Process', collection_task_start_process_path(task.collection, task), class: "", form: { data: { turbo_confirm: "Are you sure to start start_process this task?" }} if task.pending? %>
+      <%= button_to 'Cancel', collection_task_cancel_path(task.collection, task), class: "", form: { data: { turbo_confirm: "Are you sure to cancel this task?" }} if task.pending? %>
     </div>
   </td>
 </tr>

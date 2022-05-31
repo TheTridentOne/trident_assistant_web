@@ -14,14 +14,17 @@ class TaskNotification < ApplicationNotification
   end
 
   def plain_text_data
-    <<~TEXT
-      == Task #{task.state} ==
+    text =
+      <<~TEXT
+        == Task #{task.state} ==
 
-      - Type: #{task.type.underscore.humanize}
-      - Collection: #{task.collection.name}
-      - Token: ##{task.identifier || '-'}
+        - Type: #{task.type.underscore.humanize}
+        - Collection: #{task.collection.name}
+      TEXT
 
-      (From: assistant.thetrident.one)
-    TEXT
+    text += "- Token: ##{task.identifier}\n" if task.identifier.present?
+    text += "\n(From: assistant.thetrident.one)"
+
+    text
   end
 end
