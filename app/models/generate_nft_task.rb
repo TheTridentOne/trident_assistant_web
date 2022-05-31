@@ -148,7 +148,7 @@ class GenerateNftTask < Task
     File.write file, URI.parse(raw.url).open.read, encoding: 'ascii-8bit'
     file
   rescue StandardError
-    FileUtils.rm file, fore: true
+    FileUtils.rm file, force: true
   end
 
   def unzipped_dir
