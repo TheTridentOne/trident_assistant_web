@@ -14,5 +14,5 @@ pin 'hotkeys-js', to: 'https://ga.jspm.io/npm:hotkeys-js@3.9.3/dist/hotkeys.esm.
 pin 'flatpickr', to: 'https://ga.jspm.io/npm:flatpickr@4.6.13/dist/esm/index.js', preload: true
 pin 'stimulus-flatpickr', to: 'https://ga.jspm.io/npm:stimulus-flatpickr@3.0.0-0/dist/index.m.js', preload: true
 
-pin_all_from 'app/javascript/controllers', under: 'controllers', preload: true
+pin_all_from 'app/javascript/controllers', under: 'controllers'
 pin 'application', preload: true
