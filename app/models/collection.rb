@@ -30,8 +30,10 @@ class Collection < ApplicationRecord
   has_many :tasks, dependent: :destroy
 
   before_validation :setup_attributes
+  before_validation :setup_split
 
   validates :name, presence: true
+  validates :split, numericality: { in: 0..0.10 }
 
   aasm column: :state do
     state :drafted, initialize: true
@@ -71,5 +73,9 @@ class Collection < ApplicationRecord
     )
   rescue TridentAssistant::Client::RequestError
     nil
+  end
+
+  def setup_split
+    self.split = 0.0 if split.blank?
   end
 end

@@ -31,6 +31,11 @@ class MintNftTask < Task
   def process!
     return unless pending?
 
+    if collection.drafted?
+      update result: { errors: 'Collection not created yet' }
+      return
+    end
+
     collectible =
       begin
         user.trident_api.mixin_bot.collectible token_id

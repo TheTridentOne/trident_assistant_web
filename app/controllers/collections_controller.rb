@@ -54,6 +54,31 @@ class CollectionsController < ApplicationController
   end
 
   def destroy
+    return if @collection.listed?
+
+    @collection.destroy
+    redirect_to collections_path, success: 'Listed'
+  end
+
+  def list
+    @collection = current_user.collections.find params[:collection_id]
+
+    r =
+      current_user
+      .trident_api
+      .create_collection(
+        name: @collection.name,
+        description: @collection.description,
+        external_url: @collection.external_url,
+        split: @collection.split,
+        icon_url: @collection.icon.url
+      )
+
+    if @collection.update raw: r
+      redirect_to collections_path, success: 'Listed'
+    else
+      render_flash :danger, @collection.errors.full_messages.join(';')
+    end
   end
 
   private

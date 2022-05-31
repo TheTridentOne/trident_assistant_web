@@ -2,6 +2,8 @@
 
 class Collections::OrdersController < Collections::BaseController
   def index
+    return if @collection.drafted?
+
     @type = params[:type] || 'all'
     @state = params[:state] || 'open'
     @maker = params[:maker] || current_user.id

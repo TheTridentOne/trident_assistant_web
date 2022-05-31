@@ -37,6 +37,7 @@ class Item < ApplicationRecord
 
   before_validation :setup_token_id
 
+  validates :royalty, numericality: { in: 0..0.10 }
   validates :name, presence: true
   validates :metadata, presence: true
   validates :metahash, presence: true, uniqueness: true
@@ -72,5 +73,9 @@ class Item < ApplicationRecord
     return unless drafted?
 
     self.token_id = MixinBot::Utils::Nfo.new(collection: collection_id, token: identifier).unique_token_id
+  end
+
+  def setup_royalty
+    self.royalty = 0.0 if royalty.blank?
   end
 end

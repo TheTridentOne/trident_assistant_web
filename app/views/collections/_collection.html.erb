@@ -24,6 +24,8 @@
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <div class="flex items-center space-x-2">
       <%= link_to 'Trident', collection.trident_url, class: "", target: "_blank" if collection.listed? %>
+      <%= button_to 'List', collection_list_path(collection.id), class: "", form: { data: { turbo_confirm: 'Are you sure to list this collection?' }} if collection.drafted? %>
+      <%= button_to 'Delete', collection_path(collection.id), method: :delete, class: "", form: { data: { turbo_confirm: 'Are you sure to delete this collection?' }} if collection.drafted? %>
       <%= link_to 'Edit', edit_collection_path(collection.id), class: "" %>
       <%= link_to 'Items', collection_items_path(collection.id), class: "" %>
       <%= link_to 'Orders', collection_orders_path(collection.id), class: "" %>
