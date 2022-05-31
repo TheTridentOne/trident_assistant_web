@@ -12,6 +12,6 @@ class Collections::GenerateNftTasksController < Collections::BaseController
   def task_params
     params
       .require(:generate_nft_task)
-      .permit(:type, :collection_id, :royalty, :raw)
+      .permit(:type, :collection_id, :royalty, :metadata, :assets)
   end
 end

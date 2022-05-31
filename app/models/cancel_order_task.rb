@@ -31,6 +31,8 @@ class CancelOrderTask < Task
   def process!
     return unless pending?
 
+    start_process!
+
     r = user.trident_api.cancel_order order_id
 
     update result: r['data']
@@ -42,6 +44,8 @@ class CancelOrderTask < Task
          MixinBot::InsufficientBalanceError => e
     update result: { errors: e.inspect }
     fail!
+  ensure
+    pend! if processing?
   end
 
   private

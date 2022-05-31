@@ -14,7 +14,9 @@
     <%= button_to collection_bulk_destroy_items_path(@collection),
       class: 'hidden',
       form: {
-        turbo_confirm: 'Are you sure to delete the selected NFTs?'
+        data: {
+          turbo_confirm: 'Are you sure to delete the selected NFTs?'
+        }
       },
       data: {
         checkbox_select_all_target: 'submitButton' 

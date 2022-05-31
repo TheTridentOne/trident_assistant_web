@@ -2,7 +2,7 @@
   <%= render "collections/generate_nft_tasks/form", task: @task %>
 <% end %>
 
-<% @task.errors.each do |message| %>
+<% @task.errors.full_messages.each do |message| %>
   <%= turbo_stream.append "flashes" do %>
     <%= render "flashes/flash", type: :danger, message: message %>
   <% end %>

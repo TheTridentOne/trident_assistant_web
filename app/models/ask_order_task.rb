@@ -35,6 +35,8 @@ class AskOrderTask < Task
   def process!
     return unless pending?
 
+    start_process!
+
     r =
       user.trident_api.ask_order(
         collection_id,
@@ -53,6 +55,8 @@ class AskOrderTask < Task
          MixinBot::InsufficientBalanceError => e
     update result: { errors: e.inspect }
     fail!
+  ensure
+    pend! if processing?
   end
 
   private

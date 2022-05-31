@@ -36,6 +36,8 @@ class AuctionOrderTask < Task
   def process!
     return unless pending?
 
+    start_process!
+
     r =
       user.trident_api.auction_order(
         collection_id,
@@ -55,6 +57,8 @@ class AuctionOrderTask < Task
          MixinBot::InsufficientBalanceError => e
     update result: { errors: e.inspect }
     fail!
+  ensure
+    pend! if processing?
   end
 
   private

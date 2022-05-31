@@ -31,6 +31,8 @@ class MintNftTask < Task
   def process!
     return unless pending?
 
+    start_process!
+
     if collection.drafted?
       update result: { errors: 'Collection not created yet' }
       return
@@ -74,6 +76,8 @@ class MintNftTask < Task
          MixinBot::InsufficientBalanceError => e
     update result: { errors: e.inspect }
     fail!
+  ensure
+    pend! if processing?
   end
 
   def metadata

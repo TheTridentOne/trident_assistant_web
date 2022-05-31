@@ -28,6 +28,8 @@ class WithdrawNftTask < Task
   def process!
     return unless pending?
 
+    start_process!
+
     r = user.trident_api.withdraw collection_id, identifier
 
     update result: r['data']
@@ -39,5 +41,7 @@ class WithdrawNftTask < Task
          MixinBot::InsufficientBalanceError => e
     update result: { errors: e.inspect }
     fail!
+  ensure
+    pend! if processing?
   end
 end

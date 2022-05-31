@@ -40,16 +40,25 @@ class Task < ApplicationRecord
 
   aasm column: :state do
     state :pending, initialize: true
+    state :processing
     state :failed
     state :finished
     state :cancelled
 
+    event :start_process do
+      transitions from: :pending, to: :processing
+    end
+
+    event :pend do
+      transitions from: :processing, to: :pending
+    end
+
     event :finish, guards: :result_present?, after_commit: %i[touch_processed_at notify] do
-      transitions from: :pending, to: :finished
+      transitions from: :processing, to: :finished
     end
 
     event :fail, guards: :result_present?, after_commit: %i[touch_processed_at notify] do
-      transitions from: :pending, to: :failed
+      transitions from: :processing, to: :failed
     end
 
     event :cancel, after: :touch_processed_at, after_commit: :notify do

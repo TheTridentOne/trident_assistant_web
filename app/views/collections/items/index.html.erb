@@ -4,6 +4,7 @@
 <div class="mb-4 flex items-center space-x-4">
   <%= render "collections/items/query" %>
   <%= link_to 'Generate NFT', new_collection_item_path(@collection), class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
+  <%= button_to 'Sync From Trident', sync_collections_path, class: "py-2 px-4 cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white rounded" %>
 </div>
 
 <div data-controller="checkbox-select-all">

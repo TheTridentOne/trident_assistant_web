@@ -24,48 +24,67 @@ class GenerateNftTask < Task
   store_accessor :params, %i[royalty]
 
   has_one_attached :raw
+  has_one_attached :metadata
+  has_one_attached :assets
 
   before_validation :setup_royalty
 
   validates :royalty, numericality: { in: 0..0.10 }
-  validates :raw, presence: true
+  validates :metadata, presence: true
 
   def process!
     return unless pending?
 
-    download_and_unzip
+    start_process!
 
-    FileUtils.cd File.join unzipped_dir, raw.filename.to_s.split('.').first
+    download_and_unzip_metadata
+    download_and_unzip_assets
+
+    FileUtils.cd unzipped_dir
 
     succeeded = []
     failed = []
 
-    Dir.glob('./metadata/*.json').each do |meta|
-      basename = File.basename meta, '.json'
-      meta =
+    json_files.each do |json|
+      basename = File.basename json, '.json'
+
+      json =
         begin
-          JSON.parse File.read(meta)
-        rescue StandardError
+          JSON.parse File.read(json)
+        rescue StandardError => e
+          failed.push({ identifier: basename.to_i.to_s, errors: e.inspect })
           {}
         end
-      next if meta.blank?
+      next if json.blank?
 
-      image = File.join '.', 'assets', meta['image']
-      next unless File.exist? image
+      image =
+        if URI::DEFAULT_PARSER.make_regexp.match(json['image'])
+          begin
+            URI.parse(json['image']).open
+          rescue OpenURI::HTTPError
+            nil
+          end
+        else
+          png_files_manifest[json['image']].presence && File.open(png_files_manifest[json['image']])
+        end
+      if image.nil?
+        failed.push({ identifier: basename.to_i.to_s, errors: "Cannot find image: #{json['image']}" })
+        next
+      end
 
       item = collection.items.find_by identifier: basename.to_i.to_s
       next if item.present?
 
       item = collection.items.new identifier: basename.to_i.to_s
 
-      item.icon.attach io: File.open(image), filename: basename
-      item.media.attach io: File.open(image), filename: basename
+      item.icon.attach io: image, filename: basename
+      item.media.attach io: image, filename: basename
 
-      media_hash = SHA3::Digest::SHA256.hexdigest(File.read(image))
+      media_hash = SHA3::Digest::SHA256.hexdigest(image.read)
       token = {
         id: basename.to_i.to_s,
-        name: meta['name'],
-        description: meta['description'],
+        name: json['name'],
+        description: json['description'],
         icon: {
           url: item.media.url
         },
@@ -80,7 +99,7 @@ class GenerateNftTask < Task
         algorithm: 'sha256'
       }
 
-      meta['attributes'].each do |trait|
+      (json['attributes'] || []).each do |trait|
         next if trait['trait_type'].blank? || trait['value'].blank?
 
         token[:attributes] ||= {}
@@ -108,8 +127,9 @@ class GenerateNftTask < Task
       )
 
       item.assign_attributes(
-        name: meta['name'],
-        description: meta['description'],
+        name: json['name'],
+        royalty: royalty,
+        description: json['description'],
         metadata: metadata.json,
         metahash: SHA3::Digest::SHA256.hexdigest(metadata.checksum_content)
       )
@@ -129,32 +149,87 @@ class GenerateNftTask < Task
 
     update result: { succeeded: succeeded, failed: failed }
     finish!
+    assets&.purge_later
+    metadata&.purge_later
+  ensure
+    pend! if processing?
   end
 
-  def download_and_unzip
-    Zip::File.open(temp_file) do |zip_file|
+  def download_and_unzip_metadata
+    return if metadata_temp_file.blank?
+
+    Zip::File.open(metadata_temp_file) do |zip_file|
       zip_file.each do |f|
         f_path = File.join unzipped_dir, f.name
         FileUtils.mkdir_p File.dirname(f_path)
-        f.extract f_path unless File.exist?(f_path)
+        next if File.exist?(f_path)
+
+        f.extract f_path
       end
     end
   end
 
-  def temp_file
-    file = File.join unzipped_dir, 'raw.zip'
+  def download_and_unzip_assets
+    return if assets_temp_file.blank?
+
+    Zip::File.open(assets_temp_file) do |zip_file|
+      zip_file.each do |f|
+        f_path = File.join unzipped_dir, f.name
+        FileUtils.mkdir_p File.dirname(f_path)
+        next if File.exist?(f_path)
+
+        f.extract f_path
+      end
+    end
+  end
+
+  def metadata_temp_file
+    return if metadata.url.blank?
+
+    file = File.join unzipped_dir, 'metadata.zip'
     return file if File.exist? file
 
-    File.write file, URI.parse(raw.url).open.read, encoding: 'ascii-8bit'
+    File.write file, URI.parse(metadata.url).open.read, encoding: 'ascii-8bit'
     file
   rescue StandardError
     FileUtils.rm file, force: true
+    nil
+  end
+
+  def assets_temp_file
+    return if assets.url.blank?
+
+    file = File.join unzipped_dir, 'assets.zip'
+    return file if File.exist? file
+
+    File.write file, URI.parse(assets.url).open.read, encoding: 'ascii-8bit'
+    file
+  rescue StandardError
+    FileUtils.rm file, force: true
+    nil
   end
 
   def unzipped_dir
-    dir = Rails.root.join('tmp', raw.key)
+    dir = Rails.root.join('tmp', id)
     Dir.mkdir dir unless Dir.exist? dir
     dir
+  end
+
+  def json_files
+    Dir.glob "#{unzipped_dir}/**/*.json"
+  end
+
+  def png_files
+    Dir.glob "#{unzipped_dir}/**/*.png"
+  end
+
+  def png_files_manifest
+    manifest = {}
+    png_files.each do |file|
+      manifest[File.basename(file)] = file
+    end
+
+    manifest
   end
 
   private

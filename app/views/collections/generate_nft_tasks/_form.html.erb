@@ -8,10 +8,10 @@
   </div>
 
   <div class="mb-4">
-    <%= form.label :raw, class: "block mb-2" do %>
-      Zip File
+    <%= form.label :metadata, class: "block mb-2" do %>
+      Metadata Zip File
     <% end %>
-    <%= form.file_field :raw, class: "block w-full text-sm text-slate-500
+    <%= form.file_field :metadata, class: "block w-full text-sm text-slate-500
       file:mr-4 file:py-2 file:px-4
       file:rounded-full file:border-0
       file:text-sm file:font-semibold
@@ -19,6 +19,20 @@
       hover:file:bg-violet-100", 
       accept: ".zip",
       required: true,
+      direct_upload: true %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :assets, class: "block mb-2" do %>
+      Images Zip File
+    <% end %>
+    <%= form.file_field :assets, class: "block w-full text-sm text-slate-500
+      file:mr-4 file:py-2 file:px-4
+      file:rounded-full file:border-0
+      file:text-sm file:font-semibold
+      file:bg-blue-50 file:text-blue-700
+      hover:file:bg-violet-100", 
+      accept: ".zip",
       direct_upload: true %>
   </div>
 
@@ -31,14 +45,11 @@
     <div class="font-bold mb-4">
       Notice
     </div>
-    <div class="mb-2">
-      Upload a <code>zipped</code> file containing two folders: <b>assets</b> and <b>metadata</b>.
-    </div>
-    <p>Here is an example for unzip files.</p>
+    <p>Here is an example for images and metadata zip folders files.</p>
     <pre>
       <code class="hljs">
 .
-  ├── assets
+  ├── images
   │   ├── 001.png
   │   ├── 002.png
   │   └── 003.png
@@ -55,7 +66,7 @@
   "name": "#001",
   "description": "Example metadata",
   "external_url": "https://thetrident.one",
-  "image": "001.png",
+  "image": "001.png", // Or a url like "https://images.thetrident.one/001.png"
   "attributes": [
     {
       "trait_type": "Hair",
