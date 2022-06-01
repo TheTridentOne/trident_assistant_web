@@ -55,12 +55,7 @@ class Item < ApplicationRecord
   end
 
   def icon_url
-    @icon_url ||=
-      if drafted?
-        icon.url
-      else
-        metadata.dig('token', 'icon', 'url')
-      end
+    @icon_url ||= metadata.dig('token', 'icon', 'url')
   end
 
   def sync_creator_collectibles
