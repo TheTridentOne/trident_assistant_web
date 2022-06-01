@@ -57,6 +57,7 @@ class GenerateNftTask < Task
         end
       next if json.blank?
 
+      image_url = json['image'] if URI::DEFAULT_PARSER.make_regexp.match(json['image'])
       image =
         if URI::DEFAULT_PARSER.make_regexp.match(json['image'])
           begin
@@ -77,8 +78,7 @@ class GenerateNftTask < Task
 
       item = collection.items.new identifier: basename.to_i.to_s
 
-      item.icon.attach io: image, filename: basename
-      item.media.attach io: image, filename: basename
+      item.icon.attach io: icon, filename: basename if image_url.blank?
 
       media_hash = SHA3::Digest::SHA256.hexdigest(image.read)
       token = {
@@ -86,10 +86,10 @@ class GenerateNftTask < Task
         name: json['name'],
         description: json['description'],
         icon: {
-          url: item.media.url
+          url: image_url || item.icon.url
         },
         media: {
-          url: item.media.url,
+          url: image_url || item.icon.url,
           hash: media_hash
         }
       }
