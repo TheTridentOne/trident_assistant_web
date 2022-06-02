@@ -40,8 +40,6 @@ class GenerateNftTask < Task
     download_and_unzip_metadata
     download_and_unzip_assets
 
-    FileUtils.cd unzipped_dir
-
     succeeded = []
     failed = []
 
@@ -58,97 +56,41 @@ class GenerateNftTask < Task
       next if json.blank?
 
       item = collection.items.find_by identifier: basename.to_i.to_s
-      next if item.present?
+      if item.present?
+        failed.push({ basename.to_i.to_s => 'Already existed' })
+        next
+      end
 
-      image_url = json['image'] if URI::DEFAULT_PARSER.make_regexp.match(json['image'])
-      image =
+      image_path =
         if URI::DEFAULT_PARSER.make_regexp.match(json['image'])
-          begin
-            URI.parse(json['image']).open
-          rescue OpenURI::HTTPError
-            nil
-          end
+          json['image']
         else
-          png_files_manifest[json['image']].presence && File.open(png_files_manifest[json['image']])
+          png_files_manifest[json['image']]
         end
-      if image.nil?
+      if image_path.blank?
         failed.push({ basename.to_i.to_s => "Cannot find image: #{json['image']}" })
         next
       end
 
-      item = collection.items.new identifier: basename.to_i.to_s
-      item.icon.attach io: icon, filename: basename if image_url.blank?
-      media_hash = SHA3::Digest::SHA256.hexdigest(image.read)
-      token = {
-        id: basename.to_i.to_s,
-        name: json['name'],
-        description: json['description'],
-        icon: {
-          url: image_url || item.icon.url
-        },
-        media: {
-          url: image_url || item.icon.url,
-          hash: media_hash
-        }
-      }
-      checksum = {
-        fields: ['creator.id', 'creator.royalty', 'collection.id', 'collection.name',
-                 'collection.split', 'token.id', 'token.name', 'token.media.hash'],
-        algorithm: 'sha256'
-      }
-
-      (json['attributes'] || []).each do |trait|
-        next if trait['trait_type'].blank? || trait['value'].blank?
-
-        token[:attributes] ||= {}
-        token[:attributes][trait['trait_type']] = trait['value']
-        checksum[:fields].push "token.attributes.#{trait['trait_type']}"
-      end
-
-      metadata = TridentAssistant::Utils::Metadata.new(
-        creator: {
-          id: user.id,
-          name: user.name,
-          royalty: royalty.to_f.round(2).to_s
-        },
-        collection: {
-          id: collection.id,
-          name: collection.name,
-          description: collection.description,
-          split: collection.split.round(2).to_s,
-          icon: {
-            url: collection.icon_url
-          }
-        },
-        token: token,
-        checksum: checksum
-      )
-
-      item.assign_attributes(
-        name: json['name'],
+      task = collection.tasks.new(
+        type: 'CreateItemTask',
+        user_id: user_id,
+        source_task_id: id,
+        identifier: basename.to_i.to_s,
         royalty: royalty,
-        description: json['description'],
-        metadata: metadata.json,
-        metahash: SHA3::Digest::SHA256.hexdigest(metadata.checksum_content)
+        image_path: image_path,
+        json: json
       )
 
-      if item.save
-        succeeded.push item.identifier
+      if task.save
+        succeeded.push({ basename.to_i.to_s => task.id })
       else
-        failed
-          .push(
-            {
-              identifier: item.identifier,
-              errors: item.errors.full_messages.join(';')
-            }
-          )
+        failed.push({ basename.to_i.to_s => task.errors.full_messages.join(';') })
       end
     end
 
     update result: { succeeded: succeeded, failed: failed }
     finish!
-    assets&.purge_later
-    metadata&.purge_later
   ensure
     pend! if processing?
   end
@@ -208,7 +150,12 @@ class GenerateNftTask < Task
   end
 
   def unzipped_dir
-    dir = Rails.root.join('tmp', id)
+    dir =
+      if ENV['EXTERNAL_DATA_DIR'].present?
+        File.join ENV['EXTERNAL_DATA_DIR'], id
+      else
+        Rails.root.join('tmp', id)
+      end
     Dir.mkdir dir unless Dir.exist? dir
     dir
   end

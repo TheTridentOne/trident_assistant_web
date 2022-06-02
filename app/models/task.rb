@@ -36,7 +36,7 @@ class Task < ApplicationRecord
   validates :type, presence: true
   validate :ensure_not_create_duplicated_task
 
-  after_commit :process_async, :notify, on: :create
+  after_commit :process_async, :notify, :broadcast, on: :create
 
   aasm column: :state do
     state :pending, initialize: true
@@ -53,15 +53,15 @@ class Task < ApplicationRecord
       transitions from: :processing, to: :pending
     end
 
-    event :finish, guards: :result_present?, after_commit: %i[touch_processed_at notify] do
+    event :finish, guards: :result_present?, after_commit: %i[touch_processed_at notify broadcast] do
       transitions from: :processing, to: :finished
     end
 
-    event :fail, guards: :result_present?, after_commit: %i[touch_processed_at notify] do
+    event :fail, guards: :result_present?, after_commit: %i[touch_processed_at notify broadcast] do
       transitions from: :processing, to: :failed
     end
 
-    event :cancel, after: :touch_processed_at, after_commit: :notify do
+    event :cancel, after: :touch_processed_at, after_commit: %i[notify broadcast] do
       transitions from: :pending, to: :cancelled
     end
   end
@@ -81,14 +81,19 @@ class Task < ApplicationRecord
   delegate :present?, to: :result, prefix: true
 
   def notify
-    broadcast_to_user
+    return unless should_notify?
+
     TaskNotification.with(task: self).deliver_later(user)
   end
 
-  def broadcast_to_user
+  def broadcast
     broadcast_append_later_to "user_#{user_id}", target: 'flashes', partial: 'flashes/flash', locals: { message: "#{type} for #{collection.name}(##{identifier}) #{state}", type: 'notice' }
 
     broadcast_replace_later_to "user_#{user_id}", target: "#{type.underscore}_#{id}", partial: 'collections/tasks/task', locals: { task: self }
+  end
+
+  def should_notify?
+    true
   end
 
   private
