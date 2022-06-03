@@ -44,9 +44,15 @@
         <%= render partial: "collections/items/item", collection: @items %>
       </tbody>
     </table>
-    <div class="flex items-center justify-center space-x-6">
-      <%= link_to '< Prev', collection_items_path(@collection.id, type: @type, page: @prev_page) if @prev_page.present? %>
-      <%= link_to 'Next >', collection_items_path(@collection.id, type: @type, page: @next_page) if @next_page.present? %>
-    </div>
+    <% if @pagy.present? %>
+      <div class="flex justify-center">
+        <%== pagy_nav @pagy %>
+      </div>
+    <% else %>
+      <div class="flex items-center justify-center space-x-6">
+        <%= link_to '< Prev', collection_items_path(@collection.id, type: @type, page: @prev_page) if @prev_page.present? %>
+        <%= link_to 'Next >', collection_items_path(@collection.id, type: @type, page: @next_page) if @next_page.present? %>
+      </div>
+    <% end %>
   <% end %>
 </div>

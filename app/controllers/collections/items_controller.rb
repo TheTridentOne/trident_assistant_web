@@ -26,11 +26,9 @@ class Collections::ItemsController < Collections::BaseController
             identifier_cont_all: @query,
             meta_hash_cont_all: @query
           }.merge(m: 'or')
-        ).result
+        ).result,
+        items: 100
       )
-
-      @next_page = @pagy.next
-      @prev_page = @pagy.prev
     when 'airdrop', 'deposited', 'on_sale', 'on_auction', 'listed'
       r = current_user.trident_api.collectibles(
         collection_id: @collection&.id,
@@ -42,10 +40,12 @@ class Collections::ItemsController < Collections::BaseController
       @next_page = r['next_page']
       @prev_page = r['previous_page']
     when 'wallet'
-      @pagy, @items = pagy current_user.items.where(collection_id: params[:collection_id])
-
-      @next_page = @pagy.next
-      @prev_page = @pagy.prev
+      @pagy, @items = pagy(
+        current_user
+        .items
+        .where(collection_id: params[:collection_id]),
+        items: 100
+      )
     end
   end
 

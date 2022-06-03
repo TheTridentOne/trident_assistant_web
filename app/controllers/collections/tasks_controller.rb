@@ -39,7 +39,7 @@ class Collections::TasksController < Collections::BaseController
         tasks.order(processed_at: :asc)
       end
 
-    @pagy, @tasks = pagy tasks
+    @pagy, @tasks = pagy tasks, items: 100
   end
 
   def show
