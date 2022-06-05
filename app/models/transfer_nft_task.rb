@@ -34,6 +34,7 @@ class TransferNftTask < Task
     start_process!
 
     r = user.trident_api.transfer collection_id, identifier, recipient_id
+    raise "Not completed: #{r}" if r['data']['hash'].blank?
 
     update result: r['data']
     finish!

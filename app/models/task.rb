@@ -38,6 +38,8 @@ class Task < ApplicationRecord
 
   after_commit :process_async, :notify, :broadcast, on: :create
 
+  delegate :present?, to: :result, prefix: true
+
   aasm column: :state do
     state :pending, initialize: true
     state :processing
@@ -77,8 +79,6 @@ class Task < ApplicationRecord
   def touch_processed_at
     update processed_at: Time.current
   end
-
-  delegate :present?, to: :result, prefix: true
 
   def notify
     return unless should_notify?

@@ -31,6 +31,7 @@ class DepositNftTask < Task
     start_process!
 
     r = user.trident_api.deposit collection_id, identifier
+    raise "Not completed: #{r}" if r['data']['hash'].blank?
 
     update result: r['data']
     finish!
