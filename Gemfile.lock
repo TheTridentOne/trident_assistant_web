@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/TheTridentOne/trident_assistant.git
-  revision: 63e106fceedf97f8484990062f75efbcb5dab930
+  revision: 7a37f3b493090b482f4cc77deb2b2a6ddec57203
   specs:
     trident_assistant (0.1.6)
       mixin_bot (~> 0.8)
