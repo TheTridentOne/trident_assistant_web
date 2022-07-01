@@ -79,7 +79,7 @@ class Item < ApplicationRecord
           }
         }
       )
-    _metadata = TridentAssistant::Utils::Metadata.new(**_metadataw.ith_indifferent_access)
+    _metadata = TridentAssistant::Utils::Metadata.new(**_metadata.with_indifferent_access)
     update! metdata: _metadata.json, metahash: _metadata.metahash
   end
 
