@@ -69,7 +69,7 @@ class Item < ApplicationRecord
         {
           'token' => {
             'media' => {
-              'hash' => TridentAssistant::Utils.hash_from_url(metdata.dig('token', 'media', 'url'))
+              'hash' => TridentAssistant::Utils.hash_from_url(metadata.dig('token', 'media', 'url'))
             }
           },
           'collection' => {
