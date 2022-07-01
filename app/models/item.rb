@@ -80,7 +80,7 @@ class Item < ApplicationRecord
         }
       )
     _metadata = TridentAssistant::Utils::Metadata.new(**_metadata.with_indifferent_access)
-    update! metdata: _metadata.json, metahash: _metadata.metahash
+    update! metadata: _metadata.json, metahash: _metadata.metahash
   end
 
   private
