@@ -62,6 +62,27 @@ class Item < ApplicationRecord
     UserSyncCollectiblesJob.perform_in 30.seconds, collection&.creator_id
   end
 
+  def refresh_metadata!
+    _metadata =
+      metadata
+      .deep_merge(
+        {
+          'token' => {
+            'media' => {
+              'hash' => TridentAssistant::Utils.hash_from_url(metdata.dig('token', 'media', 'url'))
+            }
+          },
+          'collection' => {
+            'icon' => {
+              'url' => collection.icon_url
+            }
+          }
+        }
+      )
+    _metadata = TridentAssistant::Utils::Metadata.new(**_metadataw.ith_indifferent_access)
+    update! metdata: _metadata.json, metahash: _metadata.metahash
+  end
+
   private
 
   def setup_token_id

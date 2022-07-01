@@ -55,9 +55,8 @@ class MintNftTask < Task
     end
 
     if metadata.metahash != item.metahash
-      update result: { errors: 'Invalid Metahash' }
-      fail!
-      return
+      item.refresh_metadata!
+      item.reload
     end
 
     uploaded = upload_metadata

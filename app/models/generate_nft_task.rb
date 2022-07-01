@@ -156,7 +156,7 @@ class GenerateNftTask < Task
       else
         Rails.root.join('tmp', id)
       end
-    Dir.mkdir dir unless Dir.exist? dir
+    FileUtils.mkdir_p dir
     dir
   end
 
