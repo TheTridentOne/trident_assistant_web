@@ -88,7 +88,7 @@ class User < ApplicationRecord
 
     loop do
       logger.info "Syncing #{name}(#{id}) collectibles"
-      r = mixin_api.collectibles offset: offset
+      r = mixin_api.collectibles offset: offset, limit: 500
 
       r['data'].each do |collectible|
         logger.info "found collectible #{collectible}"
