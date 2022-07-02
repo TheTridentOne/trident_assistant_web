@@ -78,8 +78,13 @@ class User < ApplicationRecord
     end
   end
 
-  def sync_collectibles!
-    offset = non_fungible_outputs.first&.raw_updated_at
+  def sync_collectibles!(restart: false)
+    offset =
+      if restart
+        ''
+      else
+        non_fungible_outputs.first&.raw_updated_at
+      end
 
     loop do
       logger.info "Syncing #{name}(#{id}) collectibles"
