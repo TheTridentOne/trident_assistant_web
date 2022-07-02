@@ -128,6 +128,8 @@ class User < ApplicationRecord
     true
   rescue MixinBot::HttpError
     retry
+  rescue ActiveRecord::RecordNotUnique, ActiveRecord::RecordInvalid
+    false
   end
 
   def sync_collectibles_async
