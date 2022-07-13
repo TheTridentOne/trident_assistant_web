@@ -32,7 +32,7 @@ class Item < ApplicationRecord
 
   belongs_to :collection, optional: true
 
-  has_many :non_fungible_outputs, primary_key: :token_id, foreign_key: :token_id, dependent: :restrict_with_exception, inverse_of: :item
+  has_many :non_fungible_outputs, primary_key: :token_id, foreign_key: :token_id, dependent: :nullify, inverse_of: :item
   has_many :tasks, primary_key: :token_id, foreign_key: :token_id, dependent: :nullify, inverse_of: :item
 
   before_validation :setup_token_id, :setup_royalty

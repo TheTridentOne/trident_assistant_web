@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_05_30_005259) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_13_005629) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -111,7 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_05_30_005259) do
 
   create_table "non_fungible_outputs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
-    t.uuid "token_id"
+    t.uuid "token_id", null: false
     t.string "state"
     t.jsonb "raw"
     t.datetime "created_at", null: false
