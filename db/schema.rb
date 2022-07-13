@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_13_005629) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_13_011832) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -85,10 +85,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_13_005629) do
     t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["collection_id"], name: "index_items_on_collection_id"
-    t.index ["identifier"], name: "index_items_on_identifier"
+    t.index ["collection_id", "identifier"], name: "index_items_on_collection_id_and_identifier", unique: true
     t.index ["metahash"], name: "index_items_on_metahash"
-    t.index ["token_id"], name: "index_items_on_token_id"
+    t.index ["token_id"], name: "index_items_on_token_id", unique: true
   end
 
   create_table "mixin_assets", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

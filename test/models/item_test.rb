@@ -19,10 +19,9 @@
 #
 # Indexes
 #
-#  index_items_on_collection_id  (collection_id)
-#  index_items_on_identifier     (identifier)
-#  index_items_on_metahash       (metahash)
-#  index_items_on_token_id       (token_id)
+#  index_items_on_collection_id_and_identifier  (collection_id,identifier) UNIQUE
+#  index_items_on_metahash                      (metahash)
+#  index_items_on_token_id                      (token_id) UNIQUE
 #
 require 'test_helper'
 
