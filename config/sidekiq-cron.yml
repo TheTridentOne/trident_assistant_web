@@ -1,0 +1,3 @@
+send_signed_transaction_job:
+  cron: '*/15 * * * *'
+  class: 'SendSignedTransactionJob'
