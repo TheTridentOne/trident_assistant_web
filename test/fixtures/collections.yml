@@ -9,6 +9,7 @@
 #  raw          :jsonb
 #  split        :float
 #  state        :string
+#  symbol       :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  creator_id   :uuid

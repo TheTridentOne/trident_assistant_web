@@ -11,6 +11,7 @@
 #  raw          :jsonb
 #  split        :float
 #  state        :string
+#  symbol       :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  creator_id   :uuid
@@ -66,6 +67,7 @@ class Collection < ApplicationRecord
     assign_attributes(
       id: raw['id'],
       name: raw['name'],
+      symbol: raw['symbol'],
       description: raw['description'],
       split: raw['split'],
       external_url: raw['external_url'],

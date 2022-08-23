@@ -68,6 +68,7 @@ class CollectionsController < ApplicationController
       .trident_api
       .create_collection(
         name: @collection.name,
+        symbol: @collection.symbol,
         description: @collection.description,
         external_url: @collection.external_url,
         split: @collection.split,
@@ -84,7 +85,7 @@ class CollectionsController < ApplicationController
   private
 
   def collection_params
-    params.require(:collection).permit(:name, :description, :split, :external_url, :icon)
+    params.require(:collection).permit(:name, :symbol, :description, :split, :external_url, :icon)
   end
 
   def load_collection

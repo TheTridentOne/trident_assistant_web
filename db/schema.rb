@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_13_011832) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_23_025926) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pgcrypto"
@@ -62,6 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_13_011832) do
     t.string "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "symbol"
     t.index ["creator_id"], name: "index_collections_on_creator_id"
   end
 
