@@ -1,0 +1,41 @@
+<%= form_with url: admin_collection_tasks_path(@collection.id), method: :get, class: "flex items-center flex-wrap" do |form| %>
+  <%= form.select :type, 
+    [
+      ['Ask Order', 'AskOrderTask'], 
+      ['Auction Order', 'AuctionOrderTask'], 
+      ['Cancel Order', 'CancelOrderTask'], 
+      ['Withdraw', 'WithdrawNftTask'], 
+      ['Deposit', 'DepositNftTask'], 
+      ['Transfer', 'TransferNftTask'], 
+      ['Generate', 'GenerateNftTask'], 
+      ['All Types', 'all'], 
+    ], 
+    { selected: @type }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.select :state, 
+    [
+      ['Pending', 'pending'], 
+      ['Finished', 'finished'], 
+      ['Failed', 'failed'], 
+      ['Cancelled', 'cancelled'], 
+      ['All States', 'all'], 
+    ], 
+    { selected: @state }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.select :order_by, 
+    [
+      ['Created At DESC', 'created_at_desc'], 
+      ['Created At ASC', 'created_at_asc'], 
+      ['Processed At DESC', 'processed_at_desc'], 
+      ['Processed At ASC', 'processed_at_asc'], 
+    ], 
+    { selected: @order_by }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.submit :Refresh, class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
+  <% if params[:identifier].present? %>
+    <div class="ml-4">
+      <%= form.label :identifier %>
+      <%= form.text_field :identifier, value: params[:identifier], class: "rounded-lg m-1 dark:bg-zinc-900" %>
+    </div>
+  <% end %>
+<% end %>

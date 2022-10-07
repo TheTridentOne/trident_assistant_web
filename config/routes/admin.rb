@@ -17,9 +17,13 @@ constraints(AdminConstraint.new) do
   namespace :admin do
     mount Sidekiq::Web, at: 'sidekiq', constraints: AdminConstraint.new
 
-    root to: 'dashboard#index'
     resources :users, only: %i[index show]
-    resources :items, only: %i[index show], param: :metahash
-    resources :collections, only: %i[index show]
+    resources :collections, only: %i[index show] do
+      resources :items, only: %i[index show]
+      resources :orders, only: %i[index show]
+      resources :tasks, only: %i[index show]
+    end
+
+    root to: 'collections#index'
   end
 end

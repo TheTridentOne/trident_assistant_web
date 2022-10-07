@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Assistant Admin</title> 
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <%= stylesheet_link_tag "application", "flatpickr", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= favicon_link_tag 'logo.png' %>
+  </head>
+
+  <body>
+    <%= render 'admin/shared/nav' %>
+    <div class="p-4 mx-auto w-full max-w-7xl">
+      <%= yield %>
+    </div>
+    <div class="absolute bottom-0" id="modal-slot"></div>
+    <div class="fixed bottom-24 h-0 w-full px-4 z-50 flex flex-col justify-end" id="flashes">
+      <% flash.each do |type, message| %>
+        <%= render "flashes/flash", type: type, message: message %>
+      <% end %>
+    </div>
+    <%= turbo_stream_from "user_#{current_user.id}" if current_user.present? %>
+  </body>
+</html>

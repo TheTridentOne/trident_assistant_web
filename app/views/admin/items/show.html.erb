@@ -1,0 +1,91 @@
+<%= render "collections/header", collection: @collection %>
+
+<div class="flex items-center mb-6 space-x-4">
+  <%= link_to 'Items', admin_collection_items_path(@collection), class: 'underline' %>
+  <div class="">/</div>
+  <div>#<%= @item.identifier %></div>
+</div>
+
+<div class="flex items-center mb-4">
+  <%= link_to 'Trident', 
+    "https://thetrident.one/collectibles/#{@item.metahash}", 
+    target: "_blank", 
+    class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" if @item.minted? %>
+</div>
+
+<div class="grid grid-cols-2 gap-6">
+  <div class="flex items-center space-x-2">
+    <div class="font-bold">
+      Identifier:
+    </div>
+    <div class="">
+      #<%= @item.identifier %>
+    </div>
+  </div>
+
+  <div class="flex items-center space-x-2">
+    <div class="font-bold">
+      State:
+    </div>
+    <div class="flex items-center space-x-2">
+      <div class="w-2 h-2 rounded-full
+        <%= {
+          drafted: 'bg-blue-500',
+          minted: 'bg-green-500'
+        }[@item.state.to_sym] %>"></div>
+      <div><%= @item.state %></div>
+    </div>
+  </div>
+
+  <div class="flex items-center space-x-2">
+    <div class="font-bold">
+      Name:
+    </div>
+    <div class="">
+      <%= @item.name %>
+    </div>
+  </div>
+
+  <div class="flex items-center space-x-2">
+    <div class="font-bold">
+      Description:
+    </div>
+    <div class="">
+      <%= @item.description %>
+    </div>
+  </div>
+
+  <div class="flex items-center space-x-2">
+    <div class="font-bold">
+      token ID:
+    </div>
+    <div class="">
+      <%= @item.token_id || '-' %>
+    </div>
+  </div>
+
+  <div class="flex items-center space-x-2">
+    <div class="font-bold">
+      metahash:
+    </div>
+    <div class="">
+      <%= @item.metahash %>
+    </div>
+  </div>
+
+  <div class="flex items-start space-x-2 col-span-2">
+    <div class="font-bold">
+      Metadata:
+    </div>
+    <div class="w-full">
+      <pre>
+        <code data-controller="pretty-json" 
+              data-pretty-json-json-value="<%= @item.metadata.to_json %>"
+              data-pretty-json-target="content"
+              class="hljs language-json">
+          <%= @item.metadata %>
+        </code>
+      </pre>
+    </div>
+  </div>
+</div>
