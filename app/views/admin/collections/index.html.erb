@@ -30,8 +30,8 @@
       </tbody>
     </table>
     <div class="flex items-center justify-center">
-      <%= link_to 'Prev Page', collections_path(page: @pagy.prev) if @pagy.prev.present? %>
-      <%= link_to 'Next Page', collections_path(page: @pagy.next) if @pagy.next.present? %>
+      <%= link_to 'Prev Page', admin_collections_path(page: @pagy.prev) if @pagy.prev.present? %>
+      <%= link_to 'Next Page', admin_collections_path(page: @pagy.next) if @pagy.next.present? %>
     </div>
   <% end %>
 </div>
