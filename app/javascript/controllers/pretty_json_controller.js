@@ -7,12 +7,13 @@ export default class extends Controller {
   static targets = ["content"];
 
   connect() {
-    if (this.jsonValue) {
-      this.contentTarget.innerText = JSON.stringify(
-        JSON.parse(this.jsonValue),
-        null,
-        4
-      );
+    if (!this.jsonValue) return;
+
+    const json = JSON.stringify(JSON.parse(this.jsonValue), null, 4);
+    if (this.contentTarget.tagName == "TEXTAREA") {
+      this.contentTarget.value = json;
+    } else {
+      this.contentTarget.innerText = json;
     }
   }
 }

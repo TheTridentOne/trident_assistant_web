@@ -6,7 +6,7 @@
   <div>#<%= @item.identifier %></div>
 </div>
 
-<div class="flex items-center mb-4">
+<div class="flex items-center space-x-4 mb-4">
   <%= link_to 'Trident', 
     "https://thetrident.one/collectibles/#{@item.metahash}", 
     target: "_blank", 
@@ -14,6 +14,9 @@
   <%= button_to 'Mint',
     view_modals_path(type: :new_mint_nft_task, collection_id: @item.collection_id, identifiers: [@item.identifier]),
     class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" if @item.drafted? %>
+  <%= link_to 'Edit',
+    edit_collection_item_path(@item.collection, @item),
+    class: "cursor-pointer rounded border border-blue-500 hover:text-blue-600 text-blue-500 px-4 py-2 m-1" if @item.drafted? %>
 </div>
 
 <div class="grid grid-cols-2 gap-6">

@@ -1,0 +1,9 @@
+<% @item.errors.full_messages.each do |message| %>
+  <%= turbo_stream.append 'flashes' do %>
+    <%= render "flashes/flash", type: :alert, message: message %> 
+  <% end %>
+
+  <%= turbo_stream.replace "edit_item_#{@item.id}" do %>
+    <%= render "collections/items/form", item: @item %>
+  <% end %>
+<% end %>

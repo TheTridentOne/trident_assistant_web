@@ -59,6 +59,36 @@ class Collections::ItemsController < Collections::BaseController
   end
 
   def update
+    item_params = params.require(:item).permit :metadata
+    json = JSON.parse item_params[:metadata]
+
+    token = json['token']
+    royalty = json['creator']['royalty']
+
+    _metadata =
+      @item
+      .metadata
+      .deep_merge(
+        {
+          'token' => token,
+          'creator' => {
+            'royalty' => royalty
+          }
+        }
+      )
+
+    metadata = TridentAssistant::Utils::Metadata.new(**_metadata.with_indifferent_access)
+
+    @item.update(
+      identifier: token['id'],
+      name: token['name'],
+      description: json['description'],
+      royalty: royalty,
+      metadata: metadata.json,
+      metahash: metadata.metahash
+    )
+
+    redirect_to collection_item_path(@collection, @item) if @item.errors.blank?
   end
 
   def destroy

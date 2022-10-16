@@ -1,0 +1,18 @@
+<%= form_for [item.collection, item] do |form| %>
+  <div class="mb-4">
+    <%= form.label :metadata, class: "block mb-2 font-bold" %>
+    <%= form.text_area :metadata, 
+      required: true, 
+      data: {
+        controller: "pretty-json",
+        pretty_json_json_value: item.metadata.to_json,
+        pretty_json_target: 'content'
+      },
+      class: "block w-full h-96 rounded bg-slate-500/10 border-0 focus:ring-0 p-4" %>
+  </div>
+
+  <div class="my-8 flex justify-center items-center space-x-4">
+    <%= link_to 'Back', :back, class: "border border-primary px-6 py-2 rounded text-primary cursor-pointer opacity-90 hover:opacity-100" %>
+    <%= form.submit 'Save', class: "bg-primary px-6 py-2 rounded text-white cursor-pointer opacity-90 hover:opacity-100" %>
+  </div>
+<% end %>

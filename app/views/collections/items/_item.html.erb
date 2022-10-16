@@ -41,6 +41,8 @@
 
       <%= link_to 'Detail', collection_item_path(item.collection, item) %>
 
+      <%= link_to 'Edit', edit_collection_item_path(item.collection, item) if item.drafted? %>
+
       <%= button_to 'Mint',
         view_modals_path(type: :new_mint_nft_task, collection_id: item.collection_id, identifiers: [item.identifier]),
         class: "" if item.drafted? %>
