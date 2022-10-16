@@ -56,9 +56,12 @@ class Collections::ItemsController < Collections::BaseController
   end
 
   def edit
+    redirect_to collection_item_path(@collection, @item) unless @item.drafted?
   end
 
   def update
+    redirect_to collection_item_path(@collection, @item) unless @item.drafted?
+
     item_params = params.require(:item).permit :metadata
     json = JSON.parse item_params[:metadata]
 
