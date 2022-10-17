@@ -22,20 +22,6 @@
       direct_upload: true %>
   </div>
 
-  <div class="mb-4">
-    <%= form.label :assets, class: "block mb-2" do %>
-      Images Zip File
-    <% end %>
-    <%= form.file_field :assets, class: "block w-full text-sm text-slate-500
-      file:mr-4 file:py-2 file:px-4
-      file:rounded-full file:border-0
-      file:text-sm file:font-semibold
-      file:bg-blue-50 file:text-blue-700
-      hover:file:bg-violet-100 file:cursor-pointer", 
-      accept: ".zip",
-      direct_upload: true %>
-  </div>
-
   <div class="my-8 flex justify-center items-center space-x-4">
     <%= link_to 'Back', collection_items_path, class: "border border-primary px-6 py-2 rounded text-primary cursor-pointer opacity-90 hover:opacity-100" %>
     <%= form.submit 'Save', class: "bg-primary px-6 py-2 rounded text-white cursor-pointer opacity-90 hover:opacity-100" %>
@@ -45,14 +31,10 @@
     <div class="font-bold mb-4">
       Notice
     </div>
-    <p>Here is an example for images and metadata zip folders files.</p>
+    <p>Here is an example for metadata zip folders files.</p>
     <pre>
       <code class="hljs">
 .
-  ├── images
-  │   ├── 001.png
-  │   ├── 002.png
-  │   └── 003.png
   └── metadata
       ├── 001.json
       ├── 002.json
