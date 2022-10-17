@@ -251,6 +251,8 @@ GEM
       timeout
     net-smtp (0.3.2)
       net-protocol
+    nice_partials (0.1.9)
+      actionview (>= 4.2.6)
     nio4r (2.5.8)
     nokogiri (1.13.8-x86_64-linux)
       racc (~> 1.4)
@@ -399,6 +401,7 @@ DEPENDENCIES
   jbuilder
   kredis
   msgpack_rails
+  nice_partials
   noticed
   pagy
   pg

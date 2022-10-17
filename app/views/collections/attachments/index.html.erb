@@ -1,0 +1,34 @@
+<%= render "collections/header", collection: @collection %>
+<%= render "collections/tabbar", collection: @collection, tab: 'attachments' %>
+
+<div class="mb-4 flex items-center space-x-4">
+  <%= link_to 'Upload', new_collection_attachment_path(@collection), data: { turbo_stream: true }, class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
+</div>
+
+<% if @attachments.blank? %>
+  <div class="text-center opacity-60 py-20">
+    No attachments yet
+  </div>
+<% else %>
+  <div class="grid gap-4 grid-cols-2 lg:grid-cols-4">
+    <% @attachments.each do |attachment| %>
+      <div id="<%= dom_id attachment %>" class="border rounded p-2">
+        <%= link_to attachment.url, target: '_blank' do %>
+          <%= image_tag attachment.url, class: "block w-full aspect-[1/1] object-cover object-center" %>
+        <% end %>
+
+        <div class="py-2 truncate opacity-75 text-sm">
+          <%= attachment.blob.filename %>
+        </div>
+        <div class="flex justify-end">
+          <%= link_to 'Delete', collection_attachment_path(@collection, attachment), 
+            class: "text-red-500",
+            data: {
+              turbo_method: :delete,
+              turbo_confirm: 'Are you sure to delete?'
+            } %> 
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

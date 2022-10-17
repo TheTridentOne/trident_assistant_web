@@ -24,6 +24,7 @@ class Collection < ApplicationRecord
   include AASM
 
   has_one_attached :icon
+  has_many_attached :attachments
 
   belongs_to :creator, class_name: 'User', optional: true
 
@@ -56,6 +57,16 @@ class Collection < ApplicationRecord
 
   def trident_url
     "https://thetrident.one/collections/#{id}"
+  end
+
+  def find_attachment_by_filename(filename)
+    attachments
+      .includes(:blob)
+      .find_by(
+        active_storage_blobs: {
+          filename: filename
+        }
+      )
   end
 
   private

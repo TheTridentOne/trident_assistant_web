@@ -1,0 +1,18 @@
+<%= form_for collection, url: collection_attach_path(collection) do |form| %>
+  <div class="mb-4">
+    <%= form.label :attachments, class: "block mb-2" %>
+    <%= form.file_field :attachments, class: "block w-full text-sm text-slate-500
+      file:mr-4 file:py-2 file:px-4
+      file:rounded-full file:border-0
+      file:text-sm file:font-semibold
+      file:bg-blue-50 file:text-blue-700
+      hover:file:bg-violet-100", 
+      accept: "image/*",
+      multiple: true,
+      direct_upload: true %>
+  </div>
+
+  <div class="mt-8 flex justify-center items-center space-x-4">
+    <%= form.submit 'Save', class: "bg-primary px-6 py-2 rounded text-white cursor-pointer opacity-90 hover:opacity-100" %>
+  </div>
+<% end %>

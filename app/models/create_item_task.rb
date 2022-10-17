@@ -42,7 +42,7 @@ class CreateItemTask < Task
       return
     end
 
-    image_url = json['image'] if URI::DEFAULT_PARSER.make_regexp.match(json['image'])
+    image_url = image_path if URI::DEFAULT_PARSER.make_regexp.match(image_path)
     img =
       if URI::DEFAULT_PARSER.make_regexp.match(image_path)
         begin
@@ -60,8 +60,14 @@ class CreateItemTask < Task
       return
     end
 
+    blob = ActiveStorage::Blob.find_by key: image_url.split('/').last
+
     item = collection.items.new identifier: identifier
-    item.icon.attach io: img, filename: identifier if image_url.blank?
+    if image_url.blank?
+      item.icon.attach io: img, filename: identifier
+    elsif blob.present?
+      item.icon.attach blob.signed_id
+    end
 
     media_hash = SHA3::Digest::SHA256.hexdigest(img.read)
     token = {

@@ -1,0 +1,11 @@
+<%= turbo_stream.update "modal-slot" do %>
+  <%= render "shared/modal" do |partial| %>
+    <% partial.content_for :title do %>
+      Upload Attachments
+    <% end %>
+
+    <% partial.content_for :content do %>
+      <%= render "collections/attachments_form", collection: @collection %>
+    <% end %>
+  <% end %>
+<% end %>

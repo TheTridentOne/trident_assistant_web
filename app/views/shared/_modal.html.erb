@@ -1,0 +1,25 @@
+<% backdrop ||= 'default' %>
+<% html_class ||= '' %>
+
+<div
+  data-controller="modal"
+  data-modal-backdrop-value="<%= backdrop %>"
+  data-modal-initial-state-value="show">
+  <div data-modal-target="wrapper" class="fixed inset-0 z-50 flex items-start justify-center w-full">
+    <button data-modal-target="backdrop" data-action="modal#backdropClicked" class="fixed top-0 left-0 w-screen h-full bg-black opacity-50"></button>
+    <div data-modal-target="modal" class="<%= html_class %> bg-white relative w-11/12 max-w-lg h-auto max-h-full mx-auto my-auto rounded-xl overflow-y-auto sm:scrollbar-hide">
+      <button data-action="modal#hide" class="absolute top-5 right-5">
+        <%= render "shared/icons/close", html_class: 'w-6 h-6 text-black' %>
+      </button>
+      <div class="p-6 sm:p-8">
+        <div data-modal-target="title" class="text-lg sm:text-xl font-bold mb-6">
+          <%= partial.yield :title %>
+        </div>
+        <div data-modal-target="content" class="overflow-y-scroll sm:scrollbar-hide">
+          <%= partial.yield :content %>
+        </div>
+      </div>
+      <div style="height:env(safe-area-inset-bottom)"></div>
+    </div>
+  </div>
+</div>

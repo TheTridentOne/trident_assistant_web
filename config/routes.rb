@@ -15,12 +15,15 @@ Rails.application.routes.draw do
   resources :view_modals, only: :create
   resources :collections do
     post :list
+    match :attach, via: %i[put patch]
   end
   resources :collections, module: :collections do
     resources :tasks, only: %i[index show] do
       post :cancel
       post :start_process
     end
+
+    resources :attachments, only: %i[index new destroy]
 
     resources :ask_order_tasks, only: :create
     resources :auction_order_tasks, only: :create

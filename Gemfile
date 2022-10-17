@@ -89,6 +89,9 @@ gem 'after_commit_everywhere'
 # Rubyzip is a ruby library for reading and writing zip files.
 gem 'rubyzip'
 
+# A little bit of magic to make partials perfect for components.
+gem 'nice_partials'
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

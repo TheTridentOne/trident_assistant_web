@@ -82,6 +82,16 @@ class CollectionsController < ApplicationController
     end
   end
 
+  def attach
+    @collection = current_user.collections.find params[:collection_id]
+    # @collection.update params.require(:collection).permit(attachments: [])
+    params[:collection][:attachments].each do |attachment|
+      @collection.attachments.attach attachment
+    end
+
+    redirect_to collection_attachments_path(@collection)
+  end
+
   private
 
   def collection_params

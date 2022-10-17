@@ -64,6 +64,8 @@ class GenerateNftTask < Task
       image_path =
         if URI::DEFAULT_PARSER.make_regexp.match(json['image'])
           json['image']
+        elsif collection.find_attachment_by_filename(json['image'])
+          collection.find_attachment_by_filename(json['image']).url
         else
           png_files_manifest[json['image']]
         end
