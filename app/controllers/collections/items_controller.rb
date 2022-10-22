@@ -49,10 +49,10 @@ class Collections::ItemsController < Collections::BaseController
     end
   end
 
-  def new
+  def show
   end
 
-  def show
+  def new
   end
 
   def edit

@@ -1,0 +1,23 @@
+<%= form_with url: items_path, method: :get, class: "flex items-center flex-wrap" do |form| %>
+  <%= form.select :collection_id, 
+    current_user.collections.pluck(:name, :id) +
+    [
+      ['None', '']
+    ], 
+    { selected: @collection&.id || '' }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.select :type, 
+    [
+      ['Wallet', 'wallet'], 
+      ['Listed', 'listed'], 
+      ['On Sale', 'on_sale'], 
+      ['On Auction', 'on_auction'], 
+      ['Airdrop', 'airdrop'], 
+      ['Drafted', 'drafted'], 
+      ['All', 'all'], 
+    ], 
+    { selected: @type }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.text_field :query, value: @query, placeholder: "Search", class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.submit 'Refresh', class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
+<% end %>

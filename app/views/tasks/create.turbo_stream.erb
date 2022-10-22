@@ -1,0 +1,30 @@
+<% case params[:type] %>
+<% when 'AskOrderTask' %>
+  <%= render 'ask_order_tasks/new', 
+    identifiers: params[:identifiers], 
+    collection_id: params[:collection_id] %>
+<% when 'AuctionOrderTask' %>
+  <%= render 'auction_order_tasks/new', 
+    identifiers: params[:identifiers], 
+    collection_id: params[:collection_id] %>
+<% when 'CancelOrderTask' %>
+  <%= render 'cancel_order_tasks/new', 
+    identifiers: params[:identifiers], 
+    collection_id: params[:collection_id] %>
+<% when 'WithdrawNftTask' %>
+  <%= render 'withdraw_nft_tasks/new', 
+    identifiers: params[:identifiers], 
+    collection_id: params[:collection_id] %>
+<% when 'DepositNftTask' %>
+  <%= render 'deposit_nft_tasks/new', 
+    identifiers: params[:identifiers], 
+    collection_id: params[:collection_id] %>
+<% when 'TransferNftTask' %>
+  <%= render 'transfer_nft_tasks/new', 
+    identifiers: params[:identifiers], 
+    collection_id: params[:collection_id] %>
+<% when 'MintNftTask' %>
+  <%= render 'collections/mint_nft_tasks/new', 
+    identifiers: params[:identifiers], 
+    collection_id: params[:collection_id] %>
+<% end %>

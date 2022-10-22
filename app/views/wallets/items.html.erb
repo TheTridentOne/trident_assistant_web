@@ -3,11 +3,18 @@
     <div class="text-center p-4">No records</div>
   <% else %>
     <div data-controller="infinite-scroll" class="w-full overflow-x-scroll scrollbar-hide">
-      <table class='w-full table-auto min-w-max'>
+      <table class='mb-4 border-collapse w-full border border-slate-400 dark:border-slate-500 bg-white dark:bg-slate-800 text-sm shadow-sm'>
         <thead>
           <tr class="bg-zinc-100 dark:bg-zinc-900">
-            <th class="p-2"><%= t('name') %></th>
-            <th class="p-2"><%= t('collection') %></th>
+            <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+              <%= t('name') %>
+            </th>
+            <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+              <%= t('collection') %>
+            </th>
+            <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+              <%= t('actions') %>
+            </th>
           </tr>
         </thead>
           <tbody id="wallet_collectibles_list">

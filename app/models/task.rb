@@ -28,7 +28,7 @@ class Task < ApplicationRecord
   store_accessor :params, %i[identifier]
 
   belongs_to :user
-  belongs_to :collection
+  belongs_to :collection, optional: true
   belongs_to :item, primary_key: :token_id, foreign_key: :token_id, inverse_of: :tasks, optional: true
 
   before_validation :setup_token_id, on: :create
@@ -106,5 +106,7 @@ class Task < ApplicationRecord
 
   def setup_token_id
     self.token_id = MixinBot::Utils::Nfo.new(collection: collection_id, token: identifier).unique_token_id if identifier.present?
+
+    self.collection_id = item.collection_id if item&.collection&.creator == user
   end
 end

@@ -7,6 +7,12 @@
       </div>
     <% end %>
     <%= link_to 'Collections', collections_path, class: "block font-bold p-4 hover:bg-blue-500 hover:text-white #{@nav_tab == 'collections' ? 'border-b-2 border-blue-500' : ''}" %>
+    <%= link_to 'Items', items_path(collection_id: params[:collection_id]), class: "block font-bold p-4 hover:bg-blue-500 hover:text-white #{@nav_tab == 'items' ? 'border-b-2 border-blue-500' : ''}" %>
+
+    <%= link_to 'Orders', orders_path(collection_id: params[:collection_id]), class: "block font-bold p-4 hover:bg-blue-500 hover:text-white #{@nav_tab == 'orders' ? 'border-b-2 border-blue-500' : ''}" %>
+
+    <%= link_to 'Tasks', tasks_path(collection_id: params[:collection_id]), class: "block font-bold p-4 hover:bg-blue-500 hover:text-white #{@nav_tab == 'tasks' ? 'border-b-2 border-blue-500' : ''}" %>
+
     <%= link_to 'Wallet', wallet_path, class: "block font-bold p-4 hover:bg-blue-500 hover:text-white #{@nav_tab == 'wallet' ? 'border-b-2 border-blue-500' : ''}" %>
     <%= link_to 'Logout', logout_path, class: "ml-auto block font-bold p-4 hover:bg-blue-500 hover:text-white" %>
   </div>

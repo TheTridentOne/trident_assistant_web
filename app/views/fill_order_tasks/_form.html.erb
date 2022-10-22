@@ -1,0 +1,11 @@
+<%= form_for task do |form| %>
+  <%= form.hidden_field :type, value: 'FillOrderTask' %>
+  <%= form.hidden_field :collection_id %>
+  <% (order_ids || []).each do |order_id| %>
+    <%= form.hidden_field :order_ids, multiple: true, value: order_id %>
+  <% end %>
+
+  <div class="mt-8 flex justify-center items-center space-x-4">
+    <%= form.submit 'Confirm', class: "bg-primary px-6 py-2 rounded text-white cursor-pointer opacity-90 hover:opacity-100" %>
+  </div>
+<% end %>

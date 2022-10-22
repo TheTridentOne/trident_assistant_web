@@ -47,7 +47,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
-# A simple API wrapper for Mixin Network in Ruby
+# A simple API wrapper for Trident in Ruby
 gem 'trident_assistant', git: 'https://github.com/TheTridentOne/trident_assistant.git'
 
 # The Rails way to serialize/deserialize objects with Message Pack.

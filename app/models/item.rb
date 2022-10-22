@@ -42,7 +42,7 @@ class Item < ApplicationRecord
   validates :metahash, presence: true, uniqueness: true
   validates :identifier, presence: true, format: { with: /\A(?!0)\d+\z/ }, uniqueness: { scope: :collection_id }
 
-  default_scope -> { order('identifier::integer ASC') }
+  scope :order_by_id, -> { order('identifier::integer ASC') }
 
   aasm column: :state do
     state :drafted, initialize: true

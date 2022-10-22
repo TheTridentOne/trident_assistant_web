@@ -1,0 +1,30 @@
+<div class="mb-4 flex items-center space-x-4">
+  <% case @type %>
+  <% when 'listed' %>
+    <%= render 'items/bulk_task_form', type: :AskOrderTask, collection_id: @collection&.id, action: 'Sell All' %>
+    <%= render 'items/bulk_task_form', type: :AuctionOrderTask, collection_id: @collection&.id, action: 'Auction All' %>
+    <%= render 'items/bulk_task_form', type: :WithdrawNftTask, collection_id: @collection&.id, action: 'Withdraw All' %>
+  <% when 'airdrop' %>
+    <%= render 'items/bulk_task_form', type: :WithdrawNftTask, collection_id: @collection&.id, action: 'Withdraw All' %>
+  <% when 'wallet' %>
+    <%= render 'items/bulk_task_form', type: :DepositNftTask, collection_id: @collection&.id, action: 'Deposit All' %>
+    <%= render 'items/bulk_task_form', type: :TransferNftTask, collection_id: @collection&.id, action: 'Transfer All' %>
+  <% when 'drafted' %>
+    <%= render 'items/bulk_task_form', type: :MintNftTask, collection_id: @collection&.id, action: 'Mint All' %>
+    <% if @collection.present? %>
+      <%= button_to collection_bulk_destroy_items_path(@collection),
+        class: 'hidden',
+        form: {
+          data: {
+            turbo_confirm: 'Are you sure to delete the selected NFTs?'
+          }
+        },
+        data: {
+          checkbox_select_all_target: 'submitButton' 
+        } do %>
+        <div data-checkbox-select-all-target="valueInput" data-name="identifiers[]" class="hidden"></div>
+        <div class="cursor-pointer rounded bg-red-500 hover:bg-red-600 text-white px-4 py-2 m-1">Delete All</div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

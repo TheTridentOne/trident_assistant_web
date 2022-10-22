@@ -13,34 +13,38 @@ Rails.application.routes.draw do
   get :logout, to: 'sessions#destroy'
 
   resources :view_modals, only: :create
+
   resources :collections do
     post :list
     match :attach, via: %i[put patch]
   end
+
   resources :collections, module: :collections do
-    resources :tasks, only: %i[index show] do
-      post :cancel
-      post :start_process
-    end
-
-    resources :attachments, only: %i[index new destroy]
-
-    resources :ask_order_tasks, only: :create
-    resources :auction_order_tasks, only: :create
-    resources :cancel_order_tasks, only: :create
-    resources :fill_order_tasks, only: :create
-
-    resources :deposit_nft_tasks, only: :create
-    resources :transfer_nft_tasks, only: :create
-    resources :withdraw_nft_tasks, only: :create
-    resources :mint_nft_tasks, only: :create
-
+    resources :mint_nft_tasks, only: %i[new create]
     resources :generate_nft_tasks, only: :create
 
-    resources :items
+    resources :items, except: :index
     post :bulk_destroy_items, to: 'items#bulk_destroy'
 
     resources :orders, only: %i[index]
+
+    resources :attachments, only: %i[index new destroy]
+  end
+
+  resources :ask_order_tasks, only: %i[new create]
+  resources :auction_order_tasks, only: %i[new create]
+  resources :cancel_order_tasks, only: %i[new create]
+  resources :fill_order_tasks, only: %i[new create]
+
+  resources :deposit_nft_tasks, only: %i[new create]
+  resources :transfer_nft_tasks, only: %i[new create]
+  resources :withdraw_nft_tasks, only: %i[new create]
+
+  resources :items, only: %i[index]
+  resources :orders, only: %i[index]
+  resources :tasks, only: %i[index show create] do
+    post :cancel
+    post :start_process
   end
 
   resource :wallet, only: %i[show] do

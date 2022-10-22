@@ -1,0 +1,56 @@
+<tr id="<%= dom_id task %>">
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= task.collection&.name || '-' %>
+  </td>
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= task.id %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <% if task.item.present? %>
+      <%= link_to tasks_path(collection_id: task.collection&.id, identifier: task.item.identifier, type: params[:type], state: params[:state], ), class: "flex items-center space-x-2" do %>
+        <%= image_tag task.item.icon_url, class: "w-12 h-12 block" %>
+        <div>
+          <div class="">
+            #<%= task.item.identifier %>
+          </div>
+          <div class="text-sm opacity-70">
+            <%= task.item.name %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      -
+    <% end %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= task.type %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <div class="flex items-center space-x-2">
+      <div class="w-2 h-2 rounded-full
+        <%= {
+          pending: 'bg-blue-500',
+          processing: 'bg-yellow-500',
+          failed: 'bg-red-500',
+          cancelled: 'bg-gray-500',
+          finished: 'bg-green-500'
+        }[task.state.to_sym] %>"></div>
+      <div><%= task.state %></div>
+    </div>
+  </td>
+ 
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= task.processed_at || '-' %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <div class="flex items-center justify-center space-x-2">
+      <%= link_to 'Detail', task_path(task) %>
+      <%= button_to 'Process', task_start_process_path(task), class: "", form: { data: { turbo_confirm: "Are you sure to start start_process this task?" }} if task.pending? %>
+      <%= button_to 'Cancel', task_cancel_path(task), class: "", form: { data: { turbo_confirm: "Are you sure to cancel this task?" }} if task.pending? %>
+    </div>
+  </td>
+</tr>

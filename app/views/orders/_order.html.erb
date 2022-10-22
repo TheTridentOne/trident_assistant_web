@@ -1,0 +1,69 @@
+<% order = OpenStruct.new(order) if order.is_a?(Hash) %>
+<tr>
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <div class="flex justify-center">
+      <label class="cursor-pointer">
+        <input type="checkbox" data-checkbox-select-all-target="checkbox" value="<%= order.id %>" />
+      </label>
+    </div>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= link_to orders_path(collection_id: @collection&.id, metahash: order.item['metahash'], type: params[:type], state: params[:state], ), class: "flex items-center space-x-2" do %>
+      <%= image_tag order.item['icon_url'], class: "w-12 h-12 block" %>
+      <div>
+        <div class="">
+          #<%= order.item['identifier'] %>
+        </div>
+        <div class="text-sm opacity-70">
+          <%= order.item['name'] %>
+        </div>
+      </div>
+    <% end %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= order.type %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= order.state %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= order.price %>
+    <%= order.currency['symbol'] %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= link_to order.maker['name'], "https://thetrident.one/users/#{order.maker['id']}", target: "_blank" %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <% if order.taker.present? %>
+      <%= link_to order.taker['name'], "https://thetrident.one/users/#{order.maker['id']}", target: "_blank" %>
+    <% else %>
+      -
+    <% end %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= order.opened_at %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <%= order.state == 'completed' ? order.completed_at : order.expired_at %>
+  </td>
+
+  <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
+    <div class="flex items-center justify-center space-x-2">
+      <%= link_to 'Trident', "https://thetrident.one/collectibles/#{order.item['metahash']}", target: "_blank" %>
+      <%= button_to 'Cancel', 
+        tasks_path(type: :CancelOrderTask, collection_id: order.item['collection_id'], order_ids: [order.id]), 
+        class: '' if order.state == 'open' && order.maker['id'] == current_user.id %>
+      <%= button_to 'Fill', 
+        tasks_path(type: :FillOrderTask, collection_id: order.item['collection_id'], order_ids: [order.id]), 
+        class: '' if order.state == 'open' && order.maker['id'] != current_user.id && order.owner&.[]('id') == current_user.id %>
+    </div>
+  </td>
+</tr>

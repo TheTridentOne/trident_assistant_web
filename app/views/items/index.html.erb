@@ -1,0 +1,60 @@
+<%= render "collections/header", collection: @collection if @collection.present? %>
+<%= render "collections/tabbar", collection: @collection, tab: 'items' if @collection.present? %>
+
+<div class="mb-4 flex items-center space-x-4">
+  <%= render "items/query" %>
+
+  <%= link_to 'Generate NFT', new_collection_item_path(@collection), class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" if @collection.present? %>
+
+  <%= button_to 'Sync From Trident', sync_collections_path, class: "py-2 px-4 cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white rounded" %>
+</div>
+
+<div data-controller="checkbox-select-all">
+  <%= render "items/bulk_actions_bar" %>
+  <% if @items.blank? %>
+    <div class="p-4 text-center opacity-70">- No records -</div>
+  <% else %>
+    <table class="mb-4 border-collapse w-full border border-slate-400 dark:border-slate-500 bg-white dark:bg-slate-800 text-sm shadow-sm">
+      <thead class="bg-slate-50 dark:bg-slate-700">
+        <tr>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            <div class="flex justify-center">
+              <label class="cursor-pointer">
+                <input type="checkbox" data-checkbox-select-all-target="checkboxAll" />
+                <span>All</span>
+              </label>
+              </div>
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Icon
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Name
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Collection
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            State
+          </th>
+          <th class="border border-slate-300 dark:border-slate-600 font-semibold p-4 text-slate-900 dark:text-slate-200 text-left">
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: "items/item", collection: @items %>
+      </tbody>
+    </table>
+    <% if @pagy.present? %>
+      <div class="flex justify-center">
+        <%== pagy_nav @pagy %>
+      </div>
+    <% else %>
+      <div class="flex items-center justify-center space-x-6">
+        <%= link_to '< Prev', collection_items_path(@collection.id, type: @type, page: @prev_page) if @prev_page.present? %>
+        <%= link_to 'Next >', collection_items_path(@collection.id, type: @type, page: @next_page) if @next_page.present? %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

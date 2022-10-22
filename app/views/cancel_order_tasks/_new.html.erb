@@ -1,0 +1,16 @@
+<%= turbo_stream.update "modal-slot" do %>
+  <%= render "shared/modal" do |partial| %>
+    <% partial.content_for :title do %>
+      Cancel Order
+    <% end %>
+
+    <% partial.content_for :content do %>
+      <div class="">
+        You are cancelling <%= params[:order_ids].size %> orders
+      </div>
+      <%= render 'cancel_order_tasks/form', 
+        task: CancelOrderTask.new(collection_id: params[:collection_id]), 
+        order_ids: params[:order_ids] %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,39 @@
+<%= form_with url: orders_path(collection_id: params[:collection_id]), method: :get, class: "flex items-center flex-wrap" do |form| %>
+  <%= form.select :collection_id, 
+    current_user.collections.pluck(:name, :id) +
+    [
+      ['All', '']
+    ], 
+    { selected: params[:collection_id] || '' }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.select :type, 
+    [
+      ['Ask', 'ask'], 
+      ['Auction', 'auction'], 
+      ['Bid', 'bid'], 
+      ['All Type', 'all'], 
+    ], 
+    { selected: @type }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.select :state, 
+    [
+      ['Open', 'open'], 
+      ['Completed', 'completed'], 
+    ], 
+    { selected:  @state }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.select :maker, 
+    [
+      [current_user.name, current_user.id], 
+      ['All Makers', ''], 
+    ], 
+    { selected: @maker }, 
+    class: "rounded-lg m-1 dark:bg-zinc-900" %>
+  <%= form.submit :Refresh, class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" %>
+  <% if params[:metahash].present? %>
+    <div class="ml-4">
+      <%= form.label :metahash %>
+      <%= form.text_field :metahash, value: params[:metahash], class: "rounded-lg m-1 dark:bg-zinc-900" %>
+    </div>
+  <% end %>
+<% end %>

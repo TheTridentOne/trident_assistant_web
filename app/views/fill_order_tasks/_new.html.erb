@@ -1,0 +1,16 @@
+<%= turbo_stream.update "modal-slot" do %>
+  <%= render "shared/modal" do |partial| %>
+    <% content_for :title do %>
+      <%= t('fill_order') %>
+    <% end %>
+
+    <% content_for :content do %>
+      <div class="">
+        <%= t('are_you_sure_to_fill_order') %>
+      </div>
+      <%= render 'fill_order_tasks/form', 
+        task: FillOrderTask.new(collection_id: params[:collection_id]), 
+        order_id: params[:order_id] %>
+    <% end %>
+  <% end %>
+<% end %>

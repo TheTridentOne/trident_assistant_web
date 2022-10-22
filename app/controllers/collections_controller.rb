@@ -8,16 +8,19 @@ class CollectionsController < ApplicationController
     @nav_tab = 'collections'
   end
 
+  def show
+  end
+
   def new
+  end
+
+  def edit
   end
 
   def create
     @collection = current_user.collections.new collection_params
 
     redirect_to collections_path, success: 'Created' if @collection.save
-  end
-
-  def edit
   end
 
   def update
@@ -42,9 +45,6 @@ class CollectionsController < ApplicationController
     else
       render_flash :danger, @collection.errors.full_messages.join(';')
     end
-  end
-
-  def show
   end
 
   def sync

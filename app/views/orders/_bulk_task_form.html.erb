@@ -1,0 +1,4 @@
+    <%= form_with url: tasks_path(type: type, collection_id: collection_id) do |form| %>
+      <div data-checkbox-select-all-target="valueInput" data-name="order_ids[]" class="hidden"></div>
+      <%= form.submit action, data: { checkbox_select_all_target: 'submitButton' }, class: 'cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1 hidden' %>
+    <% end %>

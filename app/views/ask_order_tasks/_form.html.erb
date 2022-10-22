@@ -1,0 +1,37 @@
+<%= form_for task do |form| %>
+  <%= form.hidden_field :type, value: 'AskOrderTask' %>
+  <%= form.hidden_field :collection_id %>
+  <%= form.text_field :time_zone, value: "UTC", class: 'hidden', data: { controller: "time-zone" } %>
+  <% (identifiers || []).each do |identifier| %>
+    <%= form.hidden_field :identifiers, multiple: true, value: identifier %>
+  <% end %>
+
+  <div class="mb-4">
+    <%= form.label :asset_id, class: "block mb-2" %>
+    <%= form.select :asset_id, TridentAssistant::API.new.assets.map{ |a| [a['symbol'], a['asset_id']] }, { required: true }, class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :price, class: "block mb-2" %>
+    <%= form.number_field :price, required: true, min: '0.0001', step: '0.0001', class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
+  </div>
+
+  <div class="mb-4">
+    <%= form.label :expire_at, class: "block mb-2" %>
+    <%= form.text_field :expire_at,
+      required: true,
+      data: {
+        controller: "flatpickr",
+        flatpickr_enable_time: true,
+        flatpickr_time_24hr: true,
+        flatpickr_default_date: 7.days.from_now,
+        flatpickr_min_date: 30.minutes.from_now,
+        flatpickr_max_date: 6.months.from_now
+      },
+      class: "block w-full rounded bg-slate-500/10 border-0 focus:ring-0 py-5" %>
+  </div>
+
+  <div class="mt-8 flex justify-center items-center space-x-4">
+    <%= form.submit 'Save', class: "bg-primary px-6 py-2 rounded text-white cursor-pointer opacity-90 hover:opacity-100" %>
+  </div>
+<% end %>
