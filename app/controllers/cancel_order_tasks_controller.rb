@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class CancelOrderTasksController < ApplicationController
-  before_action :set_navtab
-
   def create
     successes = []
     @errors = []
@@ -27,9 +25,5 @@ class CancelOrderTasksController < ApplicationController
     params
       .require(:cancel_order_task)
       .permit(:type, :collection_id)
-  end
-
-  def set_navtab
-    @nav_tab = 'tasks'
   end
 end

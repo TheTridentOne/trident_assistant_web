@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 class TransferNftTasksController < ApplicationController
-  def new
-  end
-
   def create
     successes = []
     @errors = []

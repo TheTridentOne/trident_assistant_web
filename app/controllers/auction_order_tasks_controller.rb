@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class AuctionOrderTasksController < ApplicationController
-  before_action :set_navtab
-
   def create
     successes = []
     @errors = []
@@ -27,9 +25,5 @@ class AuctionOrderTasksController < ApplicationController
     params
       .require(:auction_order_task)
       .permit(:type, :collection_id, :asset_id, :price, :reserve_price, :expire_at, :time_zone)
-  end
-
-  def set_navtab
-    @nav_tab = 'tasks'
   end
 end
