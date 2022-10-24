@@ -87,7 +87,7 @@ class Task < ApplicationRecord
   end
 
   def broadcast
-    broadcast_append_later_to "user_#{user_id}", target: 'flashes', partial: 'flashes/flash', locals: { message: "#{type} for #{collection.name}(##{identifier}) #{state}", type: 'notice' }
+    broadcast_append_later_to "user_#{user_id}", target: 'flashes', partial: 'flashes/flash', locals: { message: "#{type} for #{collection&.name}(##{identifier}) #{state}", type: 'notice' }
 
     broadcast_replace_later_to "user_#{user_id}", target: "#{type.underscore}_#{id}", partial: 'collections/tasks/task', locals: { task: self }
   end
