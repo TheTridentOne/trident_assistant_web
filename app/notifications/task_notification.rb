@@ -10,7 +10,7 @@ class TaskNotification < ApplicationNotification
   end
 
   def message
-    [task.type.underscore.humanize, "for #{task.collection.name}", (task.identifier.present? ? "(##{task.identifier})" : ''), task.state].join(' ')
+    [task.type.underscore.humanize, "for #{task.collection&.name || '-'}", (task.identifier.present? ? "(##{task.identifier})" : ''), task.state].join(' ')
   end
 
   def plain_text_data
@@ -19,7 +19,7 @@ class TaskNotification < ApplicationNotification
         == Task #{task.state} ==
 
         - Type: #{task.type.underscore.humanize}
-        - Collection: #{task.collection.name}
+        - Collection: #{task.collection&.name || '-'}
       TEXT
 
     text += "- Token: ##{task.identifier}\n" if task.identifier.present?
