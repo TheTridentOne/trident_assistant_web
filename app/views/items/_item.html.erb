@@ -2,7 +2,7 @@
   <td class="border border-slate-300 dark:border-slate-700 p-2 text-slate-500 dark:text-slate-400">
     <div class="flex justify-center">
       <label class="cursor-pointer">
-        <input type="checkbox" data-checkbox-select-all-target="checkbox" value="<%= item.identifier %>" />
+        <input type="checkbox" data-checkbox-select-all-target="checkbox" value="<%= item.token_id %>" />
       </label>
     </div>
   </td>
@@ -44,7 +44,7 @@
       <%= link_to 'Edit', edit_collection_item_path(item.collection, item) if item.drafted? %>
 
       <%= button_to 'Mint',
-        view_modals_path(type: :new_mint_nft_task, collection_id: item.collection_id, identifiers: [item.identifier]),
+        view_modals_path(type: :new_mint_nft_task, collection_id: item.collection_id, token_ids: [item.token_id]),
         class: "" if item.drafted? %>
 
       <%= button_to 'Delete', collection_item_path(item.collection, item), 
@@ -59,24 +59,24 @@
       <% case @type %>
       <% when 'listed' %>
         <%= button_to 'Sell',
-          tasks_path(type: :AskOrderTask, collection_id: item.collection_id, identifiers: [item.identifier]),
+          tasks_path(type: :AskOrderTask, collection_id: item.collection_id, token_ids: [item.token_id]),
           class: "" %>
         <%= button_to 'Auction',
-          tasks_path(type: :AuctionOrderTask, collection_id: item.collection_id, identifiers: [item.identifier]),
+          tasks_path(type: :AuctionOrderTask, collection_id: item.collection_id, token_ids: [item.token_id]),
           class: "" %>
         <%= button_to 'Withdraw', 
-          tasks_path(type: :WithdrawNftTask, collection_id: item.collection_id, identifiers: [item.identifier]),
+          tasks_path(type: :WithdrawNftTask, collection_id: item.collection_id, token_ids: [item.token_id]),
           class: "" %>
       <% when 'airdrop' %>
         <%= button_to 'Withdraw', 
-          tasks_path(type: :WithdrawNftTask, collection_id: item.collection_id, identifiers: [item.identifier]),
+          tasks_path(type: :WithdrawNftTask, collection_id: item.collection_id, token_ids: [item.token_id]),
           class: "" %>
       <% when 'wallet' %>
         <%= button_to 'Deposit', 
-          tasks_path(type: :DepositNftTask, collection_id: item.collection_id, identifiers: [item.identifier]),
+          tasks_path(type: :DepositNftTask, collection_id: item.collection_id, token_ids: [item.token_id]),
           class: "" %>
         <%= button_to 'Transfer', 
-          tasks_path(type: :TransferNftTask, collection_id: item.collection_id, identifiers: [item.identifier]),
+          tasks_path(type: :TransferNftTask, collection_id: item.collection_id, token_ids: [item.token_id]),
           class: "" %>
       <% when 'on_sale' %>
         <%= link_to 'Orders',

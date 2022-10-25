@@ -6,12 +6,7 @@ class TasksController < ApplicationController
 
   def index
     tasks = current_user.tasks
-    tasks =
-      if @collection.present?
-        tasks.where(collection_id: @collection.id)
-      else
-        tasks.where.not(collection_id: current_user.collections.ids)
-      end
+    tasks = tasks.where(collection_id: @collection.id) if @collection.present?
 
     tasks = tasks.where("params->>'identifier' = ?", params[:identifier].to_s) if params[:identifier].present?
 

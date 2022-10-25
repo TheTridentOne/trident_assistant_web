@@ -6,11 +6,11 @@
 
     <% partial.content_for :content do %>
       <div class="mb-4 font-bold">
-        You are selling <%= params[:identifiers].size %> NFTs
+        You are selling <%= params[:token_ids].size %> NFTs
       </div>
       <%= render 'ask_order_tasks/form', 
         task: AskOrderTask.new(collection_id: params[:collection_id]), 
-        identifiers: params[:identifiers] %>
+        token_ids: params[:token_ids] %>
     <% end %>
   <% end %>
 <% end %>

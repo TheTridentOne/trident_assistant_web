@@ -31,7 +31,7 @@ class Task < ApplicationRecord
   belongs_to :collection, optional: true
   belongs_to :item, primary_key: :token_id, foreign_key: :token_id, inverse_of: :tasks, optional: true
 
-  before_validation :setup_token_id, on: :create
+  before_validation :setup_default_attributes, on: :create
 
   validates :type, presence: true
   validate :ensure_not_create_duplicated_task
@@ -104,7 +104,12 @@ class Task < ApplicationRecord
     errors.add(:type, "There is a #{type} task in pending") if user.tasks.pending.order(created_at: :desc).find_by(type: type, token_id: token_id).present?
   end
 
-  def setup_token_id
-    self.token_id = MixinBot::Utils::Nfo.new(collection: collection_id, token: identifier).unique_token_id if identifier.present?
+  def setup_default_attributes
+    if item.present?
+      self.collection_id = item.collection_id
+      self.identifier = item.identifier
+    elsif collection_id.present? && identifier.present?
+      self.token_id = MixinBot::Utils::Nfo.new(collection: collection_id, token: identifier).unique_token_id
+    end
   end
 end

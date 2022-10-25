@@ -2,8 +2,8 @@
   <%= form.hidden_field :type, value: 'AskOrderTask' %>
   <%= form.hidden_field :collection_id %>
   <%= form.text_field :time_zone, value: "UTC", class: 'hidden', data: { controller: "time-zone" } %>
-  <% (identifiers || []).each do |identifier| %>
-    <%= form.hidden_field :identifiers, multiple: true, value: identifier %>
+  <% (token_ids || []).each do |token_id| %>
+    <%= form.hidden_field :token_ids, multiple: true, value: token_id %>
   <% end %>
 
   <div class="mb-4">

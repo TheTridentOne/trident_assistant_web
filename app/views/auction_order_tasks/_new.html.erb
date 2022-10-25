@@ -6,11 +6,11 @@
 
     <% partial.content_for :content do %>
       <div class="mb-4 font-bold">
-        You are auctioning <%= params[:identifiers].size %> NFTs
+        You are auctioning <%= params[:token_ids].size %> NFTs
       </div>
       <%= render 'auction_order_tasks/form', 
         task: AuctionOrderTask.new(collection_id: params[:collection_id]), 
-        identifiers: params[:identifiers] %>
+        token_ids: params[:token_ids] %>
     <% end %>
   <% end %>
 <% end %>

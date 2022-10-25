@@ -5,10 +5,10 @@ class AuctionOrderTasksController < ApplicationController
     successes = []
     @errors = []
 
-    identifiers = params.dig(:auction_order_task, :identifiers) || []
+    token_ids = params.dig(:auction_order_task, :token_ids) || []
 
-    identifiers.each do |identifier|
-      task = current_user.tasks.create task_params.merge(identifier: identifier)
+    token_ids.each do |token_id|
+      task = current_user.tasks.create task_params.merge(token_id: token_id)
       if task.save
         successes.push task.id
       else

@@ -2,7 +2,7 @@
   <%= form.select :collection_id, 
     current_user.collections.pluck(:name, :id) +
     [
-      ['Others', '']
+      ['All', '']
     ], 
     { selected: @collection&.id || '' }, 
     class: "rounded-lg m-1 dark:bg-zinc-900" %>

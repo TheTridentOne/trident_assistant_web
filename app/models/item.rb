@@ -85,8 +85,6 @@ class Item < ApplicationRecord
   private
 
   def setup_token_id
-    return unless drafted?
-
     self.token_id = MixinBot::Utils::Nfo.new(collection: collection_id, token: identifier).unique_token_id
   end
 

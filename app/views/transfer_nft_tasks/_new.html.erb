@@ -6,11 +6,11 @@
 
     <% partial.content_for :content do %>
       <div class="font-bold mb-4">
-        You are transfering <%= params[:identifiers].size %> NFTs
+        You are transfering <%= params[:token_ids].size %> NFTs
       </div>
       <%= render 'transfer_nft_tasks/form', 
         task: TransferNftTask.new(collection_id: params[:collection_id]), 
-        identifiers: params[:identifiers] %>
+        token_ids: params[:token_ids] %>
     <% end %>
   <% end %>
 <% end %>
