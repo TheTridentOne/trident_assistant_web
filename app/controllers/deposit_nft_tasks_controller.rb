@@ -16,7 +16,7 @@ class DepositNftTasksController < ApplicationController
       end
     end
 
-    redirect_to tasks_path(collection_id: task_params[:collection_id]), success: "#{successes.count} task created" if successes.present?
+    redirect_to tasks_path(collection_id: params[:collection_id]), success: "#{successes.count} task created" if successes.present?
   end
 
   private

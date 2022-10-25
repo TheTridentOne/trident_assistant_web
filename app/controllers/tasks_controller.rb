@@ -5,11 +5,12 @@ class TasksController < ApplicationController
   before_action :load_task, only: %i[show cancel start_process]
 
   def index
+    tasks = current_user.tasks
     tasks =
       if @collection.present?
-        @collection.tasks
+        tasks.where(collection_id: @collection.id)
       else
-        current_user.tasks.where.not(collection_id: current_user.collections.ids)
+        tasks.where.not(collection_id: current_user.collections.ids)
       end
 
     tasks = tasks.where("params->>'identifier' = ?", params[:identifier].to_s) if params[:identifier].present?

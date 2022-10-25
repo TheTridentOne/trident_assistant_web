@@ -106,7 +106,5 @@ class Task < ApplicationRecord
 
   def setup_token_id
     self.token_id = MixinBot::Utils::Nfo.new(collection: collection_id, token: identifier).unique_token_id if identifier.present?
-
-    self.collection_id = item.collection_id if item&.collection&.creator == user
   end
 end
