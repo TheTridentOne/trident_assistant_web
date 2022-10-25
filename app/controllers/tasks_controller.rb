@@ -52,12 +52,12 @@ class TasksController < ApplicationController
 
   def cancel
     @task.cancel! if @task.may_cancel?
-    redirect_to collection_tasks_path(@collection)
+    redirect_to tasks_path(collection_id: @collection)
   end
 
   def start_process
     @task.process_async if @task.pending?
-    redirect_to collection_tasks_path(@collection)
+    redirect_to tasks_path(collection_id: @collection)
   end
 
   private
