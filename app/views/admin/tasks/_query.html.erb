@@ -1,4 +1,4 @@
-<%= form_with url: admin_collection_tasks_path(@collection.id), method: :get, class: "flex items-center flex-wrap" do |form| %>
+<%= form_with url: admin_tasks_path(collection_id: params[:collection_id]), method: :get, class: "flex items-center flex-wrap" do |form| %>
   <%= form.select :type, 
     [
       ['Ask Order', 'AskOrderTask'], 

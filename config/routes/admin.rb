@@ -18,11 +18,10 @@ constraints(AdminConstraint.new) do
     mount Sidekiq::Web, at: 'sidekiq', constraints: AdminConstraint.new
 
     resources :users, only: %i[index show]
-    resources :collections, only: %i[index show] do
-      resources :items, only: %i[index show]
-      resources :orders, only: %i[index show]
-      resources :tasks, only: %i[index show]
-    end
+    resources :collections, only: %i[index show]
+    resources :items, only: %i[index show]
+    resources :orders, only: %i[index show]
+    resources :tasks, only: %i[index show]
 
     root to: 'collections#index'
   end

@@ -1,6 +1,5 @@
-<%= render "collections/header", collection: @collection %>
 <div class="flex items-center mb-6 space-x-4">
-  <%= link_to 'Tasks', admin_collection_tasks_path(@collection), class: 'underline' %>
+  <%= link_to 'Tasks', admin_tasks_path(collection_id: @task&.collection_id), class: 'underline' %>
   <div class="">/</div>
   <div><%= @task.id %></div>
 </div>
@@ -12,7 +11,7 @@
     </div>
     <div class="">
       <% if @task.item.present? %>
-        <%= link_to collection_tasks_path(@collection.id, metahash: @task.item.metahash, type: params[:type], state: params[:state], ), class: "flex items-center space-x-2" do %>
+        <%= link_to tasks_path(collection_id: @task.collection_id, metahash: @task.item.metahash, type: params[:type], state: params[:state], ), class: "flex items-center space-x-2" do %>
           <%= image_tag @task.item.icon_url, class: "w-12 h-12 block" %>
           <div>
             <div class="">

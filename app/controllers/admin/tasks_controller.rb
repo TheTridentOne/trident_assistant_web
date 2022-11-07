@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 class Admin::TasksController < Admin::BaseController
-  before_action :load_collection
-
   def index
-    tasks = @collection.tasks
+    tasks = Task.all
+    tasks = tasks.where(collection_id: params[:collection_id]) if params[:collection_id].present?
 
     tasks = tasks.where("params->>'identifier' = ?", params[:identifier].to_s) if params[:identifier].present?
 
@@ -43,12 +42,6 @@ class Admin::TasksController < Admin::BaseController
   end
 
   def show
-    @task = @collection.tasks.find params[:id]
-  end
-
-  private
-
-  def load_collection
-    @collection = Collection.find params[:collection_id]
+    @task = Task.find params[:id]
   end
 end

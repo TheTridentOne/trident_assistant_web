@@ -1,8 +1,5 @@
-<%= render "collections/header", collection: @collection %>
-<%= render "admin/collections/tabbar", collection: @collection, tab: 'items' %>
-
 <div class="mb-4 flex items-center space-x-4">
-  <%= render "admin/items/query" %>
+  <%= render "admin/items/query", collection_id: params[:collection_id] %>
 </div>
 
 <% if @items.blank? %>
@@ -46,8 +43,8 @@
     </div>
   <% else %>
     <div class="flex items-center justify-center space-x-6">
-      <%= link_to '< Prev', admin_items_path(@collection.id, type: @type, page: @prev_page) if @prev_page.present? %>
-      <%= link_to 'Next >', admin_items_path(@collection.id, type: @type, page: @next_page) if @next_page.present? %>
+      <%= link_to '< Prev', admin_items_path(collection_id: collection.id, type: @type, page: @prev_page) if @prev_page.present? %>
+      <%= link_to 'Next >', admin_items_path(collection_id: collection.id, type: @type, page: @next_page) if @next_page.present? %>
     </div>
   <% end %>
 <% end %>

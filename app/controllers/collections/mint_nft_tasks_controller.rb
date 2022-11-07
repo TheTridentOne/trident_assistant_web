@@ -18,7 +18,7 @@ class Collections::MintNftTasksController < Collections::BaseController
       end
     end
 
-    redirect_to collection_tasks_path(@collection.id), success: "#{successes.count} task created" if successes.present?
+    redirect_to tasks_path(collection_id: @collection.id), success: "#{successes.count} task created" if successes.present?
   end
 
   private

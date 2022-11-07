@@ -4,7 +4,7 @@ class Collections::GenerateNftTasksController < Collections::BaseController
   def create
     @task = current_user.tasks.new task_params
 
-    redirect_to collection_tasks_path(@collection.id) if @task.save
+    redirect_to tasks_path(collection_id: @collection.id) if @task.save
   end
 
   private
