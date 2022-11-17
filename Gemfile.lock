@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/TheTridentOne/trident_assistant.git
-  revision: 17528075e148f49f72bb465de8d2b5aa268f3749
+  revision: be37ea899a64f6205f0e8b9e55b7c9f9cc7a5d3b
   specs:
-    trident_assistant (0.1.7)
+    trident_assistant (0.1.8)
       mixin_bot (~> 0.8)
 
 GIT
@@ -212,7 +212,7 @@ GEM
       actionpack (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.5.11)
-    irb (1.4.2)
+    irb (1.4.3)
       reline (>= 0.3.0)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
