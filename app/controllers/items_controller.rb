@@ -35,7 +35,7 @@ class ItemsController < ApplicationController
             identifier_cont_all: @query,
             meta_hash_cont_all: @query
           }.merge(m: 'or')
-        ).result,
+        ).result.order_by_id,
         items: 100
       )
     when 'all'
