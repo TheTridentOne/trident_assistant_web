@@ -93,7 +93,7 @@ class Task < ApplicationRecord
   end
 
   def should_notify?
-    true
+    false
   end
 
   private
