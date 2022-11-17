@@ -101,9 +101,9 @@ class Collections::ItemsController < Collections::BaseController
   end
 
   def bulk_destroy
-    (params[:identifiers] || []).each do |identifier|
-      item = @collection.items.find_by identifier: identifier
-      item.destroy! if item.drafted?
+    (params[:token_ids] || []).each do |token_id|
+      item = @collection.items.find_by token_id: token_id
+      item.destroy! if item&.drafted?
     end
 
     redirect_to collection_items_path(@collection, tab: 'drafted')
