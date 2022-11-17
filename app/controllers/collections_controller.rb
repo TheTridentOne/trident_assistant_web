@@ -30,17 +30,23 @@ class CollectionsController < ApplicationController
       )
     end
 
-    r =
-      current_user
-      .trident_api
-      .update_collection(
-        @collection.id,
-        description: collection_params[:description],
-        external_url: collection_params[:external_url],
-        icon_url: @collection.icon.changed? ? @collection.icon.url : ''
-      )
+    if @collection.listed?
+      r =
+        current_user
+        .trident_api
+        .update_collection(
+          @collection.id,
+          description: collection_params[:description],
+          external_url: collection_params[:external_url],
+          icon_url: @collection.icon.changed? ? @collection.icon.url : ''
+        )
 
-    if @collection.update raw: r
+      if @collection.update raw: r
+        redirect_to collections_path, success: 'Updated'
+      else
+        render_flash :danger, @collection.errors.full_messages.join(';')
+      end
+    elsif @collection.update collection_params
       redirect_to collections_path, success: 'Updated'
     else
       render_flash :danger, @collection.errors.full_messages.join(';')
