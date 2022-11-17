@@ -106,7 +106,7 @@ class CreateItemTask < Task
         id: collection.id,
         name: collection.name,
         description: collection.description,
-        split: collection.split.round(2).to_s,
+        split: collection.split.round(4).to_s,
         icon: {
           url: collection.icon_url
         }
