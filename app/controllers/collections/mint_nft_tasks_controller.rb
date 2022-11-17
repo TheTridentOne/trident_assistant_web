@@ -7,10 +7,11 @@ class Collections::MintNftTasksController < Collections::BaseController
     successes = []
     @errors = []
 
-    identifiers = params.dig(:mint_nft_task, :identifiers) || []
+    token_ids = params.dig(:mint_nft_task, :token_ids) || []
 
-    identifiers.each do |identifier|
-      task = current_user.tasks.create task_params.merge(identifier: identifier)
+    token_ids.each do |token_id|
+      item = Item.find_by token_id: token_id
+      task = current_user.tasks.create task_params.merge(identifier: item.identifier)
       if task.save
         successes.push task.id
       else
