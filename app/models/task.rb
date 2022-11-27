@@ -36,7 +36,7 @@ class Task < ApplicationRecord
   validates :type, presence: true
   validate :ensure_not_create_duplicated_task
 
-  after_commit :process_async, :notify, :broadcast, on: :create
+  after_commit :process_async, on: :create
 
   delegate :present?, to: :result, prefix: true
 
