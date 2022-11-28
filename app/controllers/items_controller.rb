@@ -65,7 +65,7 @@ class ItemsController < ApplicationController
         query: @query,
         page: params[:page]
       )
-      @items = Item.where(metahash: r['collectibles'].map(&->(item) { item['metahash'] }))
+      @items = Item.where(metahash: r['collectibles'].map(&->(item) { item['metahash'] })).order_by_id
       @next_page = r['next_page']
       @prev_page = r['previous_page']
     end
