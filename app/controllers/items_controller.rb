@@ -17,7 +17,7 @@ class ItemsController < ApplicationController
           items.where.not(collection_id: current_user.collections.ids)
         end
 
-      @pagy, @items = pagy items, items: 100
+      @pagy, @items = pagy items.order_by_id, items: 100
     when 'drafted'
       items =
         if @collection.present?
@@ -55,7 +55,7 @@ class ItemsController < ApplicationController
             identifier_cont_all: @query,
             meta_hash_cont_all: @query
           }.merge(m: 'or')
-        ).result,
+        ).result.order_by_id,
         items: 100
       )
     when 'airdrop', 'deposited', 'on_sale', 'on_auction', 'listed'

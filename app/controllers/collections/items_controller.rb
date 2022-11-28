@@ -26,7 +26,7 @@ class Collections::ItemsController < Collections::BaseController
             identifier_cont_all: @query,
             meta_hash_cont_all: @query
           }.merge(m: 'or')
-        ).result,
+        ).result.order_by_id,
         items: 100
       )
     when 'airdrop', 'deposited', 'on_sale', 'on_auction', 'listed'
@@ -43,7 +43,8 @@ class Collections::ItemsController < Collections::BaseController
       @pagy, @items = pagy(
         current_user
         .items
-        .where(collection_id: params[:collection_id]),
+        .where(collection_id: params[:collection_id])
+        .order_by_id,
         items: 100
       )
     end
