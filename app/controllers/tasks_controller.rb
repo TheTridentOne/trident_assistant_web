@@ -10,7 +10,7 @@ class TasksController < ApplicationController
 
     tasks = tasks.where("params->>'identifier' = ?", params[:identifier].to_s) if params[:identifier].present?
 
-    @state = params[:state] || 'all'
+    @state = params[:state] || 'pending'
     tasks =
       case @state
       when 'all'
@@ -28,7 +28,7 @@ class TasksController < ApplicationController
         tasks.where(type: @type)
       end
 
-    @order_by = params[:order_by] || 'created_at_desc'
+    @order_by = params[:order_by] || 'created_at_asc'
     tasks =
       case @order_by
       when 'created_at_desc'
