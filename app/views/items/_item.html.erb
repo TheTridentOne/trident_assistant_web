@@ -44,7 +44,7 @@
       <%= link_to 'Edit', edit_collection_item_path(item.collection, item) if item.drafted? %>
 
       <%= button_to 'Mint',
-        view_modals_path(type: :new_mint_nft_task, collection_id: item.collection_id, token_ids: [item.token_id]),
+        tasks_path(type: :MintNftTask, collection_id: item.collection_id, token_ids: [item.token_id]),
         class: "" if item.drafted? %>
 
       <%= button_to 'Delete', collection_item_path(item.collection, item), 

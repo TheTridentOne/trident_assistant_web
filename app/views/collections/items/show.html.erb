@@ -12,7 +12,7 @@
     target: "_blank", 
     class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" if @item.minted? %>
   <%= button_to 'Mint',
-    view_modals_path(type: :new_mint_nft_task, collection_id: @item.collection_id, token_ids: [@item.token_id]),
+    tasks_path(type: :MintNftTask, collection_id: @item.collection_id, token_ids: [@item.token_id]),
     class: "cursor-pointer rounded bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 m-1" if @item.drafted? %>
   <%= link_to 'Edit',
     edit_collection_item_path(@item.collection, @item),
