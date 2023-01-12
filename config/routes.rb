@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   # health check for render.com
   get 'healthz', to: 'healthz#index', as: :healthz
-  post 'authorize_trident', to: 'home#authorize_trident', as: :authorize_trident
+  get 'authorize_trident', to: 'home#authorize_trident', as: :authorize_trident
 
   root 'home#index'
 
