@@ -5,15 +5,6 @@ GIT
     trident_assistant (0.1.8)
       mixin_bot (~> 0.8)
 
-GIT
-  remote: https://github.com/activerecord-hackery/ransack.git
-  revision: 7ad95448dd518f5a96a0e18c25623f3f90d612b5
-  specs:
-    ransack (2.6.0)
-      activerecord (>= 6.0.4)
-      activesupport (>= 6.0.4)
-      i18n
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -138,6 +129,8 @@ GEM
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     deep_merge (1.2.2)
+    dockerfile-rails (1.2.5)
+      rails
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dry-configurable (1.0.1)
@@ -317,6 +310,10 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    ransack (4.0.0)
+      activerecord (>= 6.1.5)
+      activesupport (>= 6.1.5)
+      i18n
     rbnacl (7.1.1)
       ffi
     rbsecp256k1 (5.1.1)
@@ -419,6 +416,7 @@ DEPENDENCIES
   config
   cssbundling-rails
   debug
+  dockerfile-rails (>= 1.2)
   importmap-rails
   jbuilder
   kredis
@@ -429,7 +427,7 @@ DEPENDENCIES
   pg
   puma (~> 5.0)
   rails (~> 7)
-  ransack!
+  ransack
   redis (~> 4.0)
   redis-namespace
   rubocop
@@ -451,4 +449,4 @@ RUBY VERSION
    ruby 3.1.0p0
 
 BUNDLED WITH
-   2.3.5
+   2.4.8

@@ -75,7 +75,7 @@ gem 'aasm'
 gem 'pagy'
 
 # Object-based searching.
-gem 'ransack', github: 'activerecord-hackery/ransack'
+gem 'ransack'
 
 # S3 active storage service
 gem 'aws-sdk-s3', require: false
@@ -127,3 +127,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+
+gem 'dockerfile-rails', '>= 1.2', group: :development
