@@ -88,7 +88,7 @@ class CreateItemTask < Task
       algorithm: 'sha256'
     }
 
-    (json['attributes'] || []).each do |trait|
+    (json['attributes'].presence || []).each do |trait|
       next if trait['trait_type'].blank? || trait['value'].blank?
 
       token[:attributes] ||= {}
