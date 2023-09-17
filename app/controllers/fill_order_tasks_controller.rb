@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FillOrderTasksController < Collections::BaseController
+class FillOrderTasksController < ApplicationController
   def create
     successes = []
     @errors = []
