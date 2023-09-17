@@ -23,6 +23,8 @@
 class FillOrderTask < Task
   store_accessor :params, %i[identifier order_id]
 
+  before_validation :setup_identifier, on: :create
+
   validates :identifier, presence: true
   validates :order_id, presence: true
 
@@ -44,5 +46,13 @@ class FillOrderTask < Task
     fail!
   ensure
     pend! if processing?
+  end
+
+  private
+
+  def setup_identifier
+    r = user.trident_api.order order_id
+    self.identifier = r['item']['identifier']
+    self.token_id = MixinBot::Utils::Nfo.new(collection: collection_id, token: identifier).unique_token_id if identifier.present?
   end
 end
