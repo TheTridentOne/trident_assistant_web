@@ -8,7 +8,7 @@
   </div>
   <%= render 'collections/fill_order_tasks/form', 
     task: FillOrderTask.new(collection_id: params[:collection_id]), 
-    order_id: params[:order_id] %>
+    order_ids: params[:order_ids] %>
 <% end %>
 
 <%=s turbo_stream.update "modal-slot" do %>

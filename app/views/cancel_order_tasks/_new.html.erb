@@ -1,7 +1,7 @@
 <%= turbo_stream.update "modal-slot" do %>
   <%= render "shared/modal" do |partial| %>
     <% partial.content_for :title do %>
-      Cancel Order
+      <%= t('cancel_order') %>
     <% end %>
 
     <% partial.content_for :content do %>
