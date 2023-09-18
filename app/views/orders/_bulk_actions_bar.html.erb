@@ -1,5 +1,9 @@
 <div class="mb-4 flex items-center space-x-4">
-  <% if @state == 'open' && @maker == current_user.id %>
-    <%= render 'orders/bulk_task_form', type: :CancelOrderTask, collection_id: @collection&.id, action: 'Cancel All' %>
+  <% if @state == 'open' %>
+    <% if @maker == current_user.id %>
+      <%= render 'orders/bulk_task_form', type: :CancelOrderTask, collection_id: @collection&.id, action: 'Cancel All' %>
+    <% else %>
+      <%= render 'orders/bulk_task_form', type: :FillOrderTask, collection_id: @collection&.id, action: 'Fill All' %>
+    <% end %>
   <% end %>
 </div>
