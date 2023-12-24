@@ -59,14 +59,9 @@ gem 'config'
 # Bundle and process CSS in Rails with Tailwind, PostCSS, and Sass via Node.js.
 gem 'cssbundling-rails'
 
-# Simple, efficient background processing for Ruby http://sidekiq.org
-gem 'sidekiq', '~> 6.0'
+gem 'solid_cache'
 
-# Scheduler / Cron for Sidekiq jobs
-gem 'sidekiq-cron'
-
-# Concurrency and threshold throttling for Sidekiq.
-gem 'sidekiq-throttled'
+gem 'good_job'
 
 # AASM - State machines for Ruby classes (plain Ruby, ActiveRecord, Mongoid)
 gem 'aasm'

@@ -26,7 +26,7 @@ class MixinMessage < ApplicationRecord
   after_commit :process_async, on: :create
 
   def process_async
-    MixinMessageProcessJob.perform_async id
+    MixinMessageProcessJob.perform_later id
   end
 
   def process!

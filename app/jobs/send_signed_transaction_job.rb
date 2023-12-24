@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-class SendSignedTransactionJob < ApplicationSidekiqJob
-  sidekiq_options queue: :critical
+class SendSignedTransactionJob < ApplicationJob
+  retry_on StandardError, attempts: 5
+
+  queue_as :critical
 
   def perform
     NonFungibleOutput.where(state: 'signed').each do |nfo|

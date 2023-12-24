@@ -69,7 +69,7 @@ class Task < ApplicationRecord
   end
 
   def process_async
-    TaskProcessJob.perform_async id
+    TaskProcessJob.perform_later id
   end
 
   def process!

@@ -1,8 +1,0 @@
-:concurrency: 25
-:queues:
-  - critical
-  - high
-  - default
-  - low
-production:
-  :concurrency: 50

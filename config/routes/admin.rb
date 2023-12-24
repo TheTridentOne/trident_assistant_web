@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require 'sidekiq/web'
-require 'sidekiq/cron/web'
-
 class AdminConstraint
   def matches?(request)
     return false if request.session[:current_user_id].blank?
@@ -15,7 +12,7 @@ end
 # Below are the routes for admin
 constraints(AdminConstraint.new) do
   namespace :admin do
-    mount Sidekiq::Web, at: 'sidekiq', constraints: AdminConstraint.new
+    mount GoodJob::Engine, at: 'good_job', constraints: AdminConstraint.new
 
     resources :users, only: %i[index show]
     resources :collections, only: %i[index show]

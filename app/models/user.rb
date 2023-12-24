@@ -134,7 +134,7 @@ class User < ApplicationRecord
   end
 
   def sync_collectibles_async
-    UserSyncCollectiblesJob.perform_async id
+    UserSyncCollectiblesJob.perform_later id
   end
 
   def admin?

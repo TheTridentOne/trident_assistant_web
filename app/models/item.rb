@@ -58,7 +58,7 @@ class Item < ApplicationRecord
   end
 
   def sync_creator_collectibles
-    UserSyncCollectiblesJob.perform_in 30.seconds, collection&.creator_id
+    UserSyncCollectiblesJob.set(wait: 30.seconds).perform_later collection&.creator_id
   end
 
   def refresh_metadata!
